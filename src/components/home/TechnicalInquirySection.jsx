@@ -12,6 +12,7 @@ import {
   ShieldCheck
 } from "lucide-react";
 import { companyInfo } from "@/data/company";
+import Button from "@/components/common/Button";
 
 export default function TechnicalInquirySection() {
   const [formData, setFormData] = useState({
@@ -338,20 +339,15 @@ export default function TechnicalInquirySection() {
                   </div>
 
                   <div className="pt-2">
-                    <button
+                    <Button
                       type="submit"
                       disabled={loading}
-                      className="w-full py-4 px-6 rounded-xl text-sm font-extrabold text-white bg-brand-700 hover:bg-brand-800 shadow-lg transition-all cursor-pointer disabled:opacity-70 flex items-center justify-center gap-2"
+                      variant="primary"
+                      className="w-full"
+                      showArrow={!loading}
                     >
-                      {loading ? (
-                        <span>Evaluating Parameters...</span>
-                      ) : (
-                        <>
-                          <Send className="w-4 h-4" />
-                          <span>Submit Data Sheet for Technical Review</span>
-                        </>
-                      )}
-                    </button>
+                      {loading ? "Evaluating Parameters..." : "Submit Data Sheet for Technical Review"}
+                    </Button>
                   </div>
                 </form>
               )}

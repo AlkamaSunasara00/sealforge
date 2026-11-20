@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import Button from "@/components/common/Button";
 import {
   ArrowRight,
   FileDown,
@@ -122,21 +123,19 @@ export default function HeroSection() {
 
             {/* CTAs */}
             <div className="flex flex-wrap items-center gap-4 pt-4">
-              <Link
+              <Button
+                variant="primary"
                 href="#technical-rfq"
-                className="inline-flex items-center gap-2 px-7 py-4 text-sm font-bold text-white bg-brand-700 hover:bg-brand-600 rounded-xl shadow-lg transition-all"
               >
-                <span>Request a Quote</span>
-                <ArrowRight className="w-4 h-4" />
-              </Link>
+                Request a Quote
+              </Button>
 
-              <Link
-                href="#catalogues"
-                className="inline-flex items-center gap-2 px-7 py-4 text-sm font-bold text-white bg-slate-900 hover:bg-slate-800 border border-slate-700 rounded-xl transition-colors"
+              <Button
+                variant="secondary"
+                href="/catalogue"
               >
-                <FileDown className="w-4 h-4 text-amber-400" />
-                <span>Download Catalogues</span>
-              </Link>
+                Explore Catalogues
+              </Button>
             </div>
           </div>
 

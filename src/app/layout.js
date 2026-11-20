@@ -35,7 +35,9 @@ export const metadata = {
   ],
   authors: [{ name: "SealForge Engineering" }],
   icons: {
-    icon: "/sealforge.svg",
+    icon: "/sealforge-white.svg",
+    shortcut: "/sealforge-white.svg",
+    apple: "/sealforge-white.svg",
   },
 };
 

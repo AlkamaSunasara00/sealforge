@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import Button from "@/components/common/Button";
 import {
   Disc,
   Anchor,
@@ -91,21 +92,19 @@ export default function ProductCategories() {
                 </div>
 
                 <div className="flex flex-col sm:flex-row items-center gap-3 shrink-0">
-                  <a
+                  <Button
+                    variant="secondary"
                     href={cat.catalogueLink}
-                    download
-                    className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3.5 text-sm font-bold text-brand-900 bg-brand-50 hover:bg-brand-100 border border-brand-200 rounded-xl transition-colors"
+                    showArrow={false}
                   >
-                    <FileDown className="w-4 h-4 text-brand-700" />
-                    <span>Download PDF Catalogue</span>
-                  </a>
-                  <Link
+                    Download PDF Catalogue
+                  </Button>
+                  <Button
+                    variant="primary"
                     href="#technical-rfq"
-                    className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3.5 text-sm font-bold text-white bg-brand-700 hover:bg-brand-800 rounded-xl transition-colors shadow-sm"
                   >
-                    <span>Request Data Sheet</span>
-                    <ArrowRight className="w-4 h-4" />
-                  </Link>
+                    Request Data Sheet
+                  </Button>
                 </div>
               </div>
 

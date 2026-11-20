@@ -12,6 +12,8 @@ import {
   ArrowRight
 } from "lucide-react";
 import { companyInfo } from "@/data/company";
+import Button from "@/components/common/Button";
+import logoImg from "@/assets/logos/sealforge.svg";
 
 export default function Navbar() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -73,76 +75,80 @@ export default function Navbar() {
           <Link href="/" className="flex items-center group transition-transform duration-200 hover:opacity-90">
             <div className="h-10 sm:h-12 w-auto flex items-center">
               <Image
-                src="/sealforge.svg"
+                src={logoImg}
                 alt="SealForge"
-                width={200}
-                height={44}
                 priority
                 className="h-9 sm:h-10 w-auto object-contain"
               />
             </div>
           </Link>
 
-          {/* Desktop Links: High Contrast, Bold, Spacious */}
-          <div className="hidden lg:flex items-center gap-2 xl:gap-3">
+          {/* Desktop Navigation Links */}
+          <div className="hidden lg:flex items-center gap-1 xl:gap-2">
             <Link
               href="/"
-              className="px-4 py-2 text-sm font-bold text-slate-900 hover:text-brand-700 transition-colors rounded-lg"
+              className="px-3.5 py-2 text-sm font-bold text-slate-900 hover:text-brand-700 transition-colors rounded-lg"
             >
               Home
             </Link>
 
             <Link
-              href="#products"
-              className="px-4 py-2 text-sm font-bold text-slate-700 hover:text-brand-900 hover:bg-slate-100 transition-colors rounded-lg"
+              href="/#products"
+              className="px-3.5 py-2 text-sm font-bold text-slate-700 hover:text-brand-900 hover:bg-slate-100 transition-colors rounded-lg"
             >
               Products
             </Link>
 
             <Link
-              href="#materials"
-              className="px-4 py-2 text-sm font-bold text-slate-700 hover:text-brand-900 hover:bg-slate-100 transition-colors rounded-lg"
+              href="/#materials"
+              className="px-3.5 py-2 text-sm font-bold text-slate-700 hover:text-brand-900 hover:bg-slate-100 transition-colors rounded-lg"
             >
               Materials & Specs
             </Link>
 
             <Link
-              href="#catalogues"
-              className="px-4 py-2 text-sm font-bold text-slate-700 hover:text-brand-900 hover:bg-slate-100 transition-colors rounded-lg"
+              href="/catalogue"
+              className="px-3.5 py-2 text-sm font-bold text-slate-700 hover:text-brand-900 hover:bg-slate-100 transition-colors rounded-lg"
             >
-              Catalogues
+              Catalogue
             </Link>
 
             <Link
-              href="#industries"
-              className="px-4 py-2 text-sm font-bold text-slate-700 hover:text-brand-900 hover:bg-slate-100 transition-colors rounded-lg"
+              href="/#industries"
+              className="px-3.5 py-2 text-sm font-bold text-slate-700 hover:text-brand-900 hover:bg-slate-100 transition-colors rounded-lg"
             >
               Industries
             </Link>
 
             <Link
-              href="#contact"
-              className="px-4 py-2 text-sm font-bold text-slate-700 hover:text-brand-900 hover:bg-slate-100 transition-colors rounded-lg"
+              href="/about-us"
+              className="px-3.5 py-2 text-sm font-bold text-slate-700 hover:text-brand-900 hover:bg-slate-100 transition-colors rounded-lg"
+            >
+              About Us
+            </Link>
+
+            <Link
+              href="/contact"
+              className="px-3.5 py-2 text-sm font-bold text-slate-700 hover:text-brand-900 hover:bg-slate-100 transition-colors rounded-lg"
             >
               Contact
             </Link>
           </div>
 
-          {/* Primary High-Contrast CTA Button */}
+          {/* Primary CTA Button */}
           <div className="hidden lg:flex items-center gap-4">
-            <Link
-              href="#technical-rfq"
-              className="inline-flex items-center gap-2 px-6 py-2.5 text-sm font-bold text-white bg-brand-700 hover:bg-brand-800 rounded-xl shadow-md hover:shadow-lg transition-all duration-200"
+            <Button
+              variant="primary"
+              href="/#technical-rfq"
             >
-              <span>Get a Quote</span>
-              <ArrowRight className="w-4 h-4" />
-            </Link>
+              Get a Quote
+            </Button>
           </div>
 
           {/* Mobile Menu Button */}
           <div className="flex lg:hidden items-center gap-3">
             <Link
-              href="#technical-rfq"
+              href="/#technical-rfq"
               className="px-3.5 py-1.5 text-xs font-bold text-white bg-brand-700 rounded-lg shadow-sm"
             >
               Quote
@@ -158,7 +164,7 @@ export default function Navbar() {
           </div>
         </div>
 
-        {/* Spacious Mobile Navigation */}
+        {/* Mobile Navigation Drawer */}
         {mobileMenuOpen && (
           <div className="lg:hidden bg-white border-t border-slate-200 px-6 py-5 space-y-4 shadow-xl">
             <div className="space-y-1">
@@ -170,35 +176,42 @@ export default function Navbar() {
                 Home
               </Link>
               <Link
-                href="#products"
+                href="/#products"
                 onClick={() => setMobileMenuOpen(false)}
                 className="block px-4 py-3 rounded-lg text-base font-bold text-slate-800 hover:text-brand-700 hover:bg-slate-50"
               >
                 Products
               </Link>
               <Link
-                href="#materials"
+                href="/#materials"
                 onClick={() => setMobileMenuOpen(false)}
                 className="block px-4 py-3 rounded-lg text-base font-bold text-slate-800 hover:text-brand-700 hover:bg-slate-50"
               >
                 Materials & Specs
               </Link>
               <Link
-                href="#catalogues"
+                href="/catalogue"
                 onClick={() => setMobileMenuOpen(false)}
                 className="block px-4 py-3 rounded-lg text-base font-bold text-slate-800 hover:text-brand-700 hover:bg-slate-50"
               >
-                Catalogues
+                Catalogue
               </Link>
               <Link
-                href="#industries"
+                href="/#industries"
                 onClick={() => setMobileMenuOpen(false)}
                 className="block px-4 py-3 rounded-lg text-base font-bold text-slate-800 hover:text-brand-700 hover:bg-slate-50"
               >
                 Industries
               </Link>
               <Link
-                href="#contact"
+                href="/about-us"
+                onClick={() => setMobileMenuOpen(false)}
+                className="block px-4 py-3 rounded-lg text-base font-bold text-slate-800 hover:text-brand-700 hover:bg-slate-50"
+              >
+                About Us
+              </Link>
+              <Link
+                href="/contact"
                 onClick={() => setMobileMenuOpen(false)}
                 className="block px-4 py-3 rounded-lg text-base font-bold text-slate-800 hover:text-brand-700 hover:bg-slate-50"
               >
@@ -208,7 +221,7 @@ export default function Navbar() {
 
             <div className="pt-3 border-t border-slate-100 space-y-3">
               <Link
-                href="#technical-rfq"
+                href="/#technical-rfq"
                 onClick={() => setMobileMenuOpen(false)}
                 className="w-full inline-flex items-center justify-center gap-2 px-5 py-3.5 text-sm font-bold text-white bg-brand-700 hover:bg-brand-800 rounded-xl shadow"
               >

@@ -133,6 +133,7 @@ export default function HeroSection() {
               <Button
                 variant="secondary"
                 href="/catalogue"
+                icon={FileDown}
               >
                 Explore Catalogues
               </Button>

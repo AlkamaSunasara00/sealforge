@@ -95,7 +95,7 @@ export default function ProductCategories() {
                   <Button
                     variant="secondary"
                     href={cat.catalogueLink}
-                    showArrow={false}
+                    icon={FileDown}
                   >
                     Download PDF Catalogue
                   </Button>

@@ -1,29 +1,9 @@
 "use client";
 
+import React from "react";
 import Link from "next/link";
+import { ArrowRight } from "lucide-react";
 
-/**
- * SealForge Precision Industrial Button Component
- *
- * Exact Geometry inspired by Reference:
- * - Parallelogram body with a precision -20deg engineering slant
- * - Right-side secondary geometric bracket (top/right/bottom outline layer sitting behind)
- * - Coordinated mechanical slide animation on hover
- *
- * @param {Object} props
- * @param {"primary" | "secondary" | "ghost" | "light"} [props.variant="primary"] - Visual style variant
- * @param {React.ReactNode} props.children - Button label / content
- * @param {string} [props.href] - Optional URL (renders accessible <a> or Next.js <Link>)
- * @param {Function} [props.onClick] - Click handler
- * @param {"button" | "submit" | "reset"} [props.type="button"] - HTML button type
- * @param {boolean} [props.disabled=false] - Disabled state
- * @param {string} [props.className=""] - Custom classes for button wrapper
- * @param {boolean} [props.showArrow=true] - Whether to show the trailing arrow
- * @param {string | React.ReactNode} [props.arrow="→"] - Arrow glyph or icon
- * @param {string} [props.target] - Link target
- * @param {string} [props.rel] - Link rel
- * @param {string} [props.ariaLabel] - Accessible aria-label
- */
 export default function Button({
   variant = "primary",
   children,
@@ -32,8 +12,10 @@ export default function Button({
   type = "button",
   disabled = false,
   className = "",
+  icon = null,
+  iconPosition = "right",
   showArrow = true,
-  arrow = "→",
+  arrow = null,
   target,
   rel,
   ariaLabel,
@@ -45,30 +27,73 @@ export default function Button({
       body: "bg-[#253664] border border-white/15 text-white shadow-[0_4px_14px_rgba(7,13,28,0.6),inset_0_1px_0_rgba(255,255,255,0.18)] group-hover:bg-[#1c2a4f] group-hover:border-sky-400/40",
       content: "text-white",
       bracket: "border-sky-400/75 group-hover:border-sky-300 group-hover:opacity-100",
-      arrow: "text-slate-100 group-hover:text-white"
+      icon: "text-slate-100 group-hover:text-white"
     },
     secondary: {
       body: "bg-[#091226] border-[1.5px] border-slate-600/80 text-slate-100 shadow-[0_4px_12px_rgba(0,0,0,0.5)] group-hover:bg-[#0d1a36] group-hover:border-sky-400",
       content: "text-slate-100 group-hover:text-white",
       bracket: "border-sky-500/60 group-hover:border-sky-400 group-hover:opacity-100",
-      arrow: "text-slate-300 group-hover:text-white"
+      icon: "text-slate-300 group-hover:text-white"
     },
     ghost: {
       body: "bg-[#070d1c]/50 backdrop-blur-sm border border-slate-700/60 text-slate-300 group-hover:bg-slate-900/80 group-hover:border-slate-300/80",
       content: "text-slate-300 group-hover:text-white",
       bracket: "border-slate-400/40 group-hover:border-slate-200 group-hover:opacity-90",
-      arrow: "text-slate-400 group-hover:text-white"
+      icon: "text-slate-400 group-hover:text-white"
     },
     light: {
-      // Exact visual match for the white/ice-blue reference card
       body: "bg-[#f1f5f9] border border-slate-300 text-slate-950 shadow-[0_4px_14px_rgba(0,0,0,0.4)] group-hover:bg-white group-hover:border-white",
       content: "text-slate-950 font-bold",
       bracket: "border-slate-300 group-hover:border-white group-hover:opacity-100",
-      arrow: "text-slate-900 group-hover:text-slate-950"
+      icon: "text-slate-900 group-hover:text-slate-950"
+    },
+    white: {
+      body: "bg-white border border-white text-brand-950 shadow-[0_4px_14px_rgba(7,17,34,0.24)] group-hover:bg-brand-50 group-hover:border-brand-100",
+      content: "text-brand-950",
+      bracket: "border-white group-hover:border-bronze-400 group-hover:opacity-100",
+      icon: "text-brand-800 group-hover:text-brand-950"
     }
   };
 
   const current = variantStyles[variant] || variantStyles.primary;
+
+  // Resolve which icon to display
+  const resolveIcon = () => {
+    // 1. Explicit icon prop takes priority
+    const targetIcon = icon !== null ? icon : (showArrow ? (arrow || ArrowRight) : null);
+    if (!targetIcon) return null;
+
+    // A. Already an instantiated React Element (e.g. <Send className="w-4 h-4" />)
+    if (React.isValidElement(targetIcon)) {
+      return targetIcon;
+    }
+
+    // B. Component function or forwardRef object (e.g. icon={FileDown} or icon={Send} or icon={ArrowRight})
+    if (typeof targetIcon === "function" || (typeof targetIcon === "object" && targetIcon !== null)) {
+      const IconComponent = targetIcon;
+      return <IconComponent className="w-3.5 h-3.5 sm:w-4 sm:h-4 stroke-[2.2] shrink-0" />;
+    }
+
+    // C. String / glyph fallback (e.g. "→", "↗")
+    return <span className="font-sans leading-none">{targetIcon}</span>;
+  };
+
+  const resolvedIcon = resolveIcon();
+
+  const iconElement = resolvedIcon ? (
+    <span
+      aria-hidden="true"
+      className={`inline-flex items-center justify-center shrink-0 transition-transform duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] ${
+        disabled
+          ? ""
+          : iconPosition === "right"
+          ? "group-hover:translate-x-[4px]"
+          : "group-hover:-translate-x-[2px]"
+      } ${current.icon}`}
+    >
+      {resolvedIcon}
+    </span>
+  ) : null;
 
   const innerContent = (
     <>
@@ -90,17 +115,9 @@ export default function Button({
         <span
           className={`w-full inline-flex items-center justify-center gap-2.5 px-4.5 sm:px-5 py-2 sm:py-2.5 text-xs sm:text-[13px] font-bold tracking-[0.06em] uppercase select-none skew-x-[20deg] transition-colors duration-300 ${current.content}`}
         >
+          {iconPosition === "left" && iconElement}
           <span>{children}</span>
-          {showArrow && (
-            <span
-              aria-hidden="true"
-              className={`inline-block font-sans text-xs sm:text-sm leading-none transition-transform duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] ${
-                disabled ? "" : "group-hover:translate-x-[3px]"
-              } ${current.arrow}`}
-            >
-              {arrow}
-            </span>
-          )}
+          {iconPosition === "right" && iconElement}
         </span>
       </span>
     </>
@@ -122,52 +139,27 @@ export default function Button({
           rel={target === "_blank" ? rel || "noopener noreferrer" : rel}
           aria-label={ariaLabel}
           className={baseClasses}
-          onClick={onClick}
           {...rest}
         >
           {innerContent}
         </a>
       );
     }
+
     return (
-      <Link
-        href={href}
-        target={target}
-        rel={rel}
-        aria-label={ariaLabel}
-        className={baseClasses}
-        onClick={onClick}
-        {...rest}
-      >
+      <Link href={href} aria-label={ariaLabel} className={baseClasses} {...rest}>
         {innerContent}
       </Link>
     );
   }
 
-  // If href is provided but disabled
-  if (href && disabled) {
-    return (
-      <span
-        role="link"
-        aria-disabled="true"
-        aria-label={ariaLabel}
-        className={baseClasses}
-        tabIndex={-1}
-        {...rest}
-      >
-        {innerContent}
-      </span>
-    );
-  }
-
-  // Standard <button>
+  // Otherwise render standard <button>
   return (
     <button
       type={type}
-      disabled={disabled}
-      aria-disabled={disabled}
-      aria-label={ariaLabel}
       onClick={onClick}
+      disabled={disabled}
+      aria-label={ariaLabel}
       className={baseClasses}
       {...rest}
     >

@@ -81,7 +81,7 @@ export default function Footer() {
 
   const pageLinks = [
     { name: "Home", href: "/" },
-    { name: "About Us", href: "/about-us" },
+    { name: "About Us", href: "/about" },
     { name: "Products Range", href: "/#products" },
     { name: "Materials & Specs", href: "/#materials" },
     { name: "Product Catalogues", href: "/catalogue" },
@@ -246,7 +246,7 @@ export default function Footer() {
           </div>
 
           <div className="flex items-center gap-5">
-            <Link href="/about-us" className="hover:text-white transition-colors">
+            <Link href="/about" className="hover:text-white transition-colors">
               About Us
             </Link>
             <Link href="/contact" className="hover:text-white transition-colors">

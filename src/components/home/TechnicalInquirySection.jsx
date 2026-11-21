@@ -344,7 +344,7 @@ export default function TechnicalInquirySection() {
                       disabled={loading}
                       variant="primary"
                       className="w-full"
-                      showArrow={!loading}
+                      icon={loading ? null : Send}
                     >
                       {loading ? "Evaluating Parameters..." : "Submit Data Sheet for Technical Review"}
                     </Button>

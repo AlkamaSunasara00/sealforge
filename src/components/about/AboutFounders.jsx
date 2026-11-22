@@ -29,6 +29,15 @@ const founders = [
     email: "sales@sealforge.in",
     address: ADDRESS,
   },
+  {
+  name: "Arshad Khan",
+  role: "Chief Engineering Officer",
+  bio: "Leads engineering at SealForge with a focus on precision, performance, and reliable mechanical sealing solutions.",
+  image: "/team/arshad-khan.png",
+  phone: "+91 99673 70527",
+  email: "sales@sealforge.in",
+  address: ADDRESS,
+},
 ];
 
 function ContactRow({ icon: Icon, href, children }) {
@@ -92,12 +101,13 @@ export default function AboutFounders() {
   return (
     // NOTE: no overflow-hidden on this section or any parent, it breaks sticky
     <section className="bg-white">
-      <div className="mx-auto max-w-7xl px-6 py-24 sm:px-8 sm:py-28 lg:py-32">
-        <Reveal className="mb-12 flex flex-col justify-between gap-6 sm:flex-row sm:items-end">
+      <div className="mx-auto max-w-7xl px-4 py-10 sm:px-6 sm:py-12 lg:px-8 lg:py-14">
+        <Reveal className="mb-8 sm:mb-10 flex flex-col justify-between gap-6 sm:flex-row sm:items-end">
           <div>
-            <p className="font-mono text-[10px] font-bold uppercase tracking-[.17em] text-bronze-700">
-              The people behind SealForge
-            </p>
+            <div className="inline-flex items-center gap-2 text-xs font-mono font-bold tracking-wider uppercase text-brand-700">
+              <span className="w-1.5 h-1.5 rounded-full bg-brand-700" />
+              <span>THE PEOPLE BEHIND SEALFORGE</span>
+            </div>
             <h2 className="mt-5 max-w-2xl text-4xl font-bold leading-tight tracking-tight text-brand-900 sm:text-5xl">
               Founders driven by precision.
             </h2>

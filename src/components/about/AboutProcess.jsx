@@ -72,14 +72,15 @@ export default function AboutProcess() {
         aria-hidden="true"
       />
 
-      <div className="relative mx-auto max-w-7xl px-6 py-24 sm:px-8 sm:py-28 lg:py-32">
+      <div className="relative mx-auto max-w-7xl px-4 py-10 sm:px-6 sm:py-12 lg:px-8 lg:py-14">
         <div className="grid gap-14 lg:grid-cols-[.85fr_1.15fr] lg:gap-20">
           {/* LEFT: pinned on desktop */}
           <div className="lg:sticky lg:top-28 lg:self-start">
             <Reveal>
-              <p className="font-mono text-[10px] font-bold uppercase tracking-[.17em] text-bronze-700">
-                04 / How we work
-              </p>
+              <div className="inline-flex items-center gap-2 text-xs font-mono font-bold tracking-wider uppercase text-brand-700">
+                <span className="w-1.5 h-1.5 rounded-full bg-brand-700" />
+                <span>HOW WE WORK</span>
+              </div>
               <h2 className="mt-5 max-w-xl text-4xl font-bold leading-tight tracking-tight text-brand-900 sm:text-5xl">
                 Selection starts with your duty.
               </h2>

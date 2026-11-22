@@ -73,12 +73,13 @@ export default function AboutProducts() {
         aria-hidden="true"
       />
 
-      <div className="relative mx-auto max-w-7xl px-6 py-24 sm:px-8 sm:py-28 lg:py-32">
-        <Reveal className="mb-14 flex flex-col justify-between gap-5 sm:flex-row sm:items-end">
+      <div className="relative mx-auto max-w-7xl px-4 py-10 sm:px-6 sm:py-12 lg:px-8 lg:py-14">
+        <Reveal className="mb-8 sm:mb-10 flex flex-col justify-between gap-5 sm:flex-row sm:items-end">
           <div>
-            <p className="font-mono text-[10px] font-bold uppercase tracking-[.17em] text-bronze-300">
-              03 / What we make
-            </p>
+            <div className="inline-flex items-center gap-2 text-xs font-mono font-bold tracking-wider uppercase text-bronze-300">
+              <span className="w-1.5 h-1.5 rounded-full bg-bronze-400" />
+              <span>WHAT WE ENGINEER</span>
+            </div>
             <h2 className="mt-5 max-w-2xl text-4xl font-bold leading-tight tracking-tight text-white sm:text-5xl">
               Three product lines.{" "}
               <span className="bg-gradient-to-r from-bronze-300 to-bronze-500 bg-clip-text text-transparent">

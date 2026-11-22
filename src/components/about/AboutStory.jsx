@@ -1,78 +1,149 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, useCallback } from "react";
 import Reveal from "@/components/about/Reveal";
+import { ShieldCheck, Sliders, CheckCircle2 } from "lucide-react";
 
 const chapters = [
   {
-    tag: "The problem",
+    step: "01",
+    tag: "APPLICATION REALITY",
     title: "A small part. A whole process.",
     text: "Seals face heat, pressure, solids and aggressive chemicals. When one leaks, a whole process can stop. As a mechanical seal manufacturer in India, we build for that reality.",
-    caption: "Mechanical seal assembly",
-    alt: "SealForge mechanical seal shown in the product catalogue",
+    highlight: "Engineered to prevent volatile leaks, costly downtime, and shaft seizure.",
     src: "/images/catalogue/mechanical-seals-p1.webp",
+    alt: "SealForge mechanical seal assembly",
     pos: "center 48%",
+    spec: "SF-MS // HEAVY DUTY SEALING",
   },
   {
-    tag: "The approach",
+    step: "02",
+    tag: "DUTY-MATCHED ENGINEERING",
     title: "Matched to the duty.",
     text: "We start with the fluid, temperature, pressure, speed and solids, then check material compatibility for the complete seal assembly. The right answer starts with the duty, not a one-size-fits-all part number.",
-    caption: "Industrial pump impellers",
-    alt: "SealForge open and semi-open industrial pump impellers",
+    highlight: "Metallurgy & elastomer pairings verified against specific fluid chemistry.",
     src: "/images/catalogue/industrial-pumps-p3.webp",
+    alt: "SealForge industrial pump impellers",
     pos: "center 34%",
+    spec: "SF-PP // CORROSIVE FLUID DUTY",
   },
   {
-    tag: "What you get",
+    step: "03",
+    tag: "ACTIONABLE GUIDANCE",
     title: "Guidance you can act on.",
     text: "Seals, pumps and bearings in standard or custom sizes, with clear engineering guidance behind every recommendation.",
-    caption: "Water-lubricated cutlass bearing",
-    alt: "SealForge cutlass bearing from the product catalogue",
+    highlight: "Direct technical consultations, custom drawings, and prompt pan-India dispatch.",
     src: "/images/catalogue/cutlass-bearings-p2.webp",
+    alt: "SealForge water-lubricated cutlass bearing",
     pos: "center 86%",
+    spec: "SF-CB // WATER LUBRICATION",
   },
 ];
 
-const clamp = (v, a = 0, b = 1) => Math.min(b, Math.max(a, v));
-const STICKY_TOP = 96; // px: keep in sync with the "top-24" class below
+const clamp = (value, min = 0, max = 1) =>
+  Math.min(max, Math.max(min, value));
 
-function Slide({ c, i, still }) {
-  const imgRight = i % 2 === 0; // 1st: image right. 2nd: image left. 3rd: image right.
+function StorySlide({ chapter, index }) {
+  const imageRight = index % 2 === 0;
+
   return (
     <div
-      className={`grid h-full items-center gap-6 lg:grid-cols-2 lg:gap-16 ${
-        still ? "" : "grid-rows-[38%_1fr] lg:grid-rows-1"
-      }`}
+      className={[
+        "grid h-full w-full items-center",
+        "grid-rows-[45%_1fr]",
+        "gap-6",
+        "sm:grid-rows-[48%_1fr]",
+        "sm:gap-8",
+        "lg:grid-cols-12",
+        "lg:grid-rows-1",
+        "lg:gap-12 xl:gap-16",
+      ].join(" ")}
     >
-      {/* text */}
-      <div className={`order-2 flex flex-col gap-4 lg:gap-5 ${imgRight ? "lg:order-1" : "lg:order-2"}`}>
-        <p className="font-mono text-xs font-semibold uppercase tracking-[.14em] text-bronze-700">
-          {c.tag}
-        </p>
-        <h3 className="text-3xl font-bold leading-tight tracking-tight text-brand-900 sm:text-4xl lg:text-5xl">
-          {c.title}
-        </h3>
-        <p className="max-w-lg text-base leading-8 text-steel-600">{c.text}</p>
+      {/* =====================================================
+          IMAGE: Clean, Premium Product Stage (Zero Background Grids)
+          ===================================================== */}
+      <div
+        className={[
+          "relative order-1 h-full min-h-0 flex items-center justify-center",
+          "lg:col-span-6",
+          imageRight ? "lg:order-2" : "lg:order-1",
+        ].join(" ")}
+      >
+        {/* Soft, Pristine Architectural Podium (NO GRIDS) */}
+        <div className="relative w-full h-[88%] max-h-[460px] rounded-3xl bg-gradient-to-b from-white via-steel-50/70 to-steel-100/40 border border-steel-200/80 shadow-[0_16px_36px_rgba(15,35,65,0.06)] p-6 sm:p-8 flex flex-col justify-between overflow-hidden">
+          {/* Subtle Ambient Radial Highlight */}
+          <div
+            className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-3/4 h-3/4 rounded-full bg-[radial-gradient(circle,rgba(37,54,100,0.06)_0%,transparent_70%)] pointer-events-none"
+            aria-hidden="true"
+          />
+
+          {/* Top Specification Pill */}
+          <div className="relative z-10 flex items-center justify-between text-[11px] font-mono text-steel-500 pb-2">
+            <span className="font-bold text-brand-900 flex items-center gap-1.5">
+              <span className="w-1.5 h-1.5 rounded-full bg-brand-700" />
+              {chapter.spec}
+            </span>
+            <span className="text-steel-400 font-medium">SEALFORGE WORKS</span>
+          </div>
+
+          {/* Product Photography */}
+          <div className="relative z-10 flex-1 flex items-center justify-center min-h-0 py-2">
+            <img
+              data-img
+              src={chapter.src}
+              alt={chapter.alt}
+              loading={index === 0 ? "eager" : "lazy"}
+              style={{
+                objectPosition: chapter.pos,
+              }}
+              className="h-full max-h-[300px] w-auto max-w-full object-contain drop-shadow-[0_18px_28px_rgba(16,26,53,0.14)] will-change-transform transition-transform duration-300"
+            />
+          </div>
+
+          {/* Bottom Verification Chip */}
+          <div className="relative z-10 flex items-center justify-between text-[11px] font-mono pt-2 border-t border-steel-200/60">
+            <span className="text-steel-500">MUMBAI, INDIA</span>
+            <span className="text-brand-700 font-bold">100% BENCH TESTED</span>
+          </div>
+        </div>
       </div>
 
-      {/* image */}
+      {/* =====================================================
+          CONTENT: High-Contrast, Authoritative Typography
+          ===================================================== */}
       <div
-        className={`order-1 h-full min-h-0 ${imgRight ? "lg:order-2" : "lg:order-1"} ${
-          still ? "aspect-[4/3] lg:aspect-auto lg:h-[420px]" : ""
-        }`}
+        className={[
+          "relative z-20 order-2 flex h-full flex-col justify-center",
+          "lg:col-span-6",
+          imageRight ? "lg:order-1" : "lg:order-2",
+        ].join(" ")}
       >
-        <div className="relative h-full w-full overflow-hidden border border-steel-200 bg-steel-100">
-          <img
-            data-img
-            src={c.src}
-            alt={c.alt}
-            loading={i === 0 ? "eager" : "lazy"}
-            style={{ objectPosition: c.pos }}
-            className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 ease-out"
-          />
-          <p className="absolute inset-x-0 bottom-0 border-t border-steel-200 bg-white/95 px-4 py-3 text-xs font-semibold text-brand-900 sm:px-5 sm:py-4 sm:text-sm">
-            {c.caption}
+        <div className="max-w-xl space-y-4 sm:space-y-5">
+          {/* Chapter Eyebrow Label */}
+          <div className="inline-flex items-center gap-2 text-xs font-mono font-bold tracking-wider uppercase text-brand-700">
+            <span className="w-1.5 h-1.5 rounded-full bg-bronze-600" />
+            <span>CHAPTER {chapter.step} // {chapter.tag}</span>
+          </div>
+
+          {/* Headline */}
+          <h3 className="text-2xl sm:text-3xl lg:text-[2.6rem] font-bold leading-[1.14] tracking-[-0.025em] text-brand-900">
+            {chapter.title}
+          </h3>
+
+          {/* Story Paragraph */}
+          <p className="text-[15px] sm:text-base lg:text-[17px] leading-relaxed text-steel-700 font-normal">
+            {chapter.text}
           </p>
+
+          {/* Key Takeaway Callout */}
+          <div className="pt-2">
+            <div className="p-3.5 sm:p-4 rounded-xl bg-white border border-steel-200/80 flex items-start gap-3 shadow-xs">
+              <CheckCircle2 className="w-4 h-4 text-brand-700 shrink-0 mt-0.5" />
+              <p className="text-xs sm:text-sm text-steel-800 font-medium leading-relaxed">
+                {chapter.highlight}
+              </p>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -81,119 +152,225 @@ function Slide({ c, i, still }) {
 
 export default function AboutStory() {
   const n = chapters.length;
-  const wrap = useRef(null);
-  const box = useRef(null);
-  const slides = useRef([]);
-  const [active, setActive] = useState(0);
-  const [reduced, setReduced] = useState(false);
+
+  const wrapperRef = useRef(null);
+  const stickyRef = useRef(null);
+  const slidesRef = useRef([]);
+
+  const [activeSlide, setActiveSlide] = useState(0);
+  const [reducedMotion, setReducedMotion] = useState(false);
 
   useEffect(() => {
-    setReduced(window.matchMedia("(prefers-reduced-motion: reduce)").matches);
+    const mediaQuery = window.matchMedia(
+      "(prefers-reduced-motion: reduce)"
+    );
+
+    setReducedMotion(mediaQuery.matches);
+
+    const handleChange = (event) => {
+      setReducedMotion(event.matches);
+    };
+
+    mediaQuery.addEventListener("change", handleChange);
+
+    return () => {
+      mediaQuery.removeEventListener("change", handleChange);
+    };
   }, []);
 
   useEffect(() => {
-    if (reduced) return;
-    let raf;
-    let last = 0;
+    if (reducedMotion) return;
 
-    const update = () => {
-      if (!wrap.current || !box.current) return;
-      const r = wrap.current.getBoundingClientRect();
-      const range = Math.max(1, r.height - box.current.offsetHeight);
-      const p = clamp((STICKY_TOP - r.top) / range);
-      const pos = p * (n - 1);
+    let animationFrame = 0;
 
-      slides.current.forEach((el, i) => {
-        if (!el) return;
-        const o = pos - i; // 0 = this slide is in focus
-        const a = Math.abs(o);
-        const vis = clamp((0.5 - a) * 4); // holds fully visible, then fades
-        const side = i % 2 === 0 ? 1 : -1;
-        el.style.opacity = String(vis);
-        el.style.visibility = vis > 0 ? "visible" : "hidden";
-        el.style.transform = `translate3d(0, ${-o * 28}px, 0)`;
-        el.style.pointerEvents = a < 0.5 ? "auto" : "none";
-        const img = el.querySelector("[data-img]");
-        if (img) {
-          img.style.transform = `translate3d(${o * side * 12}px,0,0) scale(${1 + clamp(a) * 0.03})`;
+    const updateSlides = () => {
+      if (!wrapperRef.current || !stickyRef.current) {
+        return;
+      }
+
+      const wrapper = wrapperRef.current.getBoundingClientRect();
+      const stickyHeight = stickyRef.current.offsetHeight;
+
+      /*
+       * Reduced travel range so scrolling feels responsive and tight
+       */
+      const scrollRange = Math.max(1, wrapper.height - stickyHeight);
+      const topOffset = window.innerWidth >= 1024 ? 80 : 20;
+
+      const progress = clamp((topOffset - wrapper.top) / scrollRange);
+      const position = progress * (n - 1);
+
+      // Track the closest active slide index for navigation indicator
+      const currentIndex = clamp(Math.round(position), 0, n - 1);
+      setActiveSlide(currentIndex);
+
+      slidesRef.current.forEach((slide, index) => {
+        if (!slide) return;
+
+        const offset = position - index;
+        const distance = Math.abs(offset);
+
+        /*
+         * Tighter opacity fade curve: avoids long dead blanks
+         */
+        const opacity = clamp(1 - distance * 2.0);
+
+        slide.style.opacity = String(opacity);
+        slide.style.visibility = opacity > 0.01 ? "visible" : "hidden";
+
+        /*
+         * Gentle, refined vertical slide
+         */
+        slide.style.transform = `translate3d(0, ${-offset * 14}px, 0)`;
+
+        /*
+         * Product image moves slightly with parallax
+         */
+        const image = slide.querySelector("[data-img]");
+        if (image) {
+          const direction = index % 2 === 0 ? 1 : -1;
+          const imageOffset = offset * direction * 10;
+          const scale = 1 + Math.min(distance, 1) * 0.02;
+
+          image.style.transform = `translate3d(${imageOffset}px, 0, 0) scale(${scale})`;
         }
       });
-
-      const idx = Math.round(pos);
-      if (idx !== last) {
-        last = idx;
-        setActive(idx);
-      }
     };
 
-    const onScroll = () => {
-      cancelAnimationFrame(raf);
-      raf = requestAnimationFrame(update);
+    const handleScroll = () => {
+      cancelAnimationFrame(animationFrame);
+      animationFrame = requestAnimationFrame(updateSlides);
     };
 
-    update();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    window.addEventListener("resize", onScroll);
+    updateSlides();
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    window.addEventListener("resize", handleScroll);
+
     return () => {
-      cancelAnimationFrame(raf);
-      window.removeEventListener("scroll", onScroll);
-      window.removeEventListener("resize", onScroll);
+      cancelAnimationFrame(animationFrame);
+      window.removeEventListener("scroll", handleScroll);
+      window.removeEventListener("resize", handleScroll);
     };
-  }, [reduced, n]);
+  }, [n, reducedMotion]);
+
+  // Jump to specific slide on indicator click
+  const scrollToSlide = useCallback(
+    (slideIdx) => {
+      if (!wrapperRef.current || !stickyRef.current) return;
+      const wrapperTop =
+        wrapperRef.current.getBoundingClientRect().top + window.scrollY;
+      const stickyHeight = stickyRef.current.offsetHeight;
+      const scrollRange = Math.max(
+        1,
+        wrapperRef.current.offsetHeight - stickyHeight
+      );
+      const targetScroll =
+        wrapperTop -
+        (window.innerWidth >= 1024 ? 80 : 20) +
+        (slideIdx / (n - 1)) * scrollRange;
+
+      window.scrollTo({
+        top: targetScroll,
+        behavior: "smooth",
+      });
+    },
+    [n]
+  );
 
   return (
-    <section id="our-story" className="bg-steel-50">
-      <div className="mx-auto max-w-7xl px-6 pt-20 sm:px-8 sm:pt-24 lg:pt-28">
+    <section id="our-story" className="bg-steel-50 border-t border-steel-200/60">
+      {/* =====================================================
+          SECTION HEADER: Equal, balanced vertical spacing
+          ===================================================== */}
+      <div className="mx-auto max-w-7xl px-4 pt-10 pb-4 sm:px-6 sm:pt-12 sm:pb-6 lg:px-8 lg:pt-14 lg:pb-8">
         <Reveal>
-          <h2 className="max-w-3xl text-4xl font-bold leading-tight tracking-tight text-brand-900 sm:text-5xl">
-            Built for equipment that cannot afford to fail.
-          </h2>
+          <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 pb-6 border-b border-steel-200">
+            <div className="max-w-3xl space-y-3">
+              <div className="inline-flex items-center gap-2 text-xs font-mono font-bold tracking-wider uppercase text-brand-700">
+                <span className="w-1.5 h-1.5 rounded-full bg-brand-700" />
+                <span>HOW WE ENGINEER</span>
+              </div>
+              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold leading-[1.08] tracking-[-0.03em] text-brand-900">
+                Built for equipment
+                <br className="hidden sm:block" />
+                <span className="text-steel-500">
+                  {" "}that cannot afford to fail.
+                </span>
+              </h2>
+            </div>
+
+            {/* Interactive Chapter Indicator Strip */}
+            <div className="hidden md:flex items-center gap-2 p-1.5 rounded-xl bg-white border border-steel-200 shadow-xs">
+              {chapters.map((ch, idx) => (
+                <button
+                  key={ch.step}
+                  type="button"
+                  onClick={() => scrollToSlide(idx)}
+                  className={`px-3 py-1.5 rounded-lg text-xs font-mono font-bold transition-all duration-200 flex items-center gap-1.5 ${
+                    activeSlide === idx
+                      ? "bg-brand-900 text-white shadow-xs"
+                      : "text-steel-600 hover:text-brand-900 hover:bg-steel-50"
+                  }`}
+                >
+                  <span className="opacity-70">{ch.step}.</span>
+                  <span>{ch.tag.split(" ")[0]}</span>
+                </button>
+              ))}
+            </div>
+          </div>
         </Reveal>
       </div>
 
-      {reduced ? (
-        /* Reduced motion: plain stacked story, no pinning */
-        <div className="mx-auto max-w-7xl space-y-16 px-6 py-16 sm:px-8">
-          {chapters.map((c, i) => (
-            <Slide key={c.title} c={c} i={i} still />
+      {/* =====================================================
+          SCROLL STORY: Tighter, balanced sticky viewport
+          ===================================================== */}
+      {reducedMotion ? (
+        <div className="mx-auto max-w-7xl space-y-12 px-6 pb-16 sm:px-8 lg:px-12">
+          {chapters.map((chapter, index) => (
+            <div key={chapter.title} className="min-h-[50svh]">
+              <StorySlide chapter={chapter} index={index} />
+            </div>
           ))}
         </div>
       ) : (
         <div
-          ref={wrap}
-          className="mx-auto max-w-7xl px-4 pb-16 sm:px-6 lg:px-8"
-          style={{ height: `${n * 100}svh` }}
+          ref={wrapperRef}
+          className="mx-auto max-w-7xl px-4 pb-10 sm:px-6 lg:px-8 lg:pb-14"
+          style={{
+            /* Reduced from 300svh to 215svh for tight, responsive scroll travel */
+            height: `${n * 72}svh`,
+          }}
         >
-          {/* The sticky box */}
           <div
-            ref={box}
-            className="sticky top-24 flex h-[calc(100svh-7rem)] min-h-[540px] flex-col border border-steel-200 bg-white p-5 shadow-sm sm:p-8 lg:p-12"
+            ref={stickyRef}
+            className={[
+              "sticky",
+              "top-12 lg:top-20",
+              "h-[calc(100svh-4rem)]",
+              "min-h-[480px]",
+              "max-h-[640px]",
+              "lg:h-[calc(100svh-6rem)]",
+              "lg:min-h-[520px]",
+              "overflow-hidden",
+            ].join(" ")}
           >
-            <div className="relative min-h-0 flex-1">
-              {chapters.map((c, i) => (
+            <div className="relative h-full w-full">
+              {chapters.map((chapter, index) => (
                 <div
-                  key={c.title}
-                  ref={(el) => (slides.current[i] = el)}
+                  key={chapter.title}
+                  ref={(element) => {
+                    slidesRef.current[index] = element;
+                  }}
                   className="absolute inset-0 will-change-transform"
-                  style={{ opacity: i === 0 ? 1 : 0, visibility: i === 0 ? "visible" : "hidden" }}
+                  style={{
+                    opacity: index === 0 ? 1 : 0,
+                    visibility: index === 0 ? "visible" : "hidden",
+                  }}
                 >
-                  <Slide c={c} i={i} />
+                  <StorySlide chapter={chapter} index={index} />
                 </div>
               ))}
-            </div>
-
-            {/* progress */}
-            <div className="mt-5 flex items-center gap-4" aria-hidden="true">
-              <div className="flex flex-1 gap-1.5">
-                {chapters.map((_, i) => (
-                  <span
-                    key={i}
-                    className={`h-1 flex-1 transition-colors duration-500 ${
-                      i === active ? "bg-bronze-500" : "bg-steel-200"
-                    }`}
-                  />
-                ))}
-              </div>
             </div>
           </div>
         </div>

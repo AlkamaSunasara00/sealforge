@@ -100,27 +100,6 @@ export default function Navbar() {
             </Link>
 
             <Link
-              href="/#materials"
-              className="px-3.5 py-2 text-sm font-bold text-slate-700 hover:text-brand-900 hover:bg-slate-100 transition-colors rounded-lg"
-            >
-              Materials & Specs
-            </Link>
-
-            <Link
-              href="/catalogue"
-              className="px-3.5 py-2 text-sm font-bold text-slate-700 hover:text-brand-900 hover:bg-slate-100 transition-colors rounded-lg"
-            >
-              Catalogue
-            </Link>
-
-            <Link
-              href="/#industries"
-              className="px-3.5 py-2 text-sm font-bold text-slate-700 hover:text-brand-900 hover:bg-slate-100 transition-colors rounded-lg"
-            >
-              Industries
-            </Link>
-
-            <Link
               href="/about"
               className="px-3.5 py-2 text-sm font-bold text-slate-700 hover:text-brand-900 hover:bg-slate-100 transition-colors rounded-lg"
             >
@@ -181,27 +160,6 @@ export default function Navbar() {
                 className="block px-4 py-3 rounded-lg text-base font-bold text-slate-800 hover:text-brand-700 hover:bg-slate-50"
               >
                 Products
-              </Link>
-              <Link
-                href="/#materials"
-                onClick={() => setMobileMenuOpen(false)}
-                className="block px-4 py-3 rounded-lg text-base font-bold text-slate-800 hover:text-brand-700 hover:bg-slate-50"
-              >
-                Materials & Specs
-              </Link>
-              <Link
-                href="/catalogue"
-                onClick={() => setMobileMenuOpen(false)}
-                className="block px-4 py-3 rounded-lg text-base font-bold text-slate-800 hover:text-brand-700 hover:bg-slate-50"
-              >
-                Catalogue
-              </Link>
-              <Link
-                href="/#industries"
-                onClick={() => setMobileMenuOpen(false)}
-                className="block px-4 py-3 rounded-lg text-base font-bold text-slate-800 hover:text-brand-700 hover:bg-slate-50"
-              >
-                Industries
               </Link>
               <Link
                 href="/about"

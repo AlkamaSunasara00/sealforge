@@ -1,0 +1,187 @@
+"use client";
+
+import React, { useState } from "react";
+import Image from "next/image";
+import Reveal from "@/components/about/Reveal";
+
+const steps = [
+  {
+    step: "01",
+    phase: "Duty evaluation",
+    title: "Operating Duty & Fluid Analysis",
+    short: "Duty & Fluid",
+    description:
+      "Evaluation of fluid chemistry, vapour pressure margins, temperature extremes, and shaft speed to define base component geometry.",
+    image:
+      "https://images.unsplash.com/photo-1581092334651-ddf26d9a09d0?auto=format&fit=crop&w=1200&q=80",
+    parameters: "Fluid Chemistry • Pressure Limits • Thermal Profile • Shaft Speed",
+  },
+  {
+    step: "02",
+    phase: "Tribology pairing",
+    title: "Metallurgy & Face Tribology",
+    short: "Face Pairing",
+    description:
+      "Matching seal faces for severe wear and corrosion resistance: Reaction-bonded Silicon Carbide, Tungsten Carbide, and Carbon Graphite.",
+    image:
+      "https://images.unsplash.com/photo-1565793298595-6a879b1d9492?auto=format&fit=crop&w=1200&q=80",
+    parameters: "Silicon Carbide (SSiC) • Tungsten Carbide • FFKM • Hastelloy C",
+  },
+  {
+    step: "03",
+    phase: "Internal geometry",
+    title: "Hydraulic Balance & Geometry",
+    short: "Hydraulic Setup",
+    description:
+      "Optimizing hydraulic balance ratio, stuffing box envelope, and wave spring tension to maintain stable boundary lubrication.",
+    image:
+      "https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=1200&q=80",
+    parameters: "Balanced Face Ratio • DIN EN 12756 Fit • Wave Springs • API Flush Plans",
+  },
+  {
+    step: "04",
+    phase: "Bench verification",
+    title: "Hydrostatic Pressure Testing",
+    short: "Bench Testing",
+    description:
+      "100% factory hydrostatic pressure and dynamic bench testing verifying zero-leakage sealing integrity prior to dispatch.",
+    image:
+      "https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=1200&q=80",
+    parameters: "100% Bench Tested • Zero Leakage • Mill Certs • Serial Traceability",
+  },
+];
+
+export default function EngineeringStory() {
+  const [active, setActive] = useState(0);
+
+  return (
+    <section className="relative bg-slate-50 border-b border-slate-200 py-10 sm:py-12 lg:py-14 overflow-hidden">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 space-y-8 sm:space-y-10">
+        {/* Header with Standardized Eyebrow */}
+        <Reveal>
+          <div className="max-w-3xl space-y-3">
+            <div className="inline-flex items-center gap-2 text-xs font-mono font-bold tracking-wider uppercase text-brand-700">
+              <span className="w-1.5 h-1.5 rounded-full bg-brand-700" />
+              <span>ENGINEERING METHODOLOGY</span>
+            </div>
+
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight text-slate-950 uppercase leading-tight">
+              EVERY APPLICATION<br />
+              <span className="text-slate-500">HAS A DIFFERENT DEMAND.</span>
+            </h2>
+
+            <p className="text-sm sm:text-base text-slate-600 leading-relaxed max-w-2xl font-normal">
+              Fluid chemistry, pressure surges, thermal cycling, and shaft speeds dictate component selection. SealForge approaches every project as an application engineering problem — not a static catalogue part.
+            </p>
+          </div>
+        </Reveal>
+
+        {/* Expanding Panels — Clean, Borderless Content & Perfect Height */}
+        <Reveal>
+          <ul className="flex h-[28rem] sm:h-[30rem] lg:h-[25rem] flex-col gap-2.5 sm:gap-3 lg:flex-row">
+            {steps.map((st, i) => {
+              const on = i === active;
+              return (
+                <li
+                  key={st.step}
+                  className={`min-h-0 min-w-0 basis-0 transition-[flex-grow] duration-500 ease-[cubic-bezier(0.22,0.8,0.2,1)] motion-reduce:transition-none ${
+                    on ? "grow-[4.5]" : "grow"
+                  }`}
+                >
+                  <article
+                    tabIndex={0}
+                    aria-label={`Stage ${st.step}: ${st.title}`}
+                    onMouseEnter={() => setActive(i)}
+                    onFocus={() => setActive(i)}
+                    onClick={() => setActive(i)}
+                    className="group relative h-full w-full cursor-pointer overflow-hidden rounded-2xl bg-slate-950 outline-none ring-offset-2 ring-offset-slate-50 focus-visible:ring-2 focus-visible:ring-brand-700"
+                  >
+                    {/* Background Photography */}
+                    <Image
+                      src={st.image}
+                      alt={st.title}
+                      fill
+                      sizes="(max-width: 1024px) 100vw, 700px"
+                      priority={i === 0}
+                      className={`object-cover object-center transition-transform duration-700 ease-out motion-reduce:transition-none ${
+                        on ? "scale-100" : "scale-105"
+                      }`}
+                    />
+
+                    {/* Gradient Overlay for Readability */}
+                    <div
+                      aria-hidden="true"
+                      className="absolute inset-0 bg-gradient-to-t from-slate-950/95 via-slate-950/60 to-slate-950/25"
+                    />
+
+                    {/* Collapsed Dimming */}
+                    <div
+                      aria-hidden="true"
+                      className={`absolute inset-0 bg-slate-950 transition-opacity duration-500 motion-reduce:transition-none ${
+                        on ? "opacity-0" : "opacity-40 group-hover:opacity-20"
+                      }`}
+                    />
+
+                    {/* Collapsed State Minimal Tab Display */}
+                    <div
+                      aria-hidden="true"
+                      className={`absolute inset-0 flex items-center justify-between px-5 transition-opacity duration-200 motion-reduce:transition-none lg:flex-col lg:items-center lg:justify-between lg:py-7 lg:px-0 ${
+                        on ? "pointer-events-none opacity-0" : "opacity-100 delay-150"
+                      }`}
+                    >
+                      <span className="font-mono text-xs font-bold text-bronze-300">
+                        {st.step}
+                      </span>
+                      <span className="text-xs sm:text-sm font-mono font-bold tracking-wider uppercase text-white lg:[writing-mode:vertical-rl] lg:rotate-180">
+                        {st.short}
+                      </span>
+                      <span className="w-1.5 h-1.5 rounded-full bg-white/40 group-hover:bg-amber-300 transition-colors" />
+                    </div>
+
+                    {/* Expanded State Clean Editorial Content (NO Cluttered Lines) */}
+                    <div
+                      className={`absolute inset-0 flex flex-col justify-between p-6 sm:p-7 lg:p-8 text-white transition-[opacity,transform] duration-400 ease-out motion-reduce:transition-none ${
+                        on
+                          ? "translate-y-0 opacity-100 delay-150 motion-reduce:delay-0"
+                          : "pointer-events-none translate-y-3 opacity-0"
+                      }`}
+                    >
+                      {/* Top Header Tag — Clean, No Dividers */}
+                      <div className="flex items-center justify-between">
+                        <div className="flex items-center gap-2">
+                          <span className="font-mono text-xs font-bold text-bronze-300">
+                            STAGE {st.step}
+                          </span>
+                          <span className="text-white/40 font-mono text-xs">•</span>
+                          <span className="text-xs font-mono uppercase tracking-wider text-slate-300">
+                            {st.phase}
+                          </span>
+                        </div>
+                      </div>
+
+                      {/* Main Narrative — Clean, Spacious, No Dense Lines */}
+                      <div className="space-y-3 max-w-xl">
+                        <h3 className="text-2xl sm:text-3xl lg:text-[2rem] font-black uppercase tracking-tight text-white leading-tight">
+                          {st.title}
+                        </h3>
+
+                        <p className="text-xs sm:text-sm leading-relaxed text-slate-200 font-normal">
+                          {st.description}
+                        </p>
+
+                        {/* Subtle Focal Parameters Text — Clean, No Borders or Boxes */}
+                        <div className="pt-2 text-xs font-mono text-slate-300 font-medium">
+                          {st.parameters}
+                        </div>
+                      </div>
+                    </div>
+                  </article>
+                </li>
+              );
+            })}
+          </ul>
+        </Reveal>
+      </div>
+    </section>
+  );
+}

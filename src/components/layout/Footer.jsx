@@ -83,9 +83,6 @@ export default function Footer() {
     { name: "Home", href: "/" },
     { name: "About Us", href: "/about" },
     { name: "Products Range", href: "/#products" },
-    { name: "Materials & Specs", href: "/#materials" },
-    { name: "Product Catalogues", href: "/catalogue" },
-    { name: "Industries Served", href: "/#industries" },
     { name: "Request a Quote", href: "/#technical-rfq" },
     { name: "Contact & Location", href: "/contact" }
   ];

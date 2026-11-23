@@ -10,7 +10,7 @@ export default function AboutPage() {
     <div className="w-full">
       <AboutHero />
       <AboutStory />
-      <AboutFounders />
+      {/* <AboutFounders /> */}
       <AboutProducts />
       <AboutProcess />
       <AboutClosing />

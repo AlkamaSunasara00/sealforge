@@ -1,41 +1,101 @@
 import HeroSection from "@/components/home/HeroSection";
 import ProductPortfolio from "@/components/home/ProductPortfolio";
-import EngineeringStory from "@/components/home/EngineeringStory";
+import MaterialsSection from "@/components/home/MaterialsSection";
 import ApplicationsSection from "@/components/home/ApplicationsSection";
-import CustomEngineering from "@/components/home/CustomEngineering";
-import WhySealForge from "@/components/home/WhySealForge";
+import EngineeringStory from "@/components/home/EngineeringStory";
 import FinalCtaSection from "@/components/home/FinalCtaSection";
 
 export const metadata = {
-  title: "SealForge | Precision Mechanical Seals, Industrial Pumps & Cutlass Bearings",
+  title: "SealForge | Mechanical Seals, Industrial Pumps & Cutlass Bearings",
   description:
-    "SealForge engineers high-integrity mechanical seals, industrial process pumps, and water-lubricated cutlass bearings for demanding rotating-equipment applications.",
+    "SealForge manufactures precision mechanical seals (SF Series), industrial centrifugal pumps, and water-lubricated cutlass bearings in Mumbai, India. Engineered for severe duty.",
+  keywords: [
+    "SealForge",
+    "mechanical seal manufacturer India",
+    "industrial pump manufacturer",
+    "water lubricated cutlass bearing",
+    "balanced mechanical seals",
+    "polymer lined chemical pump",
+    "Grundfos replacement seal",
+    "stern tube cutlass bearing",
+    "EN 12756 mechanical seal",
+    "ISO 5199 centrifugal pump",
+    "A1 Chunawala Compound Kurla West"
+  ],
   alternates: { canonical: "https://www.sealforge.in/" },
+  openGraph: {
+    title: "SealForge | Mechanical Seals, Industrial Pumps & Cutlass Bearings",
+    description:
+      "SealForge manufactures precision mechanical seals (SF Series), industrial centrifugal pumps, and water-lubricated cutlass bearings in Mumbai, India.",
+    url: "https://www.sealforge.in/",
+    siteName: "SealForge",
+    type: "website",
+  },
+};
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebSite",
+      url: "https://www.sealforge.in/",
+      name: "SealForge",
+      description: "Indian manufacturer of mechanical seals, industrial pumps and water-lubricated cutlass bearings.",
+      potentialAction: {
+        "@type": "SearchAction",
+        target: "https://www.sealforge.in/products?q={search_term_string}",
+        "query-input": "required name=search_term_string"
+      }
+    },
+    {
+      "@type": "Organization",
+      "@id": "https://www.sealforge.in/#organization",
+      name: "SealForge",
+      url: "https://www.sealforge.in",
+      logo: "https://www.sealforge.in/sealforge.svg",
+      slogan: "Precision. Performance. Trust.",
+      email: "sales@sealforge.in",
+      telephone: "+91 99878 15272",
+      address: {
+        "@type": "PostalAddress",
+        streetAddress: "A1 Chunawala Compound, LBS Marg, Kurla (West)",
+        addressLocality: "Mumbai",
+        addressRegion: "Maharashtra",
+        postalCode: "400070",
+        addressCountry: "IN",
+      },
+    },
+  ],
 };
 
 export default function Home() {
   return (
-    <div className="w-full flex flex-col">
-      {/* 01. Hero — Cohesive Physical Engineering Composition */}
-      <HeroSection />
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(jsonLd).replace(/</g, "\\u003c"),
+        }}
+      />
+      <main className="w-full flex flex-col">
+        {/* Section 01: Hero — Brand Value Proposition & Trust Strip */}
+        <HeroSection />
 
-      {/* 03. Product Portfolio — 3 Systems: Seals, Pumps, Bearings */}
-      <ProductPortfolio />
+        {/* Section 02: Three Product Pillars (Mechanical Seals, Pumps, Bearings) */}
+        <ProductPortfolio />
 
-      {/* 04. Engineering Story — 4-Stage Progressive Application Focus */}
-      <EngineeringStory />
+        {/* Section 03: Material Science & High-Duty Engineering Standards */}
+        <MaterialsSection />
 
-      {/* 05. Applications — 10 Industry Sectors */}
-      <ApplicationsSection />
+        {/* Section 04: Demanding Industries Served */}
+        <ApplicationsSection />
 
-      {/* 06. Custom Engineering — Drawing to Finished Component */}
-      <CustomEngineering />
+        {/* Section 05: Application-First Selection Workflow (4 Steps) */}
+        <EngineeringStory />
 
-      {/* 07. Why SealForge — 4 Core Principles */}
-      <WhySealForge />
-
-      {/* 08. Final Contact CTA — High-Impact Closure */}
-      <FinalCtaSection />
-    </div>
+        {/* Section 06: Final Conversion CTA & Direct Engineering Helpline */}
+        <FinalCtaSection />
+      </main>
+    </>
   );
 }

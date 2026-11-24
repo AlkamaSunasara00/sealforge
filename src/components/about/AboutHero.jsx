@@ -17,13 +17,13 @@ export default function AboutHero() {
 
       {/* Dark overlay */}
       <div
-        className="absolute inset-0 -z-20 bg-brand-950/75"
+        className="absolute inset-0 -z-20 bg-brand-950/80"
         aria-hidden="true"
       />
 
       {/* Center readability overlay */}
       <div
-        className="absolute inset-0 -z-10 bg-[radial-gradient(circle_at_center,rgba(15,35,65,0.18)_0%,rgba(5,12,27,0.55)_55%,rgba(5,12,27,0.88)_100%)]"
+        className="absolute inset-0 -z-10 bg-[radial-gradient(circle_at_center,rgba(15,35,65,0.22)_0%,rgba(5,12,27,0.65)_55%,rgba(5,12,27,0.92)_100%)]"
         aria-hidden="true"
       />
 
@@ -34,39 +34,36 @@ export default function AboutHero() {
       />
 
       {/* Main content - equal top and bottom spacing */}
-      <div className="mx-auto flex w-full max-w-7xl items-center justify-center px-4 py-10 text-center sm:px-6 sm:py-12 lg:px-8 lg:py-14">
+      <div className="mx-auto flex w-full max-w-7xl items-center justify-center px-4 py-12 text-center sm:px-6 sm:py-16 lg:px-8 lg:py-20">
         <Reveal>
           <div className="mx-auto max-w-3xl">
             {/* Section Eyebrow Label */}
             <div className="inline-flex items-center gap-2 text-xs font-mono font-bold tracking-wider uppercase text-bronze-300 mb-3 sm:mb-4">
               <span className="w-1.5 h-1.5 rounded-full bg-bronze-400" />
-              <span>ABOUT SEALFORGE</span>
+              <span>INDIAN ENGINEERING FOR A BETTER TOMORROW</span>
             </div>
 
             {/* Heading */}
             <h1 className="text-4xl font-semibold leading-[1.08] tracking-[-0.025em] sm:text-5xl md:text-6xl lg:text-[4.25rem]">
-              Engineering built for
-              <span className="block text-steel-300">
-                demanding industries.
+              About SealForge:
+              <span className="block text-steel-300 font-normal mt-1">
+                Precision Engineering for Rotating Equipment
               </span>
             </h1>
 
             {/* Description */}
-            <p className="mx-auto mt-6 max-w-2xl text-sm leading-7 text-steel-200 sm:mt-7 sm:text-base sm:leading-8 lg:text-lg">
-              SealForge engineers mechanical sealing solutions for pumps,
-              process equipment and demanding industrial environments —
-              combining application-focused engineering with dependable
-              manufacturing.
+            <p className="mx-auto mt-6 max-w-2xl text-sm leading-7 text-steel-200 sm:mt-7 sm:text-base sm:leading-8 lg:text-lg font-normal">
+              Headquartered in Mumbai, India, SealForge is a specialized engineering manufacturer focused on three critical rotating-equipment disciplines: <strong>Mechanical Seals</strong>, <strong>Industrial Centrifugal Pumps</strong>, and <strong>Water-Lubricated Cutlass Bearings</strong>. We exist to solve the persistent challenges of fluid leakage, severe corrosion, and mechanical wear across industrial and marine operations.
             </p>
 
             {/* CTA */}
             <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:mt-9 sm:flex-row sm:gap-4">
-              <Button variant="primary" href="/#products">
-                Explore our products
+              <Button variant="primary" href="/products">
+                Explore Our Products
               </Button>
 
               <Button variant="white" href="/contact">
-                Talk to an engineer
+                Talk to an Engineer
               </Button>
             </div>
           </div>

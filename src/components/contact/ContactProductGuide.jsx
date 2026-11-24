@@ -3,66 +3,69 @@
 import React from "react";
 import Button from "@/components/common/Button";
 import Reveal from "@/components/about/Reveal";
-import { Disc, Activity, Anchor, ArrowRight, ShieldCheck, Check } from "lucide-react";
+import { Disc, Activity, Anchor, Check } from "lucide-react";
 
 export default function ContactProductGuide() {
   const products = [
     {
       id: "01",
-      family: "Product Family 01",
+      family: "Product Division 01",
       title: "MECHANICAL SEALS",
-      tag: "SEALING SYSTEMS",
-      desc: "Sealing solutions for pumps and rotating equipment across demanding industrial applications.",
+      tag: "EN 12756 STANDARDS",
+      desc: "Sealing solutions for pumps and rotating equipment across demanding chemical, water and process duties.",
       features: [
-        "Single, double & cartridge seals",
-        "SSiC, Carbon & Tungsten Carbide faces",
-        "100% bench pressure tested before dispatch"
+        "7 Series: SF-B, SF-U, SF-P, SF-S, SF-T, SF-MJ, SF-G",
+        "Balanced designs up to 25 bar; temps from -20°C to +200°C",
+        "SSiC, Carbon, Tungsten Carbide & PTFE bellows faces",
+        "Direct Grundfos (HQQE, BQQE) and MG1/JC interchange"
       ],
-      link: "/catalogue",
-      buttonText: "Explore Mechanical Seals",
+      link: "/products#mechanical-seals",
+      buttonText: "Explore Mechanical Seals →",
       variant: "primary"
     },
     {
       id: "02",
-      family: "Product Family 02",
+      family: "Product Division 02",
       title: "INDUSTRIAL PUMPS",
-      tag: "FLUID DYNAMICS",
-      desc: "Pump solutions designed for demanding chemical, industrial, water and process applications.",
+      tag: "ISO 5199 / ANSI B73.1",
+      desc: "Non-API overhung centrifugal pumps engineered for corrosive chemicals, industrial water and severe slurries.",
       features: [
-        "End-suction, process & slurry designs",
-        "Corrosion-resistant high alloy metallurgy",
-        "Engineered for high MTBF & continuous duty"
+        "Open, semi-open & closed impellers in CS, 316SS & Hastelloy",
+        "Solid polymer moulded wet-ends in PP, GRPP & UHMWPE",
+        "Heavy-duty polymer lined (PVDF / FEP / PFA) up to 230°C",
+        "Flows up to 600 m³/hr, heads to 160 m, pressures to 21 bar"
       ],
-      link: "/#products",
-      buttonText: "Explore Industrial Pumps",
+      link: "/products#industrial-pumps",
+      buttonText: "Explore Industrial Pumps →",
       variant: "primary"
     },
     {
       id: "03",
-      family: "Product Family 03",
+      family: "Product Division 03",
       title: "CUTLASS BEARINGS",
-      tag: "HYDRODYNAMIC",
-      desc: "Water-lubricated bearing solutions for marine propulsion, pumps and rotating equipment.",
+      tag: "WATER-LUBRICATED",
+      desc: "Water-lubricated sleeve bearings for marine propulsion, stern tubes, vertical turbine pumps and dredging.",
       features: [
-        "Water-lubricated fluted nitrile rubber",
-        "Naval brass & composite non-metallic sleeves",
-        "Zero oil leakage, low friction hydrodynamic film"
+        "Naval brass, bronze, stainless steel & non-metallic shells",
+        "Resilient fluted, spiral, circular & polygon rubber profiles",
+        "Shaft diameters from 25 mm to 400 mm + custom sizes",
+        "Zero oil leakage, low friction, continuous debris flushing"
       ],
-      link: "/#products",
-      buttonText: "Explore Cutlass Bearings",
+      link: "/products#cutlass-bearings",
+      buttonText: "Explore Cutlass Bearings →",
       variant: "primary"
     }
   ];
 
   return (
-    <section className="relative py-10 sm:py-12 lg:py-14 bg-white border-b border-steel-200/80 overflow-hidden">
+    <section className="relative py-12 sm:py-16 lg:py-20 bg-white border-b border-steel-200/80 overflow-hidden">
       {/* Background ambient radial glow */}
       <div
         className="pointer-events-none absolute right-0 top-1/2 -translate-y-1/2 h-[450px] w-[450px] bg-[radial-gradient(ellipse_at_center,rgba(212,153,56,0.06),transparent_70%)]"
         aria-hidden="true"
       />
 
-      <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 space-y-8 sm:space-y-10">
+      <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 space-y-10 sm:space-y-12">
         {/* Section Header */}
         <Reveal className="max-w-3xl space-y-4">
           <div className="inline-flex items-center gap-2 text-xs font-mono font-bold tracking-wider uppercase text-brand-700">
@@ -75,7 +78,7 @@ export default function ContactProductGuide() {
           </h2>
 
           <p className="text-base sm:text-lg text-steel-600 leading-relaxed font-normal">
-            You don&apos;t need to have the complete specification before contacting us. Share whatever information you have, and our team can help you determine the right direction.
+            You don&apos;t need to have the complete specification before contacting us. Share whatever information you have, and our team can help you determine the right direction across our three core product lines.
           </p>
         </Reveal>
 

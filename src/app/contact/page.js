@@ -2,26 +2,26 @@ import React from "react";
 import ContactPageContent from "@/components/contact/ContactPageContent";
 
 export const metadata = {
-  title: "Contact SealForge | Let's Solve the Application",
+  title: "Contact SealForge | Mumbai Engineering & RFQ Support",
   description:
-    "Have a sealing, pumping or rotating-equipment requirement? Talk directly to SealForge engineers in Mumbai. Technical consultation, custom shaft sizing, and quotations.",
+    "Contact SealForge engineers for mechanical seal selection, industrial pump sizing, and cutlass bearing quotes. Registered facility in Kurla, Mumbai.",
   keywords: [
     "contact SealForge",
-    "mechanical seals supplier Mumbai",
-    "industrial pumps enquiry",
-    "cutlass bearings RFQ",
-    "application engineering support",
-    "seal replacement cross reference",
-    "SealForge contact number",
+    "contact mechanical seal manufacturer",
+    "pump seal quotation Mumbai",
+    "industrial pump supplier contact",
+    "seal selection datasheet",
+    "cutlass bearing enquiry",
+    "Grundfos seal replacement cross reference",
     "A1 Chunawala Compound Kurla West"
   ],
   alternates: {
     canonical: "https://www.sealforge.in/contact",
   },
   openGraph: {
-    title: "Contact SealForge | Let's Solve the Application",
+    title: "Contact SealForge | Mumbai Engineering & RFQ Support",
     description:
-      "Tell us what you're working with. Our team helps identify the right product, configuration, or engineering solution for your application.",
+      "Contact SealForge engineers for mechanical seal selection, industrial pump sizing, and cutlass bearing quotes. Registered facility in Kurla, Mumbai.",
     url: "https://www.sealforge.in/contact",
     siteName: "SealForge",
     type: "website",

@@ -93,7 +93,7 @@ export default function Navbar() {
             </Link>
 
             <Link
-              href="/#products"
+              href="/products"
               className="px-3.5 py-2 text-sm font-bold text-slate-700 hover:text-brand-900 hover:bg-slate-100 transition-colors rounded-lg"
             >
               Products
@@ -155,7 +155,7 @@ export default function Navbar() {
                 Home
               </Link>
               <Link
-                href="/#products"
+                href="/products"
                 onClick={() => setMobileMenuOpen(false)}
                 className="block px-4 py-3 rounded-lg text-base font-bold text-slate-800 hover:text-brand-700 hover:bg-slate-50"
               >

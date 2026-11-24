@@ -13,40 +13,76 @@ import {
   Cpu,
   Layers,
   Sparkles,
-  Phone
+  Phone,
+  SlidersHorizontal,
+  ChevronDown,
+  ChevronUp
 } from "lucide-react";
 import Button from "@/components/common/Button";
 import Reveal from "@/components/about/Reveal";
 import { companyInfo } from "@/data/company";
 
 const enquiryTypes = [
-  "Mechanical Seal",
-  "Industrial Pump",
-  "Cutlass Bearing",
-  "Application Engineering",
-  "Replacement / Cross Reference",
-  "General Enquiry"
+  "Mechanical Seals (SF Series)",
+  "Industrial Pumps (Metallic / Polymer)",
+  "Cutlass Bearings (Water-Lubricated)",
+  "Grundfos Pump Seal Replacement",
+  "Application Engineering / Custom",
+  "General Commercial Enquiry"
+];
+
+const natureOptions = [
+  "New Project / Equipment Sizing",
+  "Direct Replacement / Cross-Reference",
+  "Frequent Failure Troubleshooting",
+  "Bulk OEM Supply / Annual Contract"
 ];
 
 export default function ContactForm() {
   const [formData, setFormData] = useState({
+    // Part 1: Contact Information
     fullName: "",
     companyName: "",
     workEmail: "",
     phoneNumber: "",
-    enquiryType: "Mechanical Seal",
+    location: "",
+
+    // Part 2: Enquiry Type & Nature
+    enquiryType: "Mechanical Seals (SF Series)",
+    nature: "Direct Replacement / Cross-Reference",
+
+    // Part 3: Datasheet Operating Parameters (Page 5 Catalogue)
     equipment: "",
-    operatingConditions: "",
+    fluidName: "",
+    temperature: "",
+    pressure: "",
+    shaftDiameter: "",
+    shaftSpeed: "",
+    concentration: "",
+    solidsContent: "",
+
+    // Part 4: Specific Engineering Checkboxes
+    hardFaces: false,
+    chemicalPtfeFfkm: false,
+    coolingJacket: false,
+    polymerWetted: false,
+    flangedShell: false,
+
+    // Part 5: Narrative & Files
     message: ""
   });
 
+  const [showAdvancedDatasheet, setShowAdvancedDatasheet] = useState(false);
   const [attachedFile, setAttachedFile] = useState(null);
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
 
   const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
+    const { name, value, type, checked } = e.target;
+    setFormData((prev) => ({
+      ...prev,
+      [name]: type === "checkbox" ? checked : value
+    }));
   };
 
   const handleFileChange = (e) => {
@@ -63,7 +99,7 @@ export default function ContactForm() {
     e.preventDefault();
     setLoading(true);
 
-    // Simulate reliable RFQ submission
+    // Simulate reliable RFQ processing
     setTimeout(() => {
       setLoading(false);
       setSubmitted(true);
@@ -71,27 +107,27 @@ export default function ContactForm() {
   };
 
   return (
-    <section id="conversation" className="relative py-10 sm:py-12 lg:py-14 bg-steel-50 border-b border-steel-200/80">
+    <section id="conversation" className="relative py-12 sm:py-16 lg:py-20 bg-steel-50 border-b border-steel-200/80">
       {/* Background ambient lighting */}
       <div
         className="pointer-events-none absolute left-1/2 top-0 -translate-x-1/2 h-[500px] w-full max-w-7xl bg-[radial-gradient(ellipse_at_top,rgba(91,121,195,0.08),transparent_70%)]"
         aria-hidden="true"
       />
 
-      <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 space-y-8 sm:space-y-10">
+      <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 space-y-10 sm:space-y-12">
         {/* Section Header */}
         <Reveal className="max-w-3xl mx-auto text-center space-y-4">
           <div className="inline-flex items-center gap-2 text-xs font-mono font-bold tracking-wider uppercase text-brand-700">
             <span className="w-1.5 h-1.5 rounded-full bg-brand-700" />
-            <span>START A CONVERSATION</span>
+            <span>START A CONVERSATION // RFQ DATASHEET</span>
           </div>
 
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-brand-900 leading-tight">
-            Tell us a little about your requirement.
+            Tell us about your application.
           </h2>
 
           <p className="text-base sm:text-lg text-steel-600 leading-relaxed font-normal">
-            Whether you need a mechanical seal, industrial pump, cutlass bearing or help with an existing application, share the details with us and our team will get in touch.
+            Whether you need a mechanical seal recommendation, a non-API chemical pump, a custom cutlass bearing, or troubleshooting on an existing failure, submit your details below for engineering review.
           </p>
         </Reveal>
 
@@ -108,7 +144,7 @@ export default function ContactForm() {
                   What to Expect
                 </h3>
                 <p className="text-xs text-steel-500 leading-relaxed pt-1">
-                  When you submit an RFQ or engineering enquiry to SealForge:
+                  When you submit a technical enquiry or RFQ to SealForge:
                 </p>
               </div>
 
@@ -123,7 +159,7 @@ export default function ContactForm() {
                       Application-Led Review
                     </h4>
                     <p className="text-[12px] text-steel-600 leading-relaxed mt-0.5">
-                      Reviewed directly by rotating equipment engineers, not sales scripts.
+                      Reviewed directly by rotating equipment engineers in Mumbai, not sales reps.
                     </p>
                   </div>
                 </div>
@@ -134,10 +170,10 @@ export default function ContactForm() {
                   </div>
                   <div>
                     <h4 className="text-xs font-bold font-mono text-brand-950 uppercase">
-                      &lt; 4 Hours Response
+                      4 to 24 Hours Response
                     </h4>
                     <p className="text-[12px] text-steel-600 leading-relaxed mt-0.5">
-                      Standard pump & seal cross references verified same business day.
+                      Standard seal cross-references and cutlass bearing sizes quoted promptly.
                     </p>
                   </div>
                 </div>
@@ -148,10 +184,10 @@ export default function ContactForm() {
                   </div>
                   <div>
                     <h4 className="text-xs font-bold font-mono text-brand-950 uppercase">
-                      CAD & IP Confidentiality
+                      Drawing Confidentiality
                     </h4>
                     <p className="text-[12px] text-steel-600 leading-relaxed mt-0.5">
-                      Uploaded drawings and operating metrics are covered under non-disclosure.
+                      Uploaded pump cross-sections, drawings, and chemical compositions are held strictly confidential.
                     </p>
                   </div>
                 </div>
@@ -163,7 +199,7 @@ export default function ContactForm() {
                   URGENT PLANT BREAKDOWN?
                 </span>
                 <p className="text-xs text-steel-600">
-                  Call our technical desk directly for immediate seal replacement assistance:
+                  Call our Mumbai engineering desk directly for immediate emergency seal or pump dispatch:
                 </p>
                 <a
                   href={`tel:${companyInfo.phone.replace(/\s+/g, "")}`}
@@ -195,7 +231,7 @@ export default function ContactForm() {
                   </div>
                   <div className="p-4 rounded-xl bg-steel-50 border border-steel-200 text-xs font-mono text-steel-600 space-y-1">
                     <div>Reference ID: SF-RFQ-{Math.floor(100000 + Math.random() * 900000)}</div>
-                    <div>Estimated Review Window: 2 to 4 business hours</div>
+                    <div>Estimated Review Window: 4 to 24 business hours</div>
                   </div>
                   <button
                     type="button"
@@ -206,9 +242,22 @@ export default function ContactForm() {
                         companyName: "",
                         workEmail: "",
                         phoneNumber: "",
-                        enquiryType: "Mechanical Seal",
+                        location: "",
+                        enquiryType: "Mechanical Seals (SF Series)",
+                        nature: "Direct Replacement / Cross-Reference",
                         equipment: "",
-                        operatingConditions: "",
+                        fluidName: "",
+                        temperature: "",
+                        pressure: "",
+                        shaftDiameter: "",
+                        shaftSpeed: "",
+                        concentration: "",
+                        solidsContent: "",
+                        hardFaces: false,
+                        chemicalPtfeFfkm: false,
+                        coolingJacket: false,
+                        polymerWetted: false,
+                        flangedShell: false,
                         message: ""
                       });
                       setAttachedFile(null);
@@ -224,9 +273,9 @@ export default function ContactForm() {
                   {/* Step 1: Select Requirement / Enquiry Type */}
                   <div className="space-y-3">
                     <label className="block text-xs font-mono font-bold uppercase tracking-wider text-brand-900">
-                      Enquiry Type <span className="text-rose-600">*</span>
+                      1. Product Category <span className="text-rose-600">*</span>
                     </label>
-                    <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2">
                       {enquiryTypes.map((type) => {
                         const isSelected = formData.enquiryType === type;
                         return (
@@ -252,10 +301,39 @@ export default function ContactForm() {
                     </div>
                   </div>
 
-                  {/* Step 2: Your Details (4 Grid Inputs) */}
+                  {/* Nature of Enquiry */}
+                  <div className="space-y-2">
+                    <label className="block text-xs font-mono font-semibold text-steel-700">
+                      Enquiry Nature
+                    </label>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                      {natureOptions.map((opt) => (
+                        <label
+                          key={opt}
+                          className={`flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs font-sans cursor-pointer border transition-colors ${
+                            formData.nature === opt
+                              ? "bg-brand-50/60 border-brand-700/60 text-brand-950 font-medium"
+                              : "bg-white border-steel-200 text-steel-600 hover:bg-steel-50"
+                          }`}
+                        >
+                          <input
+                            type="radio"
+                            name="nature"
+                            value={opt}
+                            checked={formData.nature === opt}
+                            onChange={handleInputChange}
+                            className="text-brand-700 focus:ring-brand-700 h-3.5 w-3.5"
+                          />
+                          <span>{opt}</span>
+                        </label>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Step 2: Your Details (4 Grid Inputs + Location) */}
                   <div className="space-y-4 pt-4 border-t border-steel-100">
                     <div className="text-xs font-mono font-bold text-steel-400 uppercase tracking-widest">
-                      // YOUR DETAILS
+                      // 2. YOUR DETAILS & CONTACT
                     </div>
 
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -270,7 +348,7 @@ export default function ContactForm() {
                           required
                           value={formData.fullName}
                           onChange={handleInputChange}
-                          placeholder="Enter your full name"
+                          placeholder="e.g., Rajesh Sharma"
                           className="w-full px-3.5 py-2.5 rounded-xl bg-steel-50/70 border border-steel-200 text-sm text-brand-950 placeholder-steel-400 focus:bg-white focus:outline-none focus:ring-2 focus:ring-brand-700/20 focus:border-brand-700 transition-colors"
                         />
                       </div>
@@ -278,7 +356,7 @@ export default function ContactForm() {
                       {/* Company Name */}
                       <div className="space-y-1.5">
                         <label className="block text-xs font-mono font-semibold text-steel-700">
-                          Company Name <span className="text-rose-600">*</span>
+                          Company / Plant Name <span className="text-rose-600">*</span>
                         </label>
                         <input
                           type="text"
@@ -286,7 +364,7 @@ export default function ContactForm() {
                           required
                           value={formData.companyName}
                           onChange={handleInputChange}
-                          placeholder="Enter your company name"
+                          placeholder="e.g., Apex Chemicals Pvt Ltd"
                           className="w-full px-3.5 py-2.5 rounded-xl bg-steel-50/70 border border-steel-200 text-sm text-brand-950 placeholder-steel-400 focus:bg-white focus:outline-none focus:ring-2 focus:ring-brand-700/20 focus:border-brand-700 transition-colors"
                         />
                       </div>
@@ -302,7 +380,7 @@ export default function ContactForm() {
                           required
                           value={formData.workEmail}
                           onChange={handleInputChange}
-                          placeholder="Enter your business email"
+                          placeholder="engineering@company.com"
                           className="w-full px-3.5 py-2.5 rounded-xl bg-steel-50/70 border border-steel-200 text-sm text-brand-950 placeholder-steel-400 focus:bg-white focus:outline-none focus:ring-2 focus:ring-brand-700/20 focus:border-brand-700 transition-colors"
                         />
                       </div>
@@ -310,62 +388,235 @@ export default function ContactForm() {
                       {/* Phone Number */}
                       <div className="space-y-1.5">
                         <label className="block text-xs font-mono font-semibold text-steel-700">
-                          Phone Number
+                          Phone / WhatsApp Number <span className="text-rose-600">*</span>
                         </label>
                         <input
                           type="tel"
                           name="phoneNumber"
+                          required
                           value={formData.phoneNumber}
                           onChange={handleInputChange}
-                          placeholder="Enter your phone number"
+                          placeholder="+91 98765 43210"
                           className="w-full px-3.5 py-2.5 rounded-xl bg-steel-50/70 border border-steel-200 text-sm text-brand-950 placeholder-steel-400 focus:bg-white focus:outline-none focus:ring-2 focus:ring-brand-700/20 focus:border-brand-700 transition-colors"
                         />
                       </div>
                     </div>
+
+                    {/* Plant Location */}
+                    <div className="space-y-1.5">
+                      <label className="block text-xs font-mono font-semibold text-steel-700">
+                        Plant / Delivery Location (City, State / Country)
+                      </label>
+                      <input
+                        type="text"
+                        name="location"
+                        value={formData.location}
+                        onChange={handleInputChange}
+                        placeholder="e.g., Dahej, Gujarat / Mumbai, Maharashtra"
+                        className="w-full px-3.5 py-2.5 rounded-xl bg-steel-50/70 border border-steel-200 text-sm text-brand-950 placeholder-steel-400 focus:bg-white focus:outline-none focus:ring-2 focus:ring-brand-700/20 focus:border-brand-700 transition-colors"
+                      />
+                    </div>
                   </div>
 
-                  {/* Step 3: Technical Parameters */}
+                  {/* Step 3: Application Operating Conditions & Equipment */}
                   <div className="space-y-4 pt-4 border-t border-steel-100">
-                    <div className="text-xs font-mono font-bold text-steel-400 uppercase tracking-widest">
-                      // YOUR REQUIREMENT
+                    <div className="flex items-center justify-between">
+                      <div className="text-xs font-mono font-bold text-steel-400 uppercase tracking-widest">
+                        // 3. EQUIPMENT & OPERATING PARAMETERS
+                      </div>
+                      <button
+                        type="button"
+                        onClick={() => setShowAdvancedDatasheet(!showAdvancedDatasheet)}
+                        className="inline-flex items-center gap-1.5 text-xs font-mono font-bold text-brand-700 hover:text-brand-950"
+                      >
+                        <SlidersHorizontal className="w-3.5 h-3.5" />
+                        <span>{showAdvancedDatasheet ? "Hide Detailed Datasheet" : "+ Add Full Datasheet (Temp, Pressure, Speed)"}</span>
+                        {showAdvancedDatasheet ? <ChevronUp className="w-3.5 h-3.5" /> : <ChevronDown className="w-3.5 h-3.5" />}
+                      </button>
                     </div>
 
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                      {/* Equipment / Application */}
+                      {/* Equipment Make / Model */}
                       <div className="space-y-1.5">
                         <label className="block text-xs font-mono font-semibold text-steel-700">
-                          Equipment / Application
+                          Equipment / Pump Make & Model
                         </label>
                         <input
                           type="text"
                           name="equipment"
                           value={formData.equipment}
                           onChange={handleInputChange}
-                          placeholder="e.g., KSB Megaflow, Sulzer, Reactor Agitator"
+                          placeholder="e.g., Grundfos CRN 32, Kirloskar, Sulzer, Agitator"
                           className="w-full px-3.5 py-2.5 rounded-xl bg-steel-50/70 border border-steel-200 text-sm text-brand-950 placeholder-steel-400 focus:bg-white focus:outline-none focus:ring-2 focus:ring-brand-700/20 focus:border-brand-700 transition-colors"
                         />
                       </div>
 
-                      {/* Operating Conditions */}
+                      {/* Fluid Name */}
                       <div className="space-y-1.5">
                         <label className="block text-xs font-mono font-semibold text-steel-700">
-                          Operating Conditions
+                          Fluid / Medium Handled
                         </label>
                         <input
                           type="text"
-                          name="operatingConditions"
-                          value={formData.operatingConditions}
+                          name="fluidName"
+                          value={formData.fluidName}
                           onChange={handleInputChange}
-                          placeholder="e.g., 8 bar, 120°C, 2900 RPM, Hydrochloric acid"
+                          placeholder="e.g., 30% HCl, Boiler Feed Water, Slurry, Crude Oil"
                           className="w-full px-3.5 py-2.5 rounded-xl bg-steel-50/70 border border-steel-200 text-sm text-brand-950 placeholder-steel-400 focus:bg-white focus:outline-none focus:ring-2 focus:ring-brand-700/20 focus:border-brand-700 transition-colors"
                         />
                       </div>
                     </div>
 
+                    {/* Collapsible / Expandable Datasheet Section */}
+                    {showAdvancedDatasheet && (
+                      <div className="p-4 sm:p-5 rounded-2xl bg-steel-50 border border-steel-200/90 space-y-4">
+                        <div className="text-[11px] font-mono font-bold text-bronze-600 uppercase tracking-wider">
+                          Catalogue Datasheet Specifications (Page 5 Reference)
+                        </div>
+
+                        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+                          <div className="space-y-1">
+                            <label className="block text-[11px] font-mono text-steel-600">
+                              Temperature (°C)
+                            </label>
+                            <input
+                              type="text"
+                              name="temperature"
+                              value={formData.temperature}
+                              onChange={handleInputChange}
+                              placeholder="e.g., 85 °C"
+                              className="w-full px-2.5 py-2 rounded-lg bg-white border border-steel-200 text-xs text-brand-950"
+                            />
+                          </div>
+
+                          <div className="space-y-1">
+                            <label className="block text-[11px] font-mono text-steel-600">
+                              Pressure (bar)
+                            </label>
+                            <input
+                              type="text"
+                              name="pressure"
+                              value={formData.pressure}
+                              onChange={handleInputChange}
+                              placeholder="e.g., 12 bar"
+                              className="w-full px-2.5 py-2 rounded-lg bg-white border border-steel-200 text-xs text-brand-950"
+                            />
+                          </div>
+
+                          <div className="space-y-1">
+                            <label className="block text-[11px] font-mono text-steel-600">
+                              Shaft Dia (mm)
+                            </label>
+                            <input
+                              type="text"
+                              name="shaftDiameter"
+                              value={formData.shaftDiameter}
+                              onChange={handleInputChange}
+                              placeholder="e.g., 45 mm"
+                              className="w-full px-2.5 py-2 rounded-lg bg-white border border-steel-200 text-xs text-brand-950"
+                            />
+                          </div>
+
+                          <div className="space-y-1">
+                            <label className="block text-[11px] font-mono text-steel-600">
+                              Speed (RPM)
+                            </label>
+                            <input
+                              type="text"
+                              name="shaftSpeed"
+                              value={formData.shaftSpeed}
+                              onChange={handleInputChange}
+                              placeholder="e.g., 2900 RPM"
+                              className="w-full px-2.5 py-2 rounded-lg bg-white border border-steel-200 text-xs text-brand-950"
+                            />
+                          </div>
+                        </div>
+
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-1">
+                          <div className="space-y-1">
+                            <label className="block text-[11px] font-mono text-steel-600">
+                              Fluid Concentration (%)
+                            </label>
+                            <input
+                              type="text"
+                              name="concentration"
+                              value={formData.concentration}
+                              onChange={handleInputChange}
+                              placeholder="e.g., 98% concentrated, or 20% solution"
+                              className="w-full px-2.5 py-2 rounded-lg bg-white border border-steel-200 text-xs text-brand-950"
+                            />
+                          </div>
+
+                          <div className="space-y-1">
+                            <label className="block text-[11px] font-mono text-steel-600">
+                              Solids Content (TDS / Particle Size)
+                            </label>
+                            <input
+                              type="text"
+                              name="solidsContent"
+                              value={formData.solidsContent}
+                              onChange={handleInputChange}
+                              placeholder="e.g., 5% abrasive sand, < 100 microns"
+                              className="w-full px-2.5 py-2 rounded-lg bg-white border border-steel-200 text-xs text-brand-950"
+                            />
+                          </div>
+                        </div>
+
+                        {/* Specific checkboxes */}
+                        <div className="pt-2 border-t border-steel-200/70 space-y-2">
+                          <span className="block text-[11px] font-mono text-steel-500 font-semibold uppercase">
+                            Special Feature Requirements:
+                          </span>
+                          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
+                            <label className="flex items-center gap-2 cursor-pointer text-steel-700">
+                              <input
+                                type="checkbox"
+                                name="hardFaces"
+                                checked={formData.hardFaces}
+                                onChange={handleInputChange}
+                                className="rounded text-brand-700 focus:ring-brand-700"
+                              />
+                              <span>Hard Faces (SiC / Tungsten Carbide for slurry)</span>
+                            </label>
+                            <label className="flex items-center gap-2 cursor-pointer text-steel-700">
+                              <input
+                                type="checkbox"
+                                name="chemicalPtfeFfkm"
+                                checked={formData.chemicalPtfeFfkm}
+                                onChange={handleInputChange}
+                                className="rounded text-brand-700 focus:ring-brand-700"
+                              />
+                              <span>PTFE Bellows or FFKM for severe acid attack</span>
+                            </label>
+                            <label className="flex items-center gap-2 cursor-pointer text-steel-700">
+                              <input
+                                type="checkbox"
+                                name="coolingJacket"
+                                checked={formData.coolingJacket}
+                                onChange={handleInputChange}
+                                className="rounded text-brand-700 focus:ring-brand-700"
+                              />
+                              <span>Cooling Jacket / API Flush Plan required</span>
+                            </label>
+                            <label className="flex items-center gap-2 cursor-pointer text-steel-700">
+                              <input
+                                type="checkbox"
+                                name="flangedShell"
+                                checked={formData.flangedShell}
+                                onChange={handleInputChange}
+                                className="rounded text-brand-700 focus:ring-brand-700"
+                              />
+                              <span>Flanged Cutlass Bearing Shell required</span>
+                            </label>
+                          </div>
+                        </div>
+                      </div>
+                    )}
+
                     {/* Your Message */}
                     <div className="space-y-1.5">
                       <label className="block text-xs font-mono font-semibold text-steel-700">
-                        Your Message <span className="text-rose-600">*</span>
+                        Requirement Details / Existing Failure Mode <span className="text-rose-600">*</span>
                       </label>
                       <textarea
                         name="message"
@@ -373,7 +624,7 @@ export default function ContactForm() {
                         rows={4}
                         value={formData.message}
                         onChange={handleInputChange}
-                        placeholder="Tell us what you need help with (dimensions, failure mode, replacement model or custom design requirement)..."
+                        placeholder="Tell us what you need help with (dimensions, replacement model code, recurring leakage, or new plant sizing requirement)..."
                         className="w-full px-3.5 py-2.5 rounded-xl bg-steel-50/70 border border-steel-200 text-sm text-brand-950 placeholder-steel-400 focus:bg-white focus:outline-none focus:ring-2 focus:ring-brand-700/20 focus:border-brand-700 transition-colors resize-y"
                       />
                     </div>
@@ -381,7 +632,7 @@ export default function ContactForm() {
                     {/* Custom Drawing / Document Upload */}
                     <div className="space-y-1.5">
                       <label className="block text-xs font-mono font-semibold text-steel-700">
-                        Drawing / Document (Optional)
+                        Upload Pump Drawing / Existing Seal Photo / Datasheet (Optional)
                       </label>
                       <div className="relative border-2 border-dashed border-steel-300 hover:border-brand-700 rounded-2xl p-4 sm:p-6 text-center transition-colors bg-steel-50/50">
                         {attachedFile ? (
@@ -436,7 +687,7 @@ export default function ContactForm() {
                       type="submit"
                       disabled={loading}
                     >
-                      {loading ? "Transmitting RFQ..." : "Send Enquiry"}
+                      {loading ? "Transmitting RFQ..." : "Submit Enquiry →"}
                     </Button>
 
                     <div className="text-xs font-mono text-steel-500 flex items-center gap-2">

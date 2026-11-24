@@ -1,14 +1,24 @@
 import AboutPage from "@/components/about/AboutPage";
 
 export const metadata = {
-  title: "About SealForge",
+  title: "About SealForge | Indian Engineering for Rotating Equipment",
   description:
-    "SealForge makes mechanical seals, industrial pumps and cutlass bearings in Mumbai, India. Meet our three founders and see how we work with you.",
+    "Learn about SealForge, a Mumbai-based manufacturer of mechanical seals, industrial centrifugal pumps, and water-lubricated cutlass bearings built for severe duty.",
+  keywords: [
+    "About SealForge",
+    "mechanical seal manufacturer Mumbai",
+    "industrial pump engineering India",
+    "cutlass bearing manufacturer",
+    "rotating equipment sealing solutions",
+    "chemical process pump manufacturer",
+    "water lubricated sleeve bearing supplier",
+    "A1 Chunawala Compound Kurla West"
+  ],
   alternates: { canonical: "https://www.sealforge.in/about" },
   openGraph: {
-    title: "About SealForge",
+    title: "About SealForge | Indian Engineering for Rotating Equipment",
     description:
-      "Indian engineering for a better tomorrow. Discover SealForge's products and approach to application-led recommendations.",
+      "Learn about SealForge, a Mumbai-based manufacturer of mechanical seals, industrial centrifugal pumps, and water-lubricated cutlass bearings built for severe duty.",
     url: "https://www.sealforge.in/about",
     siteName: "SealForge",
     type: "website",
@@ -22,6 +32,8 @@ const jsonLd = {
       "@type": "AboutPage",
       url: "https://www.sealforge.in/about",
       name: "About SealForge",
+      description:
+        "SealForge is a Mumbai-based manufacturer of mechanical seals, industrial pumps and water-lubricated cutlass bearings.",
       about: { "@id": "https://www.sealforge.in/#organization" },
     },
     {

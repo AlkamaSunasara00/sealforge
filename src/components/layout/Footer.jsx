@@ -82,7 +82,7 @@ export default function Footer() {
   const pageLinks = [
     { name: "Home", href: "/" },
     { name: "About Us", href: "/about" },
-    { name: "Products Range", href: "/#products" },
+    { name: "Products Range", href: "/products" },
     { name: "Request a Quote", href: "/#technical-rfq" },
     { name: "Contact & Location", href: "/contact" }
   ];

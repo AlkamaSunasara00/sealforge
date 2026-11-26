@@ -6,7 +6,7 @@ import Reveal from "@/components/about/Reveal";
 import Button from "@/components/common/Button";
 import finishedProductImg from "@/assets/contact/seal-forge-mechanical-seal.webp";
 import { companyInfo } from "@/data/company";
-import { Phone, Mail, MapPin, FileDown } from "lucide-react";
+import { Phone, Mail, MapPin } from "lucide-react";
 
 export default function FinalCtaSection() {
   return (
@@ -41,10 +41,10 @@ export default function FinalCtaSection() {
                 </div>
 
                 {/* Main Heading */}
-                <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight leading-[1.08] uppercase text-white">
+                <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight leading-[1.08] uppercase text-white">
                   LET&apos;S FIND THE RIGHT SOLUTION<br />
-                  FOR YOUR ROTATING<br />
-                  <span className="text-slate-300">EQUIPMENT.</span>
+                  FOR YOUR{" "}
+                  <span className="text-bronze-400">ROTATING EQUIPMENT.</span>
                 </h2>
 
                 {/* Supporting Copy */}
@@ -58,14 +58,9 @@ export default function FinalCtaSection() {
                     Request a Technical Quote
                   </Button>
 
-                  <a
-                    href="/downloads/sealforge-mechanical-seals-catalogue.pdf"
-                    download
-                    className="inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl text-xs sm:text-sm font-bold bg-white/10 hover:bg-white/20 border border-white/20 text-white transition-colors"
-                  >
-                    <FileDown className="w-4 h-4 text-bronze-300" />
-                    <span>Download Catalogues (PDF)</span>
-                  </a>
+                  <Button variant="white" href="/products">
+                    Explore Products
+                  </Button>
                 </div>
 
                 {/* Direct Technical Contact */}

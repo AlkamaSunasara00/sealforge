@@ -686,8 +686,9 @@ export default function ContactForm() {
                       variant="primary"
                       type="submit"
                       disabled={loading}
+                      showArrow={!loading}
                     >
-                      {loading ? "Transmitting RFQ..." : "Submit Enquiry →"}
+                      {loading ? "Transmitting RFQ..." : "Submit Enquiry"}
                     </Button>
 
                     <div className="text-xs font-mono text-steel-500 flex items-center gap-2">

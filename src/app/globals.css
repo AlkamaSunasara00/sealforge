@@ -1,7 +1,10 @@
 @import "tailwindcss";
 
 @theme {
-  /* Brand Navy Spectrum extracted from SealForge Logo (#253664) and Catalogues */
+  /* =========================================================
+     BRAND NAVY
+     ========================================================= */
+
   --color-brand-950: #0a1122;
   --color-brand-900: #101a35;
   --color-brand-850: #162347;
@@ -15,7 +18,10 @@
   --color-brand-100: #e5ecfb;
   --color-brand-50: #f3f6fd;
 
-  /* Industrial Metallic Bronze extracted from Cutlass Bearings (#b6812a) */
+  /* =========================================================
+     INDUSTRIAL BRONZE
+     ========================================================= */
+
   --color-bronze-900: #5e3f0e;
   --color-bronze-800: #7a5314;
   --color-bronze-700: #98691b;
@@ -27,7 +33,10 @@
   --color-bronze-100: #fcf4e8;
   --color-bronze-50: #fdfaf4;
 
-  /* Engineering Steel Neutrals */
+  /* =========================================================
+     ENGINEERING STEEL
+     ========================================================= */
+
   --color-steel-950: #070b13;
   --color-steel-900: #0f172a;
   --color-steel-800: #1e293b;
@@ -40,21 +49,45 @@
   --color-steel-100: #f1f5f9;
   --color-steel-50: #f8fafc;
 
-  /* Fonts */
-  --font-sans: var(--font-jakarta), var(--font-inter), system-ui, -apple-system, sans-serif;
-  --font-mono: var(--font-geist-mono), ui-monospace, SFMono-Regular, monospace;
+  /* =========================================================
+     FONT SYSTEM
+     
+     CHANGE ONLY THIS LINE TO TEST FONT COMBINATIONS
+     ========================================================= */
+
+--font-family: var(--font-archivo), system-ui, -apple-system, sans-serif;
+
+  --font-display: var(--font-family);
+  --font-sans: var(--font-family);
+
+  --font-mono: var(--font-geist-mono),
+    ui-monospace,
+    SFMono-Regular,
+    monospace;
 }
+
+/* =========================================================
+   ROOT
+   ========================================================= */
 
 :root {
   --background: #ffffff;
-  --foreground: #0f172a;
+  --foreground: #1d2a46;
+
   --surface: #ffffff;
   --surface-muted: #f8fafc;
+
   --border-subtle: #e2e8f0;
+
   --primary: #253664;
   --primary-hover: #1e2e5c;
+
   --accent: #b6812a;
 }
+
+/* =========================================================
+   BASE
+   ========================================================= */
 
 html {
   scroll-behavior: smooth;
@@ -63,36 +96,75 @@ html {
 body {
   background-color: var(--background);
   color: var(--foreground);
-  font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+
+  font-family: var(--font-family);
+
+  font-feature-settings:
+    "cv02",
+    "cv03",
+    "cv04",
+    "cv11";
+
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* Custom engineering grid background patterns */
+/* =========================================================
+   CUSTOM ENGINEERING GRID
+   ========================================================= */
+
 .bg-grid-pattern {
   background-size: 32px 32px;
-  background-image: 
-    linear-gradient(to right, rgba(37, 54, 100, 0.05) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(37, 54, 100, 0.05) 1px, transparent 1px);
+
+  background-image:
+    linear-gradient(
+      to right,
+      rgba(37, 54, 100, 0.05) 1px,
+      transparent 1px
+    ),
+    linear-gradient(
+      to bottom,
+      rgba(37, 54, 100, 0.05) 1px,
+      transparent 1px
+    );
 }
 
 .bg-grid-pattern-dark {
   background-size: 36px 36px;
-  background-image: 
-    linear-gradient(to right, rgba(255, 255, 255, 0.04) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
+
+  background-image:
+    linear-gradient(
+      to right,
+      rgba(255, 255, 255, 0.04) 1px,
+      transparent 1px
+    ),
+    linear-gradient(
+      to bottom,
+      rgba(255, 255, 255, 0.04) 1px,
+      transparent 1px
+    );
 }
 
 .bg-dot-pattern {
-  background-image: radial-gradient(rgba(37, 54, 100, 0.15) 1px, transparent 1px);
+  background-image:
+    radial-gradient(
+      rgba(37, 54, 100, 0.15) 1px,
+      transparent 1px
+    );
+
   background-size: 20px 20px;
 }
 
-/* Technical badge glow */
+/* =========================================================
+   TECHNICAL BADGE GLOW
+   ========================================================= */
+
 .bronze-glow {
-  box-shadow: 0 0 25px -4px rgba(182, 129, 42, 0.35);
+  box-shadow:
+    0 0 25px -4px rgba(182, 129, 42, 0.35);
 }
 
 .brand-glow {
-  box-shadow: 0 0 35px -6px rgba(37, 54, 100, 0.4);
+  box-shadow:
+    0 0 35px -6px rgba(37, 54, 100, 0.4);
 }

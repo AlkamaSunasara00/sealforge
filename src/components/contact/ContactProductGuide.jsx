@@ -20,7 +20,7 @@ export default function ContactProductGuide() {
         "Direct Grundfos (HQQE, BQQE) and MG1/JC interchange"
       ],
       link: "/products#mechanical-seals",
-      buttonText: "Explore Mechanical Seals →",
+      buttonText: "Explore Mechanical Seals",
       variant: "primary"
     },
     {
@@ -36,7 +36,7 @@ export default function ContactProductGuide() {
         "Flows up to 600 m³/hr, heads to 160 m, pressures to 21 bar"
       ],
       link: "/products#industrial-pumps",
-      buttonText: "Explore Industrial Pumps →",
+      buttonText: "Explore Industrial Pumps",
       variant: "primary"
     },
     {
@@ -52,7 +52,7 @@ export default function ContactProductGuide() {
         "Zero oil leakage, low friction, continuous debris flushing"
       ],
       link: "/products#cutlass-bearings",
-      buttonText: "Explore Cutlass Bearings →",
+      buttonText: "Explore Cutlass Bearings",
       variant: "primary"
     }
   ];

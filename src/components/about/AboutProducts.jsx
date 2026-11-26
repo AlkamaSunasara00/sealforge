@@ -86,7 +86,7 @@ export default function AboutProducts() {
                 {/* Card Action Link */}
                 <div className="pt-6 border-t border-white/10 mt-6">
                   <Button variant="primary" href={p.href}>
-                    Explore Division →
+                    Explore Division
                   </Button>
                 </div>
               </div>

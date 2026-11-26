@@ -1,115 +1,268 @@
 "use client";
 
-import React from "react";
+import React, { useEffect, useRef, useState } from "react";
+import Image from "next/image";
 import Button from "@/components/common/Button";
-import Reveal from "@/components/about/Reveal";
 import mechanicalSealBlueprint from "@/assets/about/mechanical-seal-blueprint.webp";
-import { companyInfo } from "@/data/company";
-import { ShieldCheck, Search, SlidersHorizontal, ArrowDown } from "lucide-react";
+import heroCompositeImg from "@/assets/SealForge Industrial Pump and Components.webp";
+// import heroCompositeImg from "@/assets/hero/products-hero-composite.webp";
 
-export default function ProductsHero({ searchQuery, setSearchQuery, selectedCategory, setSelectedCategory }) {
+const EASE_OUT = "cubic-bezier(0.22, 1, 0.36, 1)";
+
+export default function ProductsHero() {
+  const [loaded, setLoaded] = useState(false);
+  const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
+
+  const sectionRef = useRef(null);
+  const blueprintRef = useRef(null);
+  const glowRef = useRef(null);
+  const backLineRef = useRef(null);
+  const imageLayerRef = useRef(null);
+  const frontLineRef = useRef(null);
+
+  useEffect(() => {
+    const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const update = () => setPrefersReducedMotion(mq.matches);
+    update();
+    mq.addEventListener("change", update);
+
+    let raf1;
+    let raf2;
+    if (mq.matches) {
+      setLoaded(true);
+    } else {
+      raf1 = requestAnimationFrame(() => {
+        raf2 = requestAnimationFrame(() => {
+          setLoaded(true);
+        });
+      });
+    }
+
+    return () => {
+      mq.removeEventListener("change", update);
+      if (raf1) cancelAnimationFrame(raf1);
+      if (raf2) cancelAnimationFrame(raf2);
+    };
+  }, []);
+
+  const handleMouseMove = (e) => {
+    if (prefersReducedMotion || !sectionRef.current) return;
+    const rect = sectionRef.current.getBoundingClientRect();
+    const nx = ((e.clientX - rect.left) / rect.width - 0.5) * 2;
+    const ny = ((e.clientY - rect.top) / rect.height - 0.5) * 2;
+
+    if (blueprintRef.current) {
+      blueprintRef.current.style.transform = `translate3d(${(nx * -8).toFixed(2)}px, ${(ny * -5).toFixed(2)}px, 0) scale(1.04)`;
+    }
+    if (glowRef.current) {
+      glowRef.current.style.transform = `translate3d(${(nx * -12).toFixed(2)}px, ${(ny * -8).toFixed(2)}px, 0)`;
+    }
+    if (backLineRef.current) {
+      backLineRef.current.style.transform = `translate3d(${(nx * 10).toFixed(2)}px, ${(ny * 6).toFixed(2)}px, 0)`;
+    }
+    if (imageLayerRef.current) {
+      imageLayerRef.current.style.transform = `translate3d(${(nx * 17).toFixed(2)}px, ${(ny * 10).toFixed(2)}px, 0)`;
+    }
+    if (frontLineRef.current) {
+      frontLineRef.current.style.transform = `translate3d(${(nx * 24).toFixed(2)}px, ${(ny * 14).toFixed(2)}px, 0)`;
+    }
+  };
+
+  const handleMouseLeave = () => {
+    const reset = "translate3d(0px, 0px, 0px)";
+    if (blueprintRef.current) {
+      blueprintRef.current.style.transform = "translate3d(0px, 0px, 0px) scale(1.04)";
+    }
+    if (glowRef.current) glowRef.current.style.transform = reset;
+    if (backLineRef.current) backLineRef.current.style.transform = reset;
+    if (imageLayerRef.current) imageLayerRef.current.style.transform = reset;
+    if (frontLineRef.current) frontLineRef.current.style.transform = reset;
+  };
+
+  const backLineAnimStyle = prefersReducedMotion
+    ? {}
+    : {
+        opacity: loaded ? 1 : 0,
+        transform: loaded ? "translate3d(0, 0, 0)" : "translate3d(0, 20px, 0)",
+        transition: `opacity 700ms ${EASE_OUT} 60ms, transform 700ms ${EASE_OUT} 60ms`,
+      };
+
+  const imageAnimStyle = prefersReducedMotion
+    ? {}
+    : {
+        opacity: loaded ? 1 : 0,
+        transform: loaded ? "scale(1)" : "scale(0.92)",
+        filter: loaded ? "blur(0px)" : "blur(10px)",
+        transition: `opacity 1000ms ${EASE_OUT} 180ms, transform 1000ms ${EASE_OUT} 180ms, filter 1000ms ${EASE_OUT} 180ms`,
+      };
+
+  const frontLineAnimStyle = prefersReducedMotion
+    ? {}
+    : {
+        opacity: loaded ? 1 : 0,
+        transform: loaded ? "translate3d(0, 0, 0)" : "translate3d(0, 26px, 0)",
+        transition: `opacity 750ms ${EASE_OUT} 340ms, transform 750ms ${EASE_OUT} 340ms`,
+      };
+
+  const glowAnimStyle = prefersReducedMotion
+    ? { opacity: 1 }
+    : {
+        opacity: loaded ? 1 : 0.15,
+        transition: `opacity 900ms ${EASE_OUT} 380ms`,
+      };
+
+  const buttonsAnimStyle = prefersReducedMotion
+    ? {}
+    : {
+        opacity: loaded ? 1 : 0,
+        transform: loaded ? "translate3d(0, 0, 0)" : "translate3d(0, 16px, 0)",
+        transition: `opacity 700ms ${EASE_OUT} 540ms, transform 700ms ${EASE_OUT} 540ms`,
+      };
+
   return (
-    <section className="relative isolate flex items-center overflow-hidden bg-brand-950 text-white">
-      {/* CAD Blueprint Motion / Technical Background */}
+    <section
+      ref={sectionRef}
+      onMouseMove={handleMouseMove}
+      onMouseLeave={handleMouseLeave}
+      className="relative isolate min-h-[640px] h-[calc(100svh-84px)] sm:h-[calc(100svh-88px)] max-h-[900px] flex flex-col items-center justify-center overflow-hidden bg-[#070d1c] text-white border-b border-white/10"
+    >
+      {/* Layer 0: Blueprint Background (moves slightly opposite on parallax) */}
       <div
-        className="absolute inset-0 -z-30 bg-cover bg-center bg-no-repeat"
+        ref={blueprintRef}
+        className="absolute inset-0 -z-30 bg-cover bg-center bg-no-repeat opacity-20 will-change-transform transition-transform duration-300 ease-out"
         style={{
           backgroundImage: `url(${mechanicalSealBlueprint.src})`,
+          transform: "translate3d(0px, 0px, 0px) scale(1.04)",
         }}
         aria-hidden="true"
       />
-
-      {/* Dark overlay */}
       <div
-        className="absolute inset-0 -z-20 bg-brand-950/85"
+        className="absolute inset-0 -z-20 bg-gradient-to-b from-[#070d1c]/85 via-[#070d1c]/78 to-[#070d1c]"
         aria-hidden="true"
       />
 
-      {/* Center readability radial wash */}
+      {/* Layer 1: Soft Blue/Cyan Radial Glow behind product */}
       <div
-        className="absolute inset-0 -z-10 bg-[radial-gradient(circle_at_center,rgba(15,35,65,0.25)_0%,rgba(5,12,27,0.70)_55%,rgba(5,12,27,0.95)_100%)]"
+        ref={glowRef}
+        className="pointer-events-none absolute -z-10 inset-0 flex items-center justify-center will-change-transform transition-transform duration-300 ease-out"
         aria-hidden="true"
-      />
-
-      {/* Bottom transition gradient */}
-      <div
-        className="absolute inset-x-0 bottom-0 -z-10 h-20 bg-gradient-to-t from-brand-950 to-transparent"
-        aria-hidden="true"
-      />
-
-      <div className="mx-auto flex w-full max-w-7xl items-center justify-center px-4 py-14 text-center sm:px-6 sm:py-20 lg:px-8 lg:py-24">
-        <Reveal>
-          <div className="mx-auto max-w-4xl space-y-6">
-            {/* Eyebrow */}
-            <div className="inline-flex items-center gap-2 text-xs font-mono font-bold tracking-wider uppercase text-bronze-300 bg-white/5 border border-white/10 px-4 py-1.5 rounded-full">
-              <span className="w-1.5 h-1.5 rounded-full bg-bronze-400 animate-pulse" />
-              <span>PRECISION • PERFORMANCE • TRUST</span>
-            </div>
-
-            {/* H1 Headline */}
-            <h1 className="text-3xl sm:text-5xl md:text-6xl lg:text-[4rem] font-black leading-[1.08] tracking-[-0.025em] uppercase text-white">
-              Mechanical Seals, Industrial Pumps <br className="hidden sm:inline" />
-              <span className="bg-gradient-to-r from-bronze-300 via-bronze-400 to-bronze-500 bg-clip-text text-transparent">
-                & Cutlass Bearings.
-              </span>
-            </h1>
-
-            {/* Subtitle */}
-            <p className="mx-auto max-w-3xl text-sm sm:text-base lg:text-lg text-steel-200 leading-relaxed font-normal">
-              Engineered for zero-leakage fluid containment and rotating equipment reliability across aggressive chemical processing, marine propulsion, power generation, and demanding municipal utilities.
-            </p>
-
-            {/* Key Trust Telemetry Strip */}
-            <div className="pt-2 flex flex-wrap items-center justify-center gap-3 sm:gap-6 text-xs font-mono text-steel-300">
-              <div className="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-white/5 border border-white/10">
-                <span className="text-bronze-400 font-bold">7</span>
-                <span>Seal Families (SF Series)</span>
-              </div>
-              <div className="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-white/5 border border-white/10">
-                <span className="text-bronze-400 font-bold">5</span>
-                <span>Centrifugal Pump Designs</span>
-              </div>
-              <div className="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-white/5 border border-white/10">
-                <span className="text-bronze-400 font-bold">25–400mm</span>
-                <span>Water-Lubricated Bearings</span>
-              </div>
-              <div className="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-white/5 border border-white/10">
-                <ShieldCheck className="w-3.5 h-3.5 text-emerald-400" />
-                <span>EN 12756 & ISO 5199 Standards</span>
-              </div>
-            </div>
-
-            {/* Global Search Bar */}
-            <div className="pt-4 max-w-xl mx-auto">
-              <div className="relative flex items-center bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl p-1.5 shadow-2xl focus-within:border-bronze-400 transition-colors">
-                <Search className="w-5 h-5 text-steel-400 ml-3 shrink-0" />
-                <input
-                  type="text"
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                  placeholder="Search series (e.g., SF-B, Grundfos, PVDF, 25 bar, cutlass)..."
-                  className="w-full bg-transparent px-3 py-2 text-sm text-white placeholder-steel-400 focus:outline-none font-sans"
-                />
-                {searchQuery && (
-                  <button
-                    type="button"
-                    onClick={() => setSearchQuery("")}
-                    className="text-xs font-mono text-steel-400 hover:text-white px-2 py-1"
-                  >
-                    Clear
-                  </button>
-                )}
-              </div>
-            </div>
-          </div>
-        </Reveal>
+      >
+        <div
+          style={glowAnimStyle}
+          className="h-[340px] w-[340px] sm:h-[460px] sm:w-[460px] lg:h-[540px] lg:w-[540px] rounded-full bg-[radial-gradient(circle_at_center,rgba(56,189,248,0.16)_0%,rgba(37,54,100,0.28)_42%,transparent_72%)] blur-2xl"
+        />
       </div>
 
-      {/* Bottom accent */}
-      <div
-        className="absolute bottom-0 left-0 right-0 h-px bg-bronze-500/50"
-        aria-hidden="true"
-      />
+      {/* Centered Composition */}
+      <div className="mx-auto w-full px-3 sm:px-6 flex flex-col items-center justify-center text-center">
+        <h1 className="relative w-full flex flex-col items-center justify-center">
+          {/* Layer 2 (Back, z-1): Outline "ENGINEERED" — 90-95% viewport width */}
+          <div
+            ref={backLineRef}
+            className="relative z-[1] w-full flex justify-center will-change-transform transition-transform duration-300 ease-out pointer-events-none"
+          >
+            <span
+              style={{
+                ...backLineAnimStyle,
+                color: "rgba(255, 255, 255, 0.04)",
+                WebkitTextStroke: "clamp(1.2px, 0.16vw, 2.2px) rgba(255, 255, 255, 0.56)",
+              }}
+              className="block text-[13.4vw] sm:text-[13.6vw] lg:text-[13.4vw] leading-[0.84] font-bold tracking-[-0.04em] uppercase whitespace-nowrap select-none will-change-[opacity,transform]"
+            >
+              ENGINEERED
+            </span>
+          </div>
+
+          {/* Layer 3 (Middle, z-2): Product Image (~52% viewport width desktop, ~80% mobile, max ~52% hero height) */}
+          <div
+            ref={imageLayerRef}
+            className="relative z-[2] -mt-[5.2vw] sm:-mt-[4.8vw] lg:-mt-[4.6vw] w-[80vw] sm:w-[62vw] md:w-[55vw] lg:w-[52vw] max-w-[760px] mx-auto will-change-transform transition-transform duration-300 ease-out"
+          >
+            <div
+              style={imageAnimStyle}
+              className="relative w-full flex flex-col items-center will-change-[opacity,transform,filter]"
+            >
+              {/* Idle Float Wrapper */}
+              <div
+                className={`relative w-full flex justify-center ${
+                  prefersReducedMotion ? "" : "hero-idle-float"
+                }`}
+              >
+                <Image
+                  src={heroCompositeImg}
+                  alt="SealForge Mechanical Seals, Industrial Pumps, and Cutlass Bearings"
+                  priority
+                  sizes="(max-width: 640px) 80vw, (max-width: 1024px) 55vw, 52vw"
+                  className="w-full h-auto max-h-[38svh] sm:max-h-[46svh] lg:max-h-[48svh] object-contain drop-shadow-[0_24px_48px_rgba(0,0,0,0.85)]"
+                />
+              </div>
+
+              {/* Ground Ellipse Shadow scaling slightly with float */}
+              <div
+                aria-hidden="true"
+                className={`-mt-3 sm:-mt-4 h-5 sm:h-7 w-[68%] rounded-full bg-black/70 blur-xl pointer-events-none ${
+                  prefersReducedMotion ? "" : "hero-shadow-pulse"
+                }`}
+              />
+            </div>
+          </div>
+
+          {/* Layer 4 (Front, z-3): Solid Bronze-400 "CATALOGUE." cutting across product */}
+          <div
+            ref={frontLineRef}
+            className="relative z-[3] -mt-[10.5vw] sm:-mt-[9.5vw] lg:-mt-[9vw] w-full flex justify-center will-change-transform transition-transform duration-300 ease-out pointer-events-none"
+          >
+            <span
+              style={frontLineAnimStyle}
+              className="relative block text-[13.4vw] sm:text-[13.6vw] lg:text-[13.4vw] leading-[0.84] font-bold tracking-[-0.04em] uppercase whitespace-nowrap select-none text-bronze-400 drop-shadow-[0_12px_28px_rgba(7,13,28,0.94)] will-change-[opacity,transform]"
+            >
+              CATALOGUE.
+            </span>
+          </div>
+        </h1>
+
+        {/* Layer 5 (Front, z-4): Buttons directly under "CATALOGUE." */}
+        <div
+          style={buttonsAnimStyle}
+          className="relative z-[4] mt-5 sm:mt-7 flex flex-wrap items-center justify-center gap-4 will-change-[opacity,transform]"
+        >
+          <Button variant="primary" href="#mechanical-seals">
+            Explore Products
+          </Button>
+          <Button variant="white" href="/contact">
+            Consult an Engineer
+          </Button>
+        </div>
+      </div>
+
+      <style jsx>{`
+        @keyframes heroIdleFloat {
+          0%,
+          100% {
+            transform: translate3d(0, 0px, 0);
+          }
+          50% {
+            transform: translate3d(0, -8px, 0);
+          }
+        }
+        @keyframes heroShadowPulse {
+          0%,
+          100% {
+            transform: scale(1);
+            opacity: 0.7;
+          }
+          50% {
+            transform: scale(0.92);
+            opacity: 0.48;
+          }
+        }
+        .hero-idle-float {
+          animation: heroIdleFloat 6s ease-in-out infinite;
+        }
+        .hero-shadow-pulse {
+          animation: heroShadowPulse 6s ease-in-out infinite;
+        }
+      `}</style>
     </section>
   );
 }

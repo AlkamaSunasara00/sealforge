@@ -3,95 +3,100 @@
 import React from "react";
 import Button from "@/components/common/Button";
 import Reveal from "@/components/about/Reveal";
-import MagicRings from "@/components/about/MagicRings";
 import { companyInfo } from "@/data/company";
-import { Phone, Mail, FileText, ArrowRight, Download } from "lucide-react";
+import { Phone, Mail, MapPin, ArrowUpRight } from "lucide-react";
 
 export default function ProductsCtaSection() {
   return (
-    <section className="bg-steel-50 px-4 py-16 text-white sm:px-6 sm:py-20 lg:px-8 lg:py-28">
-      <div className="relative isolate mx-auto max-w-7xl overflow-hidden rounded-[2.5rem] border border-brand-800/80 bg-brand-950 shadow-2xl shadow-brand-950/20">
-        {/* Magic Rings Canvas */}
-        <div
-          className="pointer-events-none absolute inset-0 opacity-70"
-          aria-hidden="true"
-        >
-          <MagicRings
-            color="#d49938"
-            colorTwo="#5b79c3"
-            ringCount={6}
-            motion="breathe"
-            speed={0.35}
-            lineThickness={1.6}
-            glow={0.8}
-            opacity={0.72}
-            followMouse
-            mouseInfluence={0.08}
-            hoverScale={1.05}
-            hoverIntensity={0.7}
-            parallax={0.025}
-            clickBurst={false}
-            className="h-full w-full"
-          />
-        </div>
+    <section className="py-16 sm:py-20 lg:py-24 bg-slate-50/70 border-b border-slate-200">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <Reveal>
+          <div className="grid grid-cols-1 lg:grid-cols-12 overflow-hidden rounded-3xl border border-slate-200/90 shadow-[0_24px_60px_-24px_rgba(10,17,34,0.2)]">
+            {/* Left 7 Cols: Deep Navy Narrative & Actions */}
+            <div className="lg:col-span-7 relative isolate bg-[#070d1c] text-white p-8 sm:p-12 lg:p-14 flex flex-col justify-between overflow-hidden">
+              <div
+                aria-hidden="true"
+                className="pointer-events-none absolute -top-24 -right-24 h-72 w-72 rounded-full bg-[#253664]/45 blur-3xl"
+              />
 
-        {/* Content Container */}
-        <div className="relative mx-auto flex min-h-[460px] max-w-5xl items-center justify-center px-6 py-14 text-center sm:min-h-[500px] sm:px-8 sm:py-18 lg:min-h-[540px]">
-          <Reveal className="flex w-full flex-col items-center">
-            {/* Eyebrow */}
-            <div className="inline-flex items-center gap-2 text-xs font-mono font-bold tracking-wider uppercase text-bronze-300 mb-6 bg-white/5 border border-white/10 px-3.5 py-1.5 rounded-full">
-              <span className="w-1.5 h-1.5 rounded-full bg-bronze-400" />
-              <span>TECHNICAL SELECTION & CUSTOM SIZING</span>
+              <div className="relative z-10 space-y-4">
+                <div className="inline-flex items-center gap-2 text-xs font-mono font-bold tracking-wider uppercase text-bronze-300">
+                  <span className="w-1.5 h-1.5 rounded-full bg-bronze-400" />
+                  <span>TECHNICAL SELECTION &amp; CUSTOM SIZING</span>
+                </div>
+
+                <h2 className="text-3xl sm:text-4xl lg:text-[2.6rem] font-bold tracking-tight leading-[1.08] uppercase text-white">
+                  NEED APPLICATION ENGINEERING{" "}
+                  <span className="text-bronze-400">OR A CUSTOM QUOTE?</span>
+                </h2>
+
+                <p className="text-sm sm:text-base text-slate-300 leading-relaxed font-normal max-w-xl">
+                  Share your fluid chemistry, operating temperature, pressure, shaft speed, and diameter. Our Mumbai application engineers will verify compatibility and recommend the exact build.
+                </p>
+              </div>
+
+              <div className="relative z-10 mt-8 pt-6 border-t border-white/10 flex flex-col sm:flex-row items-stretch sm:items-center gap-4">
+                <Button variant="white" href="/contact">
+                  Submit Equipment Datasheet
+                </Button>
+              </div>
             </div>
 
-            {/* Headline */}
-            <h2 className="max-w-4xl text-3xl sm:text-5xl lg:text-6xl font-black leading-[1.12] tracking-tight uppercase text-white">
-              Need Application Engineering <br />
-              <span className="bg-gradient-to-r from-bronze-300 via-bronze-400 to-bronze-500 bg-clip-text text-transparent">
-                or a Custom Quotation?
+            {/* Right 5 Cols: White Direct Contact Desk */}
+            <div className="lg:col-span-5 bg-white text-slate-900 p-8 sm:p-10 lg:p-12 flex flex-col justify-center border-t lg:border-t-0 lg:border-l border-slate-200">
+              <span className="text-[11px] font-mono font-bold uppercase tracking-widest text-bronze-600 block mb-3">
+                Mumbai Application Desk
               </span>
-            </h2>
+              <h3 className="text-xl font-bold text-brand-950 tracking-tight mb-5">
+                Speak Directly With Engineering
+              </h3>
 
-            {/* Narrative */}
-            <p className="mt-6 max-w-2xl text-base leading-8 text-steel-200 sm:text-lg font-normal">
-              Every rotating equipment duty is unique. Share your operating fluid, operating temperature, pressure, speed, and shaft diameter. Our engineering team in Mumbai will verify material compatibility and recommend the optimal configuration.
-            </p>
+              <dl className="divide-y divide-slate-200 border-y border-slate-200">
+                <div className="py-3.5 flex items-center justify-between gap-3">
+                  <dt className="inline-flex items-center gap-2 text-xs font-mono font-semibold text-slate-500 uppercase">
+                    <Phone className="w-3.5 h-3.5 text-brand-700 shrink-0" />
+                    <span>Helpline</span>
+                  </dt>
+                  <dd>
+                    <a
+                      href={`tel:${companyInfo.phone.replace(/\s+/g, "")}`}
+                      className="inline-flex items-center gap-1 text-sm font-mono font-bold text-brand-950 hover:text-brand-700 transition-colors"
+                    >
+                      <span>{companyInfo.phoneDisplay}</span>
+                      <ArrowUpRight className="w-3.5 h-3.5 text-bronze-600" />
+                    </a>
+                  </dd>
+                </div>
 
-            {/* Dual CTAs */}
-            <div className="mt-10 flex flex-wrap items-center justify-center gap-4">
-              <Button variant="white" href="/contact">
-                Submit Equipment Datasheet →
-              </Button>
-              <Button
-                variant="primary"
-                href="/downloads/sealforge-mechanical-seals-catalogue.pdf"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                Download PDF Catalogues
-              </Button>
+                <div className="py-3.5 flex items-center justify-between gap-3">
+                  <dt className="inline-flex items-center gap-2 text-xs font-mono font-semibold text-slate-500 uppercase">
+                    <Mail className="w-3.5 h-3.5 text-brand-700 shrink-0" />
+                    <span>Email RFQ</span>
+                  </dt>
+                  <dd>
+                    <a
+                      href={`mailto:${companyInfo.email}`}
+                      className="inline-flex items-center gap-1 text-sm font-mono font-bold text-brand-950 hover:text-brand-700 transition-colors"
+                    >
+                      <span>{companyInfo.email}</span>
+                      <ArrowUpRight className="w-3.5 h-3.5 text-bronze-600" />
+                    </a>
+                  </dd>
+                </div>
+
+                <div className="py-3.5 flex items-start justify-between gap-4">
+                  <dt className="inline-flex items-center gap-2 text-xs font-mono font-semibold text-slate-500 uppercase shrink-0 pt-0.5">
+                    <MapPin className="w-3.5 h-3.5 text-brand-700 shrink-0" />
+                    <span>Facility</span>
+                  </dt>
+                  <dd className="text-xs text-slate-700 leading-relaxed text-right font-medium">
+                    A1 Chunawala Compound, LBS Marg, Kurla (West), Mumbai 400 070
+                  </dd>
+                </div>
+              </dl>
             </div>
-
-            {/* Direct Helpline Strip */}
-            <div className="mt-12 pt-8 border-t border-white/10 flex flex-wrap items-center justify-center gap-6 sm:gap-10 text-xs font-mono text-steel-300">
-              <a
-                href={`tel:${companyInfo.phone.replace(/\s+/g, "")}`}
-                className="flex items-center gap-2 hover:text-white transition-colors"
-              >
-                <Phone className="w-4 h-4 text-bronze-400 shrink-0" />
-                <span>Direct Engineering Helpline: {companyInfo.phoneDisplay}</span>
-              </a>
-              <span className="text-white/20 hidden sm:inline">•</span>
-              <a
-                href={`mailto:${companyInfo.email}`}
-                className="flex items-center gap-2 hover:text-white transition-colors"
-              >
-                <Mail className="w-4 h-4 text-sky-400 shrink-0" />
-                <span>Email RFQ: {companyInfo.email}</span>
-              </a>
-            </div>
-          </Reveal>
-        </div>
+          </div>
+        </Reveal>
       </div>
     </section>
   );

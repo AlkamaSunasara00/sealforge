@@ -1,31 +1,25 @@
 "use client";
 
 import React from "react";
-import { Disc, Activity, Anchor, BookOpen, Layers } from "lucide-react";
+import Link from "next/link";
+import { Layers, Disc, Activity, Anchor, ArrowUpRight } from "lucide-react";
 
 const categories = [
   { id: "all", label: "All Products", icon: Layers, count: "13" },
-  { id: "mechanical-seals", label: "Mechanical Seals", icon: Disc, count: "7 Series" },
-  { id: "industrial-pumps", label: "Industrial Pumps", icon: Activity, count: "5 Types" },
-  { id: "cutlass-bearings", label: "Cutlass Bearings", icon: Anchor, count: "25–400 mm" },
-  { id: "materials-guide", label: "Material Science Guide", icon: BookOpen, count: "EN 12756" },
+  { id: "mechanical-seals", label: "Mechanical Seals", icon: Disc, count: "7" },
+  { id: "industrial-pumps", label: "Industrial Pumps", icon: Activity, count: "5" },
+  { id: "cutlass-bearings", label: "Cutlass Bearings", icon: Anchor, count: "1" },
 ];
 
 export default function ProductsFilterBar({ selectedCategory, setSelectedCategory }) {
-  const scrollToCategory = (catId) => {
-    setSelectedCategory(catId);
-    if (catId !== "all") {
-      const el = document.getElementById(catId);
-      if (el) {
-        el.scrollIntoView({ behavior: "smooth", block: "start" });
-      }
-    }
-  };
-
   return (
-    <nav aria-label="Product categories" className="sticky top-[69px] z-40 bg-white/95 backdrop-blur-md border-b border-steel-200/90 shadow-xs py-3 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-7xl mx-auto flex items-center justify-between gap-4 overflow-x-auto no-scrollbar">
-        <div className="flex items-center gap-2 sm:gap-3 shrink-0">
+    <nav
+      aria-label="Product categories"
+      className="sticky top-[56px] sm:top-[60px] z-40 bg-white/95 backdrop-blur-md border-b border-slate-200 shadow-xs"
+    >
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 flex items-center justify-between gap-4">
+        {/* Category Pills */}
+        <div className="flex items-center gap-2 overflow-x-auto no-scrollbar">
           {categories.map((cat) => {
             const isSelected = selectedCategory === cat.id;
             const Icon = cat.icon;
@@ -33,18 +27,24 @@ export default function ProductsFilterBar({ selectedCategory, setSelectedCategor
               <button
                 key={cat.id}
                 type="button"
-                onClick={() => scrollToCategory(cat.id)}
-                className={`flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs sm:text-sm font-mono font-bold transition-all whitespace-nowrap ${
+                onClick={() => setSelectedCategory(cat.id)}
+                className={`inline-flex items-center gap-2 px-4 py-2 rounded-xl text-xs sm:text-sm font-bold whitespace-nowrap transition-all cursor-pointer ${
                   isSelected
-                    ? "bg-brand-950 text-white shadow-sm border border-brand-950"
-                    : "bg-steel-50 text-steel-700 hover:bg-steel-100 hover:text-brand-950 border border-steel-200/80"
+                    ? "bg-[#253664] text-white shadow-sm"
+                    : "bg-slate-100 text-slate-700 hover:bg-slate-200 hover:text-brand-950"
                 }`}
               >
-                <Icon className={`w-3.5 h-3.5 ${isSelected ? "text-bronze-400" : "text-steel-400"}`} />
+                <Icon
+                  className={`w-3.5 h-3.5 ${
+                    isSelected ? "text-bronze-300" : "text-slate-500"
+                  }`}
+                />
                 <span>{cat.label}</span>
                 <span
-                  className={`text-[10px] px-1.5 py-0.5 rounded-md ${
-                    isSelected ? "bg-white/20 text-white" : "bg-steel-200/60 text-steel-500"
+                  className={`text-[11px] font-mono px-1.5 py-0.5 rounded-md ${
+                    isSelected
+                      ? "bg-white/20 text-white"
+                      : "bg-white text-slate-600"
                   }`}
                 >
                   {cat.count}
@@ -54,13 +54,14 @@ export default function ProductsFilterBar({ selectedCategory, setSelectedCategor
           })}
         </div>
 
-        <a
+        {/* Right Quick Action */}
+        <Link
           href="/contact"
-          className="hidden md:inline-flex items-center gap-1.5 text-xs font-mono font-bold text-brand-700 hover:text-brand-950 shrink-0"
+          className="hidden md:inline-flex items-center gap-1.5 text-xs font-mono font-bold uppercase tracking-wider text-brand-700 hover:text-brand-950 shrink-0 transition-colors"
         >
-          <span>Need Custom Sizing?</span>
-          <span className="text-bronze-600">Talk to Engineers →</span>
-        </a>
+          <span>Custom Sizing</span>
+          <ArrowUpRight className="w-3.5 h-3.5 text-bronze-600" />
+        </Link>
       </div>
     </nav>
   );

@@ -3,6 +3,10 @@
 import React, { useState } from "react";
 import Image from "next/image";
 import Reveal from "@/components/about/Reveal";
+import dutyAnalysisImg from "@/assets/home/duty-analysis-industrial-engineering.webp";
+import compatibilityAnalysisImg from "@/assets/home/engineering-compatibility-analysis.webp";
+import precisionManufacturingImg from "@/assets/home/precision-manufacturing-engineering.webp";
+import qualityDispatchImg from "@/assets/home/industrial-quality-dispatch.webp";
 
 const steps = [
   {
@@ -12,8 +16,7 @@ const steps = [
     short: "Duty Review",
     description:
       "You provide the fluid chemistry, operating temperature, suction/discharge pressure, shaft speed, and solids concentration. We evaluate vapour pressure margins to prevent face flashing.",
-    image:
-      "https://images.unsplash.com/photo-1581092334651-ddf26d9a09d0?auto=format&fit=crop&w=1200&q=80",
+    image: dutyAnalysisImg,
     parameters: "Fluid Chemistry • Suction/Discharge Head • Operating Temp • Shaft RPM",
   },
   {
@@ -23,8 +26,7 @@ const steps = [
     short: "Tribology Match",
     description:
       "Our engineers cross-reference face combinations (SSiC, Carbon, TC), elastomer grades (FKM, EPDM, FFKM), casing metallurgies, or cutlass clearances to eliminate premature failure risks.",
-    image:
-      "https://images.unsplash.com/photo-1565793298595-6a879b1d9492?auto=format&fit=crop&w=1200&q=80",
+    image: compatibilityAnalysisImg,
     parameters: "Face Hardness • PV Limits • Chemical Swell Rating • Flush Geometry",
   },
   {
@@ -34,8 +36,7 @@ const steps = [
     short: "Manufacturing",
     description:
       "Built in our Mumbai facility to exact drawings, standard metric/imperial dimensions (EN 12756, ISO 5199, ANSI B73.1), or engineered-to-order retrofit specifications.",
-    image:
-      "https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=1200&q=80",
+    image: precisionManufacturingImg,
     parameters: "EN 12756 Tolerances • Precision Lapping • Dynamic Balancing • Flange Alignment",
   },
   {
@@ -45,8 +46,7 @@ const steps = [
     short: "Dispatch & Support",
     description:
       "Delivered ready-to-install with complete technical documentation, mill test certificates, installation guidelines, and direct engineering backup for commissioning.",
-    image:
-      "https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=1200&q=80",
+    image: qualityDispatchImg,
     parameters: "100% Quality Checked • Installation Sheets • Serial Traceability • Ongoing Backup",
   },
 ];
@@ -65,9 +65,9 @@ export default function EngineeringStory() {
               <span>HOW WE WORK — APPLICATION-FIRST SELECTION</span>
             </div>
 
-            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight text-slate-950 uppercase leading-tight">
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-slate-950 uppercase leading-tight">
               SELECTION STARTS WITH<br />
-              <span className="text-slate-500">YOUR OPERATING DUTY.</span>
+              <span className="text-bronze-700">YOUR OPERATING DUTY.</span>
             </h2>
 
             <p className="text-sm sm:text-base text-slate-600 leading-relaxed max-w-2xl font-normal">
@@ -161,7 +161,7 @@ export default function EngineeringStory() {
 
                       {/* Main Narrative */}
                       <div className="space-y-3 max-w-xl">
-                        <h3 className="text-2xl sm:text-3xl font-black uppercase tracking-tight text-white leading-tight">
+                        <h3 className="text-2xl sm:text-3xl font-bold uppercase tracking-tight text-white leading-tight">
                           {st.title}
                         </h3>
 

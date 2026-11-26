@@ -1,10 +1,30 @@
+import balancedSealImg from "@/assets/products/mechenical-seals/Balanced Mechanical Seal.webp";
+import unbalancedSealImg from "@/assets/products/mechenical-seals/Unbalanced Mechanical Seal.webp";
+import ptfeBellowsSealImg from "@/assets/products/mechenical-seals/PTFE-Teflon-Bellows-Seal.webp";
+import singleCoilSpringSealImg from "@/assets/products/mechenical-seals/Single-Coil-Spring-Seal.webp";
+import taperedCoilSpringSealImg from "@/assets/products/mechenical-seals/Tapered-Coil-Spring-Seal.webp";
+import rubberBellowsSealImg from "@/assets/products/mechenical-seals/Rubber-Bellows-Seal.webp";
+import grundfosReplacementSealImg from "@/assets/products/mechenical-seals/Grundfos-Pump-Replacement-Seals.webp";
+import openImpellerPumpImg from "@/assets/products/pumps/Open Semi-Open Impeller-Overhung-Pumps.webp";
+import closedImpellerPumpImg from "@/assets/products/pumps/Closed-Impeller-Overhung-Pumps.webp";
+import solidPolymerPumpImg from "@/assets/products/pumps/Solid-Polymer-Moulded-Overhung-Pumps.webp";
+import armouredPolymerPumpImg from "@/assets/products/pumps/Armoured-Solid-Polymer-Moulded-Overhung-Pumps.webp";
+import polymerLinedPumpImg from "@/assets/products/pumps/Polymer-Lined-Overhung-End-Suction-Pumps.webp";
+import cutlassBearingImg from "@/assets/products/cutlass-bearing/cutlass-bearing.webp";
+import flutedProfileImg from "@/assets/products/cutlass-bearing/Fluted-Profile.webp";
+import spiralProfileImg from "@/assets/products/cutlass-bearing/Spiral-Profile.webp";
+import circularProfileImg from "@/assets/products/cutlass-bearing/Circular-Profile.webp";
+import polygonProfileImg from "@/assets/products/cutlass-bearing/Polygon-Profile.webp";
+import cylindricalShellImg from "@/assets/products/cutlass-bearing/CylindricalShell.webp";
+import flangedShellImg from "@/assets/products/cutlass-bearing/Flanged-Shell.webp";
+
 export const mechanicalSeals = [
   {
     id: "sf-b",
     series: "SF-B Series",
     name: "Balanced Mechanical Seal",
     tagline: "Hydraulically balanced for high-pressure & severe process duties.",
-    image: "/images/catalogue/mechanical-seals-p6.webp",
+    image: balancedSealImg,
     stockImage: "https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=800&q=80",
     category: "mechanical-seals",
     badge: "Balanced | Single Acting",
@@ -40,7 +60,7 @@ export const mechanicalSeals = [
     series: "SF-U Series",
     name: "Unbalanced Mechanical Seal",
     tagline: "Cost-effective, dependable sealing for standard industrial pumps.",
-    image: "/images/catalogue/mechanical-seals-p2.webp",
+    image: unbalancedSealImg,
     stockImage: "https://images.unsplash.com/photo-1581092334651-ddf26d9a09d0?auto=format&fit=crop&w=800&q=80",
     category: "mechanical-seals",
     badge: "Unbalanced | Single Acting",
@@ -74,7 +94,7 @@ export const mechanicalSeals = [
     series: "SF-P Series",
     name: "PTFE / Teflon Bellows Seal",
     tagline: "Outside-mounted design for highly corrosive & boiling acids.",
-    image: "/images/catalogue/mechanical-seals-p7.webp",
+    image: ptfeBellowsSealImg,
     stockImage: "https://images.unsplash.com/photo-1532187863486-abf9dbad1b69?auto=format&fit=crop&w=800&q=80",
     category: "mechanical-seals",
     badge: "Outside-Mounted | Chemical Bellows",
@@ -108,7 +128,7 @@ export const mechanicalSeals = [
     series: "SF-S Series",
     name: "Single Coil Spring Seal",
     tagline: "Heavy-duty non-clogging spring for slurries & viscous media.",
-    image: "/images/catalogue/mechanical-seals-p8.webp",
+    image: singleCoilSpringSealImg,
     stockImage: "https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=800&q=80",
     category: "mechanical-seals",
     badge: "Non-Clogging | Single Spring",
@@ -142,7 +162,7 @@ export const mechanicalSeals = [
     series: "SF-T Series",
     name: "Tapered Coil Spring Seal",
     tagline: "Compact axial fit with positive spring shaft drive.",
-    image: "/images/catalogue/mechanical-seals-p9.webp",
+    image: taperedCoilSpringSealImg,
     stockImage: "https://images.unsplash.com/photo-1581092335878-2d9ff86ca2bf?auto=format&fit=crop&w=800&q=80",
     category: "mechanical-seals",
     badge: "Tapered Spring | Directional Drive",
@@ -176,7 +196,7 @@ export const mechanicalSeals = [
     series: "SF-MJ Series",
     name: "Rubber Bellows Seal (MG & JC Type)",
     tagline: "Industry-standard elastomer bellows with self-aligning capabilities.",
-    image: "/images/catalogue/mechanical-seals-p1.webp",
+    image: rubberBellowsSealImg,
     stockImage: "https://images.unsplash.com/photo-1565793298595-6a879b1d9492?auto=format&fit=crop&w=800&q=80",
     category: "mechanical-seals",
     badge: "MG1 / MG12 / JC Style | Elastomer Bellows",
@@ -210,7 +230,7 @@ export const mechanicalSeals = [
     series: "SF-G Series",
     name: "Grundfos Pump Replacement Seals",
     tagline: "Direct drop-in replacement seals for Grundfos multistage & centrifugal pumps.",
-    image: "/images/catalogue/mechanical-seals-p10.webp",
+    image: grundfosReplacementSealImg,
     stockImage: "https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=800&q=80",
     category: "mechanical-seals",
     badge: "Grundfos CR / CRN / TP / NB Compatible",
@@ -238,20 +258,63 @@ export const mechanicalSeals = [
       "NB / NK horizontal end-suction pumps",
       "Industrial boiler feed and water treatment systems",
     ],
+    referenceTable: [
+      {
+        code: "HQQE",
+        construction: "Balanced Cartridge Seal",
+        combination: "Silicon Carbide / Silicon Carbide / EPDM",
+        models: "CR / CRN 1, 3, 5, 10, 15, 20, 32, 45, 64, 90",
+      },
+      {
+        code: "HQQV",
+        construction: "Balanced Cartridge Seal",
+        combination: "Silicon Carbide / Silicon Carbide / FKM",
+        models: "CR / CRN Chemical & High Temp Duties",
+      },
+      {
+        code: "BQQE",
+        construction: "Rubber Bellows Unbalanced",
+        combination: "Silicon Carbide / Silicon Carbide / EPDM",
+        models: "NB / NK Centrifugal Water Pumps",
+      },
+      {
+        code: "BQQV",
+        construction: "Rubber Bellows Unbalanced",
+        combination: "Silicon Carbide / Silicon Carbide / FKM",
+        models: "NB / NK Hydrocarbon / Oil Duties",
+      },
+      {
+        code: "DQQE",
+        construction: "O-Ring Balanced Design",
+        combination: "Silicon Carbide / Silicon Carbide / EPDM",
+        models: "TP / TPE In-Line Circulation Pumps",
+      },
+      {
+        code: "SQQE",
+        construction: "Rubber Bellows Unbalanced",
+        combination: "Silicon Carbide / Silicon Carbide / EPDM",
+        models: "Selected Submersible & Multistage Pumps",
+      },
+    ],
   },
 ];
 
 export const industrialPumps = [
   {
     id: "pump-open",
-    name: "Metallic Overhung Pumps — Open / Semi-Open Impeller",
+    subGroup: "1. Metallic Overhung Pumps",
+    subNumber: "1.1",
+    name: "Open / Semi-Open Impeller Overhung Pumps",
     designReference: "ANSI B73.1",
-    tagline: "Engineered for chemical slurries, solids, and harsh industrial fluid transfer.",
-    image: "/images/catalogue/industrial-pumps-p3.webp",
-    stockImage: "https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=800&q=80",
+    tagline:
+      "Designed for industrial services where flexibility in handling different process fluids and solids-containing or less-clean liquids is required.",
+    image: openImpellerPumpImg,
     category: "industrial-pumps",
-    badge: "ANSI B73.1 | Slurry & Solids",
+    badge: "1.1 Metallic Overhung | ANSI B73.1",
     specs: {
+      pumpType: "Metallic overhung centrifugal pump",
+      impellerType: "Open / Semi-open",
+      standard: "ANSI B73.1",
       capacity: "Up to 120 m³/hr",
       head: "Up to 95 m",
       maxPressure: "Up to 16 bar",
@@ -260,29 +323,44 @@ export const industrialPumps = [
       flange: "ANSI B16.5 Class 150",
     },
     construction: {
-      impellerType: "Open / Semi-Open with external clearance adjustment",
-      sealing: "Inside-mounted mechanical seal or gland packing",
-      moc: "Carbon Steel, 304/316 Stainless Steel, Hastelloy C",
-      options: "Cooling jacket for high-temperature media",
+      impellerType: "Open / Semi-open",
+      sealing: "Inside-mounted Seal",
+      moc: "Carbon Steel, Stainless Steel, Hastelloy and other metal alloy on request",
+      options: "Cooling jacket, gland packing",
     },
+    features: [
+      "Open or semi-open impeller handles solids-containing and less-clean process liquids",
+      "Metallic construction selected according to pumped medium and operating conditions",
+      "Cost-effective and safe gland packing or inside-mounted mechanical seal options",
+    ],
     applications: [
-      "Chemical process transfer & slurries",
-      "Wastewater & effluent treatment",
-      "Sugar mill juice and molasses",
-      "Oil extraction and refinery drainage",
+      "Chemical process transfer",
+      "Water treatment",
+      "Sugar processing",
+      "Oil extraction",
+      "General industrial fluid transfer",
+      "Power plant services",
+      "Oil & gas services",
       "Mining and mineral processing",
+      "Irrigation",
+      "Marine applications",
     ],
   },
   {
     id: "pump-closed",
-    name: "Metallic Overhung Pumps — Closed Impeller",
-    designReference: "ISO 5199 / ISO 2858",
-    tagline: "High-efficiency clean chemical process, utility water & industrial circulation.",
-    image: "/images/catalogue/industrial-pumps-p4.webp",
-    stockImage: "https://images.unsplash.com/photo-1581092334651-ddf26d9a09d0?auto=format&fit=crop&w=800&q=80",
+    subGroup: "1. Metallic Overhung Pumps",
+    subNumber: "1.2",
+    name: "Closed Impeller Overhung Pumps",
+    designReference: "ISO 5199 / 2858",
+    tagline:
+      "Intended for general industrial and process applications requiring higher hydraulic performance and a closed-impeller configuration.",
+    image: closedImpellerPumpImg,
     category: "industrial-pumps",
-    badge: "ISO 5199 / ISO 2858 | High Efficiency",
+    badge: "1.2 Metallic Overhung | ISO 5199 / 2858",
     specs: {
+      pumpType: "Metallic overhung centrifugal pump",
+      impellerType: "Closed",
+      standard: "ISO 5199 / 2858",
       capacity: "Up to 600 m³/hr",
       head: "Up to 160 m",
       maxPressure: "Up to 21 bar",
@@ -291,29 +369,43 @@ export const industrialPumps = [
       flange: "ANSI B16.5 Class 150",
     },
     construction: {
-      impellerType: "Precision Enclosed Impeller for optimal hydraulic efficiency",
-      sealing: "Inside-mounted mechanical seal or gland packing",
-      moc: "Cast Iron, Carbon Steel, CF8M (316 SS), Hastelloy C",
-      options: "Back pull-out design for rapid servicing without piping disturbance",
+      impellerType: "Closed",
+      sealing: "Inside-mounted",
+      moc: "Carbon Steel, Stainless Steel, Hastelloy and other metal alloy on request",
+      options: "Cooling jacket, gland packing",
     },
+    features: [
+      "Precision closed impeller delivers higher hydraulic efficiency across continuous duties",
+      "Engineered to ISO 5199 / 2858 dimensional and hydraulic standards",
+      "Available with inside-mounted mechanical seal, cooling jacket, or gland packing",
+    ],
     applications: [
-      "Petrochemical & oil processing",
-      "Power generation cooling water circuits",
-      "Municipal and industrial water distribution",
-      "Sugar refining and marine applications",
-      "General chemical process circulation",
+      "Chemical process transfer",
+      "Water treatment",
+      "Sugar processing",
+      "Oil extraction",
+      "General industrial fluid transfer",
+      "Power plant services",
+      "Oil & gas services",
+      "Mining and mineral processing",
+      "Irrigation",
     ],
   },
   {
     id: "pump-polymer",
-    name: "Non-Metallic Solid Polymer Moulded Overhung Pumps",
-    designReference: "ISO 5199 / ISO 2858",
-    tagline: "100% solid polymer wetted parts for extreme corrosion immunity.",
-    image: "/images/catalogue/industrial-pumps-p5.webp",
-    stockImage: "https://images.unsplash.com/photo-1532187863486-abf9dbad1b69?auto=format&fit=crop&w=800&q=80",
+    subGroup: "2. Non-Metallic Overhung Pumps",
+    subNumber: "2.1",
+    name: "Solid Polymer Moulded Overhung Pumps",
+    designReference: "ISO 5199 / 2858",
+    tagline:
+      "Intended for corrosive and chemically aggressive services where metallic construction may not provide the required material compatibility.",
+    image: solidPolymerPumpImg,
     category: "industrial-pumps",
-    badge: "Solid Polymer | Zero Metallic Contact",
+    badge: "2.1 Non-Metallic | Solid Polymer",
     specs: {
+      pumpType: "Solid polymer moulded overhung centrifugal pump",
+      impellerType: "Semi-open",
+      standard: "ISO 5199 / 2858",
       capacity: "Up to 80 m³/hr",
       head: "Up to 60 m",
       maxPressure: "6 bar",
@@ -322,77 +414,109 @@ export const industrialPumps = [
       flange: "ANSI B16.5 Class 150",
     },
     construction: {
-      impellerType: "Semi-Open moulded polymer impeller",
-      sealing: "Outside-mounted mechanical seal (zero fluid contact with springs)",
-      moc: "Polypropylene (PP), Glass-Reinforced PP (GRPP), UHMWPE",
-      options: "Corrosion-proof hardware & PTFE face combinations",
+      impellerType: "Semi-open",
+      sealing: "Outside-mounted seal",
+      moc: "PP / GRPP / UHMWPE",
+      options: "Gland packing",
     },
+    features: [
+      "100% solid polymer moulded wetted components eliminate metallic corrosion",
+      "Outside-mounted mechanical seal isolates spring hardware from aggressive chemicals",
+      "Available in PP, GRPP, and UHMWPE constructions",
+    ],
     applications: [
-      "Corrosive acid and alkali transfer",
-      "Electroplating chemical baths",
-      "Pickling lines and etching acids",
-      "Fertilizer and agrochemical production",
-      "Pharmaceutical effluent neutralization",
+      "Corrosive chemical transfer",
+      "Aggressive chemical service",
+      "Pharmaceutical processing",
+      "Fertilizer processing",
+      "Water treatment",
+      "Power plant service",
+      "Mining and mineral processing",
     ],
   },
   {
     id: "pump-armoured",
+    subGroup: "2. Non-Metallic Overhung Pumps",
+    subNumber: "2.2",
     name: "Armoured Solid Polymer Moulded Overhung Pumps",
-    designReference: "ISO 5199 / ISO 2858",
-    tagline: "Chemical resistance of polymer with structural strength of ductile iron.",
-    image: "/images/catalogue/industrial-pumps-p2.webp",
-    stockImage: "https://images.unsplash.com/photo-1565793298595-6a879b1d9492?auto=format&fit=crop&w=800&q=80",
+    designReference: "ISO 5199 / 2858",
+    tagline:
+      "Intended for applications requiring the corrosion resistance of polymer construction together with additional structural support.",
+    image: armouredPolymerPumpImg,
     category: "industrial-pumps",
-    badge: "Armoured Polymer | Heavy Duty Structural",
+    badge: "2.2 Non-Metallic | Armoured Polymer",
     specs: {
+      pumpType: "Armoured solid polymer moulded overhung pump",
+      standard: "ISO 5199 / 2858",
       capacity: "Up to 200 m³/hr",
       head: "Up to 200 m",
       maxPressure: "10 bar",
-      maxTemp: "Up to 110 °C",
+      maxTemp: "110 °C",
       speed: "2900 rpm",
       flange: "ANSI B16.5 Class 150",
     },
     construction: {
-      impellerType: "Semi-Open reinforced polymer impeller",
-      sealing: "Fully enclosed mechanical seal",
-      moc: "Wetted PP / GRPP / UHMWPE with Ductile Iron protective armor casing",
-      options: "Eliminates pipe-strain nozzle cracking under thermal expansion",
+      sealing: "Fully enclosed seal",
+      moc: "PP / GRPP / UHMWPE",
+      options: "Lined polymer material with metal reinforcement",
     },
+    features: [
+      "Combines polymer chemical resistance with rigid external metal reinforcement",
+      "Fully enclosed mechanical seal handles elevated pressure duties",
+      "Designed to ISO 5199 / 2858 with ANSI B16.5 Class 150 flanges",
+    ],
     applications: [
-      "Bulk chemical tanker unloading",
-      "Fertilizer plant acid recirculation",
-      "Power station water and effluent loops",
-      "Mining chemical leaching & slurry neutralization",
+      "Corrosive chemical transfer",
+      "Aggressive chemical service",
+      "Pharmaceutical processing",
+      "Fertilizer processing",
+      "Water treatment",
+      "Oil & gas services",
+      "Power plant service",
     ],
   },
   {
     id: "pump-lined",
+    subGroup: "3. Polymer-Lined Overhung / End-Suction Pumps",
+    subNumber: "3.1",
     name: "Polymer-Lined Overhung / End-Suction Pumps",
-    designReference: "ISO 5199 / ANSI B73.1",
-    tagline: "Seamless thick fluoropolymer lining (PVDF, FEP, PFA) handling boiling acids to 230 °C.",
-    image: "/images/catalogue/industrial-pumps-p7.webp",
-    stockImage: "https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=800&q=80",
+    designReference: "ISO 5199 / 2858",
+    tagline:
+      "For highly corrosive process services using PP, PVDF, FEP, and PFA linings up to 230 °C and 16 bar.",
+    image: polymerLinedPumpImg,
     category: "industrial-pumps",
-    badge: "Fluoropolymer Lined | Up to 230 °C",
+    badge: "3. Polymer-Lined | PP / PVDF / FEP / PFA",
     specs: {
+      pumpType: "Polymer-lined end-suction / Overhung pump with gland packing",
+      impellerType: "Semi-open",
+      standard: "ISO 5199 / 2858",
       capacity: "Up to 400–600 m³/hr",
       head: "Up to 100–120 m",
-      maxPressure: "Up to 16 bar",
-      maxTemp: "Up to 230 °C",
+      maxPressure: "10 bar (16 bar for PVDF/FEP/PFA)",
+      maxTemp: "Up to 120 °C (230 °C for PVDF/FEP/PFA)",
       speed: "3000 rpm",
       flange: "ANSI B16.5 Class 150",
     },
     construction: {
-      impellerType: "Semi-Open lined impeller locked via dovetail grooves",
-      sealing: "Inside or outside mounted mechanical seals",
-      moc: "Ductile iron casing with thick PP, PVDF, FEP, or PFA lining",
-      options: "Cooling jackets and double seal flushing arrangements",
+      impellerType: "Semi-open",
+      sealing: "Inside / Outside mounted seal",
+      moc: "PP / PVDF / FEP / PFA / PTFE",
+      options: "Cooling jacket; single / double mechanical-seal options",
     },
+    features: [
+      "Suitable for highly corrosive liquids with PP, PVDF, FEP, and PFA lining options",
+      "FEP/PFA/PVDF configurations rated up to 400 m³/hr, 100 m head, 16 bar, and 230 °C",
+      "Inside or outside mounted mechanical seal with optional cooling jacket",
+    ],
     applications: [
-      "Boiling concentrated Hydrochloric, Sulphuric, Nitric acids",
-      "Chlor-alkali plants and halogenated solvents",
-      "Pharmaceutical organic chemical synthesis",
-      "Toxic and volatile process chemical handling",
+      "Chemical process transfer",
+      "Pharmaceutical processing",
+      "Fertilizer processing",
+      "Power plant services",
+      "Water treatment",
+      "Food industry where applicable",
+      "Oil & gas",
+      "Mining & mineral processing",
     ],
   },
 ];
@@ -400,58 +524,143 @@ export const industrialPumps = [
 export const cutlassBearings = {
   id: "cutlass-bearings",
   name: "Water-Lubricated Cutlass Bearings",
-  tagline: "Dependable, low-friction sleeve bearings for rotating shafts in marine and pump applications.",
-  image: "/images/catalogue/cutlass-bearings-p1.webp",
-  stockImage: "https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=800&q=80",
+  tagline:
+    "Dependable, low-friction sleeve bearings for rotating shafts in marine and industrial pump applications.",
+  image: cutlassBearingImg,
   category: "cutlass-bearings",
   badge: "Zero Oil Pollution | 25 mm – 400 mm",
+  overview: [
+    "SealForge Cutlass Bearings are water-lubricated sleeve bearings designed to provide dependable support for rotating shafts while offering low friction, effective lubrication, and resistance to wear.",
+    "A Cutlass Bearing typically consists of a resilient rubber lining bonded or fitted within a metallic or non-metallic outer shell. Specially designed internal grooves allow water to reach the shaft–bearing interface, supporting lubrication, heat dissipation, and removal of contaminants while accommodating minor shaft misalignment and absorbing vibration.",
+  ],
+  industries: [
+    "Marine",
+    "Pumps",
+    "Water & Wastewater",
+    "Power",
+    "Irrigation",
+    "Industrial",
+    "Mining",
+    "Dredging",
+  ],
   specs: {
     shaftDiameter: "25 mm to 400 mm (Standard Metric & Imperial)",
     lubrication: "100% Process Water / Seawater",
     shellTypes: "Cylindrical Sleeve & Integral Flanged Shell",
-    lining: "High-Durometer Resilient Synthetic Nitrile Rubber",
+    lining: "Resilient Rubber Lining (Fluted, Spiral, Circular, Polygon)",
   },
   shells: [
     {
-      type: "Metallic Shells",
-      materials: "Naval Brass, Marine Bronze, 304/316 Stainless Steel, Mild Steel",
-      benefits: "Provide high structural rigidity, press-fit dimensional stability, and proven marine service life.",
+      type: "Metallic Shell",
+      materials: "Brass, Bronze, Stainless Steel / Mild Steel, Higher Alloys on Request",
+      benefits:
+        "Provides structural rigidity, press-fit retention, and dimensional stability in demanding housings.",
     },
     {
-      type: "Non-Metallic Shells",
-      materials: "Phenolic Resin Composites, Engineered Thermoset Plastics, Fiberglass Laminates",
-      benefits: "Eliminate galvanic corrosion, reduce overall component weight, and provide electrical isolation.",
+      type: "Non-Metallic Shell",
+      materials:
+        "Engineered Reinforced Thermoset Plastic, Phenolic Resin Composite, Fiberglass-Reinforced Laminate",
+      benefits:
+        "Selected where corrosion resistance, zero galvanic reaction, reduced weight, or electrical isolation is required.",
+    },
+  ],
+  materialSelectionFactors: [
+    "Load",
+    "Corrosion",
+    "Temperature",
+    "Housing Material",
+    "Lubrication Medium",
+    "Installation Method",
+    "Operating Environment",
+  ],
+  shellTypesCards: [
+    {
+      name: "Cylindrical Shell",
+      image: cylindricalShellImg,
+      features: [
+        "Conventional sleeve configuration",
+        "Designed for cylindrical housings",
+        "Robust and versatile construction",
+        "Standard and custom dimensions",
+        "Metallic and non-metallic options",
+      ],
+    },
+    {
+      name: "Flanged Shell",
+      image: flangedShellImg,
+      features: [
+        "Integral flange for positive positioning",
+        "Additional axial support",
+        "Suitable for pump and marine applications",
+        "Custom flange dimensions available",
+        "Selected metallic and non-metallic constructions",
+      ],
     },
   ],
   profiles: [
     {
       name: "Fluted Profile",
-      description: "Straight longitudinal grooves along the entire bearing length.",
-      function: "Maximum water circulation, cooling, and rapid continuous flushing of abrasive grit, sand, and silt.",
+      image: flutedProfileImg,
+      description: "Straight longitudinal grooves along the bearing length.",
+      function:
+        "Water circulation, cooling, and continuous contaminant/grit flushing.",
     },
     {
       name: "Spiral Profile",
-      description: "Helically arranged hydrodynamic water grooves through the bore.",
-      function: "Controlled water movement and positive boundary film path along higher-speed shafts.",
+      image: spiralProfileImg,
+      description: "Helically arranged grooves through the bearing.",
+      function: "Controlled water movement and positive lubrication path.",
     },
     {
       name: "Circular Profile",
-      description: "Continuous circular internal bearing geometry.",
-      function: "Uniform shaft support for specialized low-speed and hydraulic machinery.",
+      image: circularProfileImg,
+      description: "Circular internal bearing geometry.",
+      function: "Uniform shaft support for selected low-speed applications.",
     },
     {
       name: "Polygon Profile",
-      description: "Polygonal multi-flat internal land geometry.",
-      function: "Application-specific load distribution and dynamic hydrodynamic pressure wedge development.",
+      image: polygonProfileImg,
+      description: "Polygonal internal land geometry.",
+      function:
+        "Application-specific load distribution and dynamic water passages.",
     },
   ],
+  dimensionsTable: [
+    { ds: 25, od: 40, l: 100, t: 2.5 },
+    { ds: 30, od: 45, l: 120, t: 2.5 },
+    { ds: 35, od: 50, l: 140, t: 3 },
+    { ds: 40, od: 55, l: 160, t: 3 },
+    { ds: 45, od: 60, l: 180, t: 3 },
+    { ds: 50, od: 65, l: 200, t: 3 },
+    { ds: 55, od: 70, l: 220, t: 3 },
+    { ds: 60, od: 75, l: 240, t: 3 },
+    { ds: 65, od: 80, l: 260, t: 3 },
+    { ds: 70, od: 85, l: 280, t: 3 },
+    { ds: 75, od: 90, l: 300, t: 3 },
+    { ds: 80, od: 95, l: 320, t: 3 },
+    { ds: 85, od: 100, l: 340, t: 3 },
+    { ds: 90, od: 105, l: 360, t: 3 },
+    { ds: 95, od: 110, l: 380, t: 3 },
+    { ds: 100, od: 115, l: 400, t: 4.75 },
+    { ds: 105, od: 120, l: 420, t: 4.75 },
+    { ds: 110, od: 125, l: 440, t: 4.75 },
+    { ds: 115, od: 130, l: 460, t: 4.75 },
+    { ds: 120, od: 135, l: 480, t: 6.25 },
+    { ds: 125, od: 140, l: 500, t: 6.25 },
+    { ds: 130, od: 145, l: 520, t: 6.25 },
+    { ds: 135, od: 150, l: 540, t: 6.25 },
+    { ds: 140, od: 155, l: 560, t: 6.25 },
+    { ds: 145, od: 160, l: 580, t: 6.25 },
+    { ds: 150, od: 165, l: 600, t: 6.25 },
+  ],
   applications: [
-    "Marine propulsion shafts, stern tubes & strut/bracket bearings",
-    "Rudder stock bearings",
-    "Vertical turbine and deep-well submersible pumps",
-    "Centrifugal intake and river cooling water pumps",
-    "Dredging cutterhead shafts and spud bearings",
-    "Hydroelectric turbines and irrigation lift pumps",
+    "Marine propulsion and propeller shafts",
+    "Stern tube bearing systems",
+    "Vertical turbine and centrifugal pumps",
+    "Submersible, borewell and deep-well pumps",
+    "Water-handling and irrigation equipment",
+    "Industrial rotating equipment",
+    "Dredging and marine equipment",
   ],
 };
 
@@ -527,3 +736,42 @@ export const materialGuide = {
     "Verify wetted casing metallurgy (Carbon Steel, 316SS, Hastelloy C) or fluoropolymer lining (PVDF, PFA) against fluid corrosiveness.",
   ],
 };
+
+export const allProducts = [
+  ...mechanicalSeals.map((item) => ({
+    ...item,
+    slug: item.id,
+    categoryLabel: "Mechanical Seals",
+    subLabel: item.series,
+  })),
+  ...industrialPumps.map((item) => ({
+    ...item,
+    slug: item.id,
+    categoryLabel: "Industrial Pumps",
+    subLabel: item.designReference,
+  })),
+  {
+    ...cutlassBearings,
+    slug: cutlassBearings.id,
+    categoryLabel: "Cutlass Bearings",
+    subLabel: "25 mm – 400 mm",
+  },
+];
+
+export function getProductBySlug(slug) {
+  return allProducts.find((p) => p.slug === slug) || null;
+}
+
+export function getRelatedProducts(product, limit = 3) {
+  if (!product) return [];
+  const sameCategory = allProducts.filter(
+    (p) => p.category === product.category && p.slug !== product.slug
+  );
+  if (sameCategory.length >= limit) {
+    return sameCategory.slice(0, limit);
+  }
+  const others = allProducts.filter(
+    (p) => p.category !== product.category && p.slug !== product.slug
+  );
+  return [...sameCategory, ...others].slice(0, limit);
+}

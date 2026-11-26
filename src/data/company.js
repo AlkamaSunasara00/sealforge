@@ -103,7 +103,6 @@ export const productCategories = [
     tagline: "Engineered sealing solutions for high pressure, temperature & corrosive services",
     image: "/images/catalogue/mechanical-seals-p1.webp",
     badge: "API 682 & ISO Standards",
-    catalogueLink: "/downloads/sealforge-mechanical-seals-catalogue.pdf",
     features: [
       "Balanced & Unbalanced Configurations",
       "Single Coil Spring & Multi-Spring Systems",
@@ -154,7 +153,6 @@ export const productCategories = [
     tagline: "Water-lubricated sleeve bearings for marine propeller shafts & vertical pumps",
     image: "/images/catalogue/cutlass-bearings-p1.webp",
     badge: "25 mm to 400 mm+ Range",
-    catalogueLink: "/downloads/sealforge-cutlass-bearings-catalogue.pdf",
     features: [
       "Water Lubricated — Zero Oil Contamination",
       "Brass, Bronze & Stainless Steel Outer Shells",
@@ -191,7 +189,6 @@ export const productCategories = [
     tagline: "Heavy-duty metallic, solid polymer & polymer-lined centrifugal process pumps",
     image: "/images/catalogue/industrial-pumps-p1.webp",
     badge: "ISO 5199 / ISO 2858 / ANSI B16.5",
-    catalogueLink: "/downloads/sealforge-industrial-pumps-catalogue.pdf",
     features: [
       "Metallic Overhung (Open & Closed Impellers)",
       "Solid Polymer Pumps (PP / PVDF / UHMWPE)",

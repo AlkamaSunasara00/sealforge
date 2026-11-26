@@ -1,38 +1,193 @@
 "use client";
 
-import React from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Image from "next/image";
-import Link from "next/link";
 import Button from "@/components/common/Button";
-import Reveal from "@/components/about/Reveal";
 import FloatingLines from "@/components/common/FloatingLines";
-import cartridgeSealImg from "@/assets/contact/seal-forge-cartridge-seal.png";
-import { ArrowRight, ShieldCheck, Gauge, Layers } from "lucide-react";
+import mechanicalSealsImg from "@/assets/mechenical-seals-main.webp";
+import pumpsImg from "@/assets/pumps-main.webp";
+import cutlassBearingImg from "@/assets/cutlass-bearing-main.webp";
 
-const trustHighlights = [
+const EASE_OUT = "cubic-bezier(0.22, 1, 0.36, 1)";
+const HOLD_MS = 5200;
+const TRANSITION_MS = 850;
+
+const SLIDES = [
   {
-    icon: ShieldCheck,
-    title: "7 Mechanical Seal Families",
-    desc: "From balanced process seals up to 25 bar to PTFE bellows and Grundfos replacements.",
-    link: "/products#mechanical-seals",
+    id: "mechanical-seals",
+    eyebrow: "01 / FLUID CONTAINMENT",
+    lines: ["PRECISION", "MECHANICAL", "SEALS."],
+    description:
+      "EN 12756 balanced, unbalanced, bellows, and OEM replacement seals engineered for zero-leakage containment in severe process duties.",
+    specs: ["EN 12756 Compliant", "Up to 25 Bar", "SiC / Carbon / Viton"],
+    primaryLabel: "Explore Seals",
+    primaryHref: "/products",
+    image: mechanicalSealsImg,
+    alt: "SealForge Precision Engineered Mechanical Seal",
   },
   {
-    icon: Gauge,
-    title: "Metallic & Polymer Centrifugal Pumps",
-    desc: "Non-API overhung pumps engineered to ISO 5199 and ANSI B73.1 (up to 600 m³/hr).",
-    link: "/products#industrial-pumps",
+    id: "industrial-pumps",
+    eyebrow: "02 / PROCESS TRANSFER",
+    lines: ["CORROSION", "RESISTANT", "PUMPS."],
+    description:
+      "Non-API overhung centrifugal pumps in metallic, solid polymer, and fluoropolymer-lined builds for corrosive chemical transfer.",
+    specs: ["ISO 5199 / ANSI B73.1", "PP / PVDF / PFA Lined", "Zero-Leakage Ready"],
+    primaryLabel: "Explore Pumps",
+    primaryHref: "/products",
+    image: pumpsImg,
+    alt: "SealForge Industrial Overhung Centrifugal Pump",
   },
   {
-    icon: Layers,
-    title: "25 mm to 400 mm Cutlass Bearings",
-    desc: "Fluted water-lubricated sleeve bearings in naval brass, bronze, and composite shells.",
-    link: "/products#cutlass-bearings",
+    id: "cutlass-bearings",
+    eyebrow: "03 / SHAFT SUPPORT",
+    lines: ["WATER", "LUBRICATED", "BEARINGS."],
+    description:
+      "Fluted nitrile-lined sleeve and flanged cutlass bearings built for silent, hydrodynamic shaft support in marine and hydro turbines.",
+    specs: ["25 mm – 400 mm Bore", "Naval Brass / Bronze", "Hydrodynamic Flutes"],
+    primaryLabel: "Explore Bearings",
+    primaryHref: "/products",
+    image: cutlassBearingImg,
+    alt: "SealForge Water-Lubricated Cutlass Bearing",
   },
 ];
 
 export default function HeroSection() {
+  const [activeIndex, setActiveIndex] = useState(0);
+  const [exitingIndex, setExitingIndex] = useState(null);
+  const [isEntering, setIsEntering] = useState(false);
+  const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
+  const parallaxRef = useRef(null);
+  const sectionRef = useRef(null);
+
+  useEffect(() => {
+    const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const update = () => setPrefersReducedMotion(mq.matches);
+    update();
+    mq.addEventListener("change", update);
+    return () => mq.removeEventListener("change", update);
+  }, []);
+
+  useEffect(() => {
+    if (exitingIndex !== null) return undefined;
+
+    const timer = setTimeout(() => {
+      const next = (activeIndex + 1) % SLIDES.length;
+      if (prefersReducedMotion) {
+        setActiveIndex(next);
+        return;
+      }
+
+      setExitingIndex(activeIndex);
+      setActiveIndex(next);
+      setIsEntering(true);
+
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+          setIsEntering(false);
+        });
+      });
+    }, HOLD_MS);
+
+    return () => clearTimeout(timer);
+  }, [activeIndex, exitingIndex, prefersReducedMotion]);
+
+  useEffect(() => {
+    if (exitingIndex === null) return undefined;
+    const cleanup = setTimeout(() => {
+      setExitingIndex(null);
+    }, TRANSITION_MS);
+    return () => clearTimeout(cleanup);
+  }, [exitingIndex]);
+
+  const handleMouseMove = (e) => {
+    if (prefersReducedMotion || !sectionRef.current || !parallaxRef.current) return;
+    const rect = sectionRef.current.getBoundingClientRect();
+    const nx = ((e.clientX - rect.left) / rect.width - 0.5) * 2;
+    const ny = ((e.clientY - rect.top) / rect.height - 0.5) * 2;
+    const offsetX = (nx * 14).toFixed(2);
+    const offsetY = (ny * 10).toFixed(2);
+    parallaxRef.current.style.transform = `translate3d(${offsetX}px, ${offsetY}px, 0)`;
+  };
+
+  const handleMouseLeave = () => {
+    if (parallaxRef.current) {
+      parallaxRef.current.style.transform = "translate3d(0px, 0px, 0px)";
+    }
+  };
+
+  const currentSlide = SLIDES[activeIndex];
+  const exitingSlide = exitingIndex !== null ? SLIDES[exitingIndex] : null;
+
+  const getEnterLineStyle = (idx) => {
+    if (prefersReducedMotion) return {};
+    if (isEntering) {
+      return {
+        opacity: 0,
+        transform: "translate3d(0, 16px, 0)",
+        filter: "blur(6px)",
+        transition: "none",
+      };
+    }
+    return {
+      opacity: 1,
+      transform: "translate3d(0, 0, 0)",
+      filter: "blur(0px)",
+      transitionProperty: "opacity, transform, filter",
+      transitionDuration: "600ms",
+      transitionTimingFunction: EASE_OUT,
+      transitionDelay: `${90 + idx * 80}ms`,
+    };
+  };
+
+  const getEnterBlockStyle = (delayMs) => {
+    if (prefersReducedMotion) return {};
+    if (isEntering) {
+      return {
+        opacity: 0,
+        transform: "translate3d(0, 14px, 0)",
+        filter: "blur(4px)",
+        transition: "none",
+      };
+    }
+    return {
+      opacity: 1,
+      transform: "translate3d(0, 0, 0)",
+      filter: "blur(0px)",
+      transitionProperty: "opacity, transform, filter",
+      transitionDuration: "600ms",
+      transitionTimingFunction: EASE_OUT,
+      transitionDelay: `${delayMs}ms`,
+    };
+  };
+
+  const getEnterImageStyle = () => {
+    if (prefersReducedMotion) return {};
+    if (isEntering) {
+      return {
+        opacity: 0,
+        transform: "scale(0.93)",
+        filter: "blur(8px)",
+        transition: "none",
+      };
+    }
+    return {
+      opacity: 1,
+      transform: "scale(1)",
+      filter: "blur(0px)",
+      transitionProperty: "opacity, transform, filter",
+      transitionDuration: "800ms",
+      transitionTimingFunction: EASE_OUT,
+      transitionDelay: "120ms",
+    };
+  };
+
   return (
-    <section className="relative isolate min-h-[90svh] flex flex-col justify-between overflow-hidden bg-[#070d1c] text-white">
+    <section
+      ref={sectionRef}
+      onMouseMove={handleMouseMove}
+      onMouseLeave={handleMouseLeave}
+      className="relative isolate min-h-[calc(100svh-84px)] sm:min-h-[calc(100svh-88px)] flex items-center overflow-hidden bg-[#070d1c] text-white"
+    >
       {/* Background Interactive Floating Lines Fluid Dynamics */}
       <div className="absolute inset-0 -z-20 overflow-hidden pointer-events-auto">
         <FloatingLines
@@ -55,7 +210,7 @@ export default function HeroSection() {
 
         {/* Minimal Subtle Edge Vignette */}
         <div
-          className="absolute inset-0 bg-gradient-to-r from-[#070d1c]/40 via-transparent to-transparent pointer-events-none"
+          className="absolute inset-0 bg-gradient-to-r from-[#070d1c]/50 via-transparent to-transparent pointer-events-none"
           aria-hidden="true"
         />
         <div
@@ -64,94 +219,179 @@ export default function HeroSection() {
         />
       </div>
 
-      {/* Main Hero Body */}
-      <div className="relative mx-auto w-full max-w-7xl px-4 pt-12 pb-8 sm:px-6 sm:pt-16 sm:pb-12 lg:px-8 lg:pt-20 lg:pb-16 my-auto">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-8 items-center">
-          {/* Left Column: Refined Editorial Typography */}
-          <div className="lg:col-span-7 space-y-5 sm:space-y-6 z-10 max-w-2xl">
-            <Reveal>
+      {/* Main Hero Container */}
+      <div className="relative mx-auto w-full max-w-7xl px-4 pt-5 pb-12 sm:px-6 sm:pt-6 sm:pb-16 lg:px-8 lg:pt-6 lg:pb-20">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-6 items-center">
+          {/* Left Column: Wider Text Column */}
+          <div className="lg:col-span-6 xl:col-span-6 z-10 relative">
+            {/* Exiting Slide Text Layer (fades out seamlessly without leaving an empty gap) */}
+            {exitingSlide && (
+              <div
+                aria-hidden="true"
+                className="pointer-events-none absolute inset-0 animate-[heroFadeOut_340ms_cubic-bezier(0.22,1,0.36,1)_forwards]"
+              >
+                <div className="inline-flex items-center gap-2 text-[11px] font-mono font-bold tracking-[0.2em] uppercase text-bronze-300 mb-3">
+                  <span className="w-1.5 h-1.5 rounded-full bg-bronze-400" />
+                  <span>{exitingSlide.eyebrow}</span>
+                </div>
+                <h1 className="text-4xl sm:text-5xl lg:text-[3.5rem] xl:text-[4.15rem] font-bold leading-[1.05] tracking-[-0.025em] uppercase text-white">
+                  {exitingSlide.lines.map((line, idx) => (
+                    <span
+                      key={`${exitingSlide.id}-exit-${idx}`}
+                      className={`block ${
+                        idx === exitingSlide.lines.length - 1 ? "text-bronze-400" : ""
+                      }`}
+                    >
+                      {line}
+                    </span>
+                  ))}
+                </h1>
+                <p className="mt-4 max-w-lg text-sm sm:text-base md:text-[1.0625rem] text-slate-300 leading-relaxed">
+                  {exitingSlide.description}
+                </p>
+              </div>
+            )}
+
+            {/* Active Slide Text Layer */}
+            <div key={currentSlide.id} className="relative">
               {/* Eyebrow */}
-              <div className="inline-flex items-center gap-2 text-xs font-mono font-bold tracking-wider uppercase text-bronze-300 mb-3 sm:mb-4">
+              <div
+                style={getEnterBlockStyle(40)}
+                className="inline-flex items-center gap-2 text-[11px] font-mono font-bold tracking-[0.2em] uppercase text-bronze-300 mb-3 will-change-[opacity,transform,filter]"
+              >
                 <span className="w-1.5 h-1.5 rounded-full bg-bronze-400" />
-                <span>PRECISION • PERFORMANCE • TRUST</span>
+                <span>{currentSlide.eyebrow}</span>
               </div>
 
-              {/* Controlled, Proportional Headline */}
-              <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-[3.25rem] xl:text-[3.65rem] font-black leading-[1.08] tracking-[-0.03em] uppercase text-white">
-                ENGINEERED<br />
-                TO KEEP<br />
-                <span className="text-slate-300">INDUSTRY MOVING.</span>
+              {/* Headline */}
+              <h1 className="text-4xl sm:text-5xl lg:text-[3.5rem] xl:text-[4.15rem] font-bold leading-[1.05] tracking-[-0.025em] uppercase text-white">
+                {currentSlide.lines.map((line, idx) => (
+                  <span
+                    key={`${currentSlide.id}-line-${idx}`}
+                    style={getEnterLineStyle(idx)}
+                    className={`block will-change-[opacity,transform,filter] ${
+                      idx === currentSlide.lines.length - 1 ? "text-bronze-400" : ""
+                    }`}
+                  >
+                    {line}
+                  </span>
+                ))}
               </h1>
 
-              {/* Subtitle from home.md */}
-              <p className="mt-4 max-w-xl text-sm sm:text-base md:text-lg text-slate-300 leading-relaxed font-normal">
-                SealForge is an Indian engineering manufacturer of high-reliability mechanical seals, non-API overhung pumps, and water-lubricated cutlass bearings. We help plant engineers, pump OEMs, and marine operators keep rotating equipment leak-free and running under demanding industrial duties.
+              {/* Short Description */}
+              <p
+                style={getEnterBlockStyle(280)}
+                className="mt-4 max-w-lg text-sm sm:text-base md:text-[1.0625rem] text-slate-300 leading-relaxed font-normal will-change-[opacity,transform,filter]"
+              >
+                {currentSlide.description}
               </p>
 
-              {/* Action Buttons */}
-              <div className="mt-8 flex flex-col sm:flex-row items-stretch sm:items-center gap-4 pt-1">
-                <Button variant="primary" href="/products">
-                  Explore Our Products
+              {/* Compact Modern Engineering Spec Chips */}
+              <div
+                style={getEnterBlockStyle(330)}
+                className="mt-5 flex flex-wrap items-center gap-2 will-change-[opacity,transform,filter]"
+              >
+                {currentSlide.specs.map((spec) => (
+                  <span
+                    key={spec}
+                    className="inline-flex items-center rounded-md border border-white/12 bg-white/[0.04] px-2.5 py-1 text-[11px] font-mono tracking-wide text-slate-200 backdrop-blur-sm"
+                  >
+                    {spec}
+                  </span>
+                ))}
+              </div>
+
+              {/* Two Common Buttons Side by Side */}
+              <div
+                style={getEnterBlockStyle(380)}
+                className="mt-7 flex flex-wrap items-center gap-4 will-change-[opacity,transform,filter]"
+              >
+                <Button variant="primary" href={currentSlide.primaryHref}>
+                  {currentSlide.primaryLabel}
                 </Button>
                 <Button variant="white" href="/contact">
                   Consult an Engineer
                 </Button>
               </div>
-            </Reveal>
+            </div>
           </div>
 
-          {/* Right Column: Clean, Borderless Mechanical Seal Showcase */}
-          <div className="lg:col-span-5 relative flex items-center justify-center">
-            <Reveal delay={150} className="w-full">
-              <div className="relative mx-auto w-full max-w-[440px] sm:max-w-[480px] lg:max-w-none flex items-center justify-center transition-transform duration-500 ease-out hover:scale-[1.02]">
-                <div className="relative w-full aspect-[1024/682] drop-shadow-[0_25px_50px_rgba(0,0,0,0.85)]">
-                  <Image
-                    src={cartridgeSealImg}
-                    alt="SealForge Precision Engineered Cartridge Mechanical Seal"
-                    fill
-                    priority
-                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 600px"
-                    className="object-contain filter contrast-[1.06] brightness-[0.98]"
-                  />
-                </div>
-              </div>
-            </Reveal>
-          </div>
-        </div>
-      </div>
+          {/* Right Column: Large Product Showcase with Radial Backdrop & Mouse Parallax */}
+          <div className="lg:col-span-6 xl:col-span-6 relative flex items-center justify-center">
+            {/* Subtle Ambient Spotlight Behind Product */}
+            <div
+              className="pointer-events-none absolute inset-0 m-auto h-[320px] w-[320px] sm:h-[420px] sm:w-[420px] lg:h-[480px] lg:w-[480px] rounded-full bg-[radial-gradient(circle_at_center,rgba(59,87,157,0.28)_0%,rgba(182,129,42,0.08)_48%,transparent_72%)] blur-2xl"
+              aria-hidden="true"
+            />
 
-      {/* Bottom Trust Strip: Key Capability Highlights */}
-      <div className="relative border-t border-white/10 bg-[#070d1c]/80 backdrop-blur-md">
-        <div className="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 divide-y md:divide-y-0 md:divide-x divide-white/10">
-            {trustHighlights.map((item, idx) => {
-              const Icon = item.icon;
-              return (
-                <Link
-                  key={idx}
-                  href={item.link}
-                  className={`group flex items-start gap-4 pt-4 md:pt-0 ${
-                    idx > 0 ? "md:pl-6" : ""
-                  } hover:opacity-90 transition-opacity`}
+            <div
+              ref={parallaxRef}
+              className="relative w-full flex items-center justify-center will-change-transform transition-transform duration-300 ease-out"
+            >
+              {/* Exiting Image Layer */}
+              {exitingSlide && (
+                <div
+                  aria-hidden="true"
+                  className="pointer-events-none absolute inset-0 flex items-center justify-center animate-[heroImgOut_360ms_cubic-bezier(0.22,1,0.36,1)_forwards]"
                 >
-                  <div className="p-2.5 rounded-xl bg-brand-900/60 border border-brand-700/40 text-bronze-300 shrink-0 group-hover:scale-105 transition-transform">
-                    <Icon className="w-5 h-5 text-bronze-300" />
+                  <div className="relative w-full max-w-[400px] sm:max-w-[470px] lg:max-w-[540px] aspect-[4/3]">
+                    <Image
+                      src={exitingSlide.image}
+                      alt=""
+                      fill
+                      sizes="(max-width: 768px) 90vw, (max-width: 1200px) 48vw, 540px"
+                      className="object-contain drop-shadow-[0_25px_50px_rgba(0,0,0,0.85)] filter contrast-[1.04] brightness-[0.98]"
+                    />
                   </div>
-                  <div>
-                    <div className="flex items-center gap-1.5 text-sm font-bold text-white group-hover:text-bronze-300 transition-colors">
-                      <span>{item.title}</span>
-                      <ArrowRight className="w-3.5 h-3.5 opacity-0 -translate-x-1 group-hover:opacity-100 group-hover:translate-x-0 transition-all text-bronze-300" />
-                    </div>
-                    <p className="mt-1 text-xs text-slate-300 leading-relaxed font-normal">
-                      {item.desc}
-                    </p>
-                  </div>
-                </Link>
-              );
-            })}
+                </div>
+              )}
+
+              {/* Active Image Layer */}
+              <div
+                key={`${currentSlide.id}-img`}
+                style={getEnterImageStyle()}
+                className="relative w-full max-w-[400px] sm:max-w-[470px] lg:max-w-[540px] aspect-[4/3] flex items-center justify-center will-change-[opacity,transform,filter]"
+              >
+                <Image
+                  src={currentSlide.image}
+                  alt={currentSlide.alt}
+                  fill
+                  priority
+                  sizes="(max-width: 768px) 90vw, (max-width: 1200px) 48vw, 540px"
+                  className="object-contain drop-shadow-[0_25px_50px_rgba(0,0,0,0.85)] filter contrast-[1.04] brightness-[0.98]"
+                />
+              </div>
+            </div>
           </div>
         </div>
       </div>
+
+      <style jsx>{`
+        @keyframes heroFadeOut {
+          from {
+            opacity: 1;
+            transform: translate3d(0, 0, 0);
+            filter: blur(0px);
+          }
+          to {
+            opacity: 0;
+            transform: translate3d(0, -8px, 0);
+            filter: blur(6px);
+          }
+        }
+        @keyframes heroImgOut {
+          from {
+            opacity: 1;
+            transform: scale(1);
+            filter: blur(0px);
+          }
+          to {
+            opacity: 0;
+            transform: scale(0.94);
+            filter: blur(8px);
+          }
+        }
+      `}</style>
     </section>
   );
 }

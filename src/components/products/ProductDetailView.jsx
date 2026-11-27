@@ -2,7 +2,17 @@ import Image from "next/image";
 import Link from "next/link";
 import {
   ArrowDown,
-  ArrowDownToLine,
+  Box,
+  Building2,
+  Check,
+  ChevronsUp,
+  ClipboardCheck,
+  Crosshair,
+  Droplets,
+  Gauge,
+  Layers,
+  Ruler,
+  Thermometer,
   ArrowUpRight,
   ChevronRight,
   Image as ImageIcon,
@@ -10,10 +20,11 @@ import {
   Maximize2,
 } from "lucide-react";
 import Button from "@/components/common/Button";
-import { cataloguesData, companyInfo } from "@/data/company";
+import { companyInfo } from "@/data/company";
 import { materialGuide } from "@/data/products";
 import CutlassDimensionsDiagram from "./CutlassDimensionsDiagram";
 import ProductCard from "./ProductCard";
+import "./ProductDetailView.css";
 
 const specLabels = {
   pumpType: "Pump type",
@@ -33,6 +44,20 @@ const specLabels = {
   lubrication: "Lubrication medium",
   shellTypes: "Shell configurations",
   lining: "Elastomer lining",
+};
+
+const specIcons = {
+  shaftDiameter: Ruler,
+  maxPressure: Gauge,
+  temperature: Thermometer,
+  maxTemp: Thermometer,
+  capacity: Droplets,
+  head: ChevronsUp,
+  pumpModels: Box,
+  sealConstructions: Layers,
+  standard: ClipboardCheck,
+  lubrication: Droplets,
+  shellTypes: Layers,
 };
 
 const materialLabels = {
@@ -66,7 +91,18 @@ const quoteRequirements = {
 
 const container = "mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8";
 const sectionOffset = "scroll-mt-32";
-const heading = "text-2xl font-extrabold tracking-tight text-brand-950 sm:text-4xl";
+const heading = "text-[1.7rem] font-extrabold leading-tight tracking-tight text-brand-950 sm:text-4xl";
+
+function DetailHeading({ id, icon: Icon, children }) {
+  return (
+    <div className="sf-product-section-heading flex items-center gap-3 sm:gap-4">
+      <span className="grid size-10 shrink-0 place-items-center rounded-md bg-brand-900 text-bronze-300 sm:size-11">
+        <Icon className="size-5" aria-hidden="true" />
+      </span>
+      <h2 id={id} className={heading}>{children}</h2>
+    </div>
+  );
+}
 const inlineLink =
   "inline-flex w-fit items-center gap-2 text-sm font-bold text-brand-700 hover:text-brand-950 hover:underline underline-offset-4";
 
@@ -88,9 +124,9 @@ function getHeroSpecs(product) {
 
 function SpecRows({ entries, labels }) {
   return (
-    <dl className="divide-y divide-steel-200 border-y border-steel-200">
+    <dl className="divide-y divide-steel-200 overflow-hidden rounded-lg border border-steel-200 bg-white">
       {entries.map(([key, value]) => (
-        <div key={key} className="grid gap-1 px-3 py-3.5 even:bg-steel-50 sm:grid-cols-[minmax(0,2fr)_minmax(0,3fr)] sm:gap-6 sm:px-4">
+        <div key={key} className="grid gap-1 px-4 py-3.5 even:bg-brand-50/50 sm:grid-cols-[minmax(0,2fr)_minmax(0,3fr)] sm:gap-6 sm:px-5">
           <dt className="text-sm text-steel-600">{labels[key] ?? key}</dt>
           <dd className="text-sm font-semibold leading-relaxed text-brand-950">{value}</dd>
         </div>
@@ -101,19 +137,14 @@ function SpecRows({ entries, labels }) {
 
 function ProductImage({ product }) {
   return (
-    <div className="relative isolate min-w-0">
-      <div
-        aria-hidden="true"
-        className="absolute inset-0 -z-10 bg-brand-100 [clip-path:polygon(0_0,96%_0,100%_7%,100%_100%,4%_100%,0_93%)]"
-      />
-      <div
-        aria-hidden="true"
-        className="absolute inset-px -z-10 overflow-hidden bg-[radial-gradient(ellipse_at_center,#fff_18%,#f3f6fd_63%,#e5ecfb_100%)] [clip-path:polygon(0_0,96%_0,100%_7%,100%_100%,4%_100%,0_93%)]"
-      >
-        <div className="absolute inset-0 bg-[linear-gradient(to_right,#25366412_1px,transparent_1px),linear-gradient(to_bottom,#25366412_1px,transparent_1px)] bg-size-[28px_28px] [mask-image:radial-gradient(ellipse,#0000_22%,#000_94%)]" />
-        <div className="absolute inset-[10%] rounded-full border border-dashed border-brand-300/60" />
-        <div className="absolute inset-x-[12%] top-1/2 h-px bg-brand-300/35" />
-        <div className="absolute inset-y-[9%] left-1/2 w-px bg-brand-300/35" />
+    <div className="sf-product-stage relative isolate min-w-0 overflow-hidden">
+      <div aria-hidden="true" className="sf-product-stage-grid pointer-events-none absolute inset-0 -z-10" />
+      <div aria-hidden="true" className="pointer-events-none absolute inset-3 -z-10 rounded-sm border border-brand-200/70 sm:inset-5">
+        <div className="absolute -left-px -top-px size-5 border-l-2 border-t-2 border-bronze-600/70" />
+        <div className="absolute -bottom-px -right-px size-5 border-b-2 border-r-2 border-bronze-600/70" />
+        <div className="absolute inset-x-[14%] top-1/2 h-px bg-brand-200/75" />
+        <div className="absolute inset-y-[11%] left-1/2 w-px bg-brand-200/75" />
+        <div className="absolute inset-y-[11%] inset-x-[18%] rounded-[50%] border border-brand-200/65" />
       </div>
       <div className="relative aspect-[4/3] sm:aspect-[16/11] lg:aspect-[4/3]">
         {product.image ? (
@@ -124,14 +155,14 @@ function ProductImage({ product }) {
               fill
               preload
               sizes="(min-width: 1280px) 610px, (min-width: 1024px) 50vw, 100vw"
-              className="object-contain p-6 pb-12 drop-shadow-[0_20px_22px_rgba(16,26,53,0.22)] sm:p-9 sm:pb-14"
+              className="sf-product-stage-image object-contain p-6 pb-12 sm:p-9 sm:pb-14"
             />
             <a
               href={typeof product.image === "string" ? product.image : product.image.src}
               target="_blank"
               rel="noopener"
               aria-label="View full product image (opens in a new tab)"
-              className="absolute bottom-3 right-3 inline-flex min-h-11 items-center gap-2 border border-brand-200 bg-white px-3 text-xs font-bold text-brand-900 transition-colors hover:bg-brand-50 sm:bottom-4 sm:right-4"
+              className="absolute bottom-4 right-4 z-10 inline-flex min-h-11 items-center gap-2 rounded-md border border-brand-200 bg-white/95 px-3 text-xs font-bold text-brand-900 shadow-sm transition-colors hover:border-brand-400 hover:bg-white sm:bottom-6 sm:right-6"
             >
               <Maximize2 className="size-3.5" aria-hidden="true" />
               Full image
@@ -229,7 +260,7 @@ function BearingImage({ image, alt }) {
 
 function ReferenceTable({ label, columns, rows }) {
   return (
-    <div role="region" aria-label={label} tabIndex={0} className="overflow-x-auto border border-steel-200 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-600">
+    <div role="region" aria-label={label} tabIndex={0} className="overflow-x-auto rounded-lg border border-steel-200 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-600">
       <table className="w-full min-w-[30rem] text-left text-sm">
         <caption className="sr-only">{label}</caption>
         <thead className="bg-brand-900 text-white">
@@ -263,7 +294,6 @@ export default function ProductDetailView({ product, relatedProducts }) {
   const hasOemCodes = !!product.referenceTable?.length;
   const hasApplications = !!product.applications?.length;
   const referenceTitle = hasDimensions ? "Dimensions" : "OEM reference";
-  const catalogue = cataloguesData.find(({ id }) => id === product.category);
   const requirements = quoteRequirements[product.category] ?? [];
   const emailSubject = encodeURIComponent(`Quote request — ${product.name}`);
   const emailBody = encodeURIComponent(
@@ -279,28 +309,27 @@ export default function ProductDetailView({ product, relatedProducts }) {
   ].filter(Boolean);
 
   return (
-    <div className="w-full bg-white text-steel-900">
-      <div className="relative isolate bg-brand-950 text-white">
-        <div aria-hidden="true" className="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_top_right,#253664,transparent_65%)]" />
+    <div className="sf-product-page w-full bg-white text-steel-900">
+      <div className="sf-product-hero border-b border-brand-100 pb-6 sm:pb-8">
         <div className={container}>
-          <nav aria-label="Breadcrumb" className="flex flex-wrap items-center gap-x-2 gap-y-1 border-b border-white/15 py-4 text-xs text-brand-200">
-            <Link href="/" className="hover:text-white hover:underline">Home</Link>
+          <nav aria-label="Breadcrumb" className="flex flex-wrap items-center gap-x-2 gap-y-1 border-b border-brand-900/12 py-4 text-xs text-brand-700">
+            <Link href="/" className="hover:text-brand-950 hover:underline">Home</Link>
             <ChevronRight className="size-3" aria-hidden="true" />
-            <Link href="/products" className="hover:text-white hover:underline">Products</Link>
+            <Link href="/products" className="hover:text-brand-950 hover:underline">Products</Link>
             <ChevronRight className="size-3" aria-hidden="true" />
-            <Link href={`/products#${product.category}`} className="hover:text-white hover:underline">{product.categoryLabel}</Link>
+            <Link href={`/products#${product.category}`} className="hover:text-brand-950 hover:underline">{product.categoryLabel}</Link>
             <ChevronRight className="size-3" aria-hidden="true" />
-            <span aria-current="page" className="text-white">{product.name}</span>
+            <span aria-current="page" className="font-semibold text-brand-950">{product.name}</span>
           </nav>
 
-          <div className="grid items-center gap-7 py-8 sm:gap-10 sm:py-12 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.05fr)] lg:gap-14 lg:py-14">
+          <div className="grid items-center gap-7 py-7 sm:gap-8 sm:py-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.04fr)] lg:gap-12 lg:py-11">
             <div className="min-w-0">
-              <p className="w-fit border-l-2 border-bronze-400 pl-3 font-mono text-xs font-bold uppercase tracking-widest text-bronze-300">{product.subLabel}</p>
-              <h1 className="mt-4 text-[clamp(2.25rem,5.2vw,4.7rem)] font-extrabold leading-[1.04] tracking-tight text-balance">{product.name}</h1>
-              <p className="mt-4 max-w-lg text-base leading-relaxed text-brand-100 sm:text-lg">{product.tagline}</p>
-              <div className="mt-6 flex flex-wrap items-center gap-x-4 gap-y-3 sm:mt-8">
-                <Button href="#quote" variant="white">Request a quote</Button>
-                <a href="#specifications" className="inline-flex min-h-11 items-center gap-1.5 text-sm font-bold text-brand-100 hover:text-white hover:underline">
+              <p className="sf-product-enter w-fit border-l-2 border-bronze-600 pl-3 font-mono text-xs font-bold uppercase tracking-widest text-bronze-800">{product.subLabel}</p>
+              <h1 className="sf-product-enter mt-4 text-[clamp(2.2rem,4.45vw,4.2rem)] font-extrabold leading-[1.05] tracking-[-0.045em] text-brand-950 text-balance [--enter-delay:60ms]">{product.name}</h1>
+              <p className="sf-product-enter mt-4 max-w-lg text-base leading-relaxed text-steel-700 [--enter-delay:120ms] sm:text-lg">{product.tagline}</p>
+              <div className="sf-product-enter mt-6 flex flex-wrap items-center gap-x-4 gap-y-2 [--enter-delay:170ms] sm:mt-8">
+                <Button href="#quote" variant="primary">Request a quote</Button>
+                <a href="#specifications" className="inline-flex min-h-11 items-center gap-1.5 text-sm font-bold text-brand-800 hover:text-brand-950 hover:underline">
                   View specs <ArrowDown className="size-4" aria-hidden="true" />
                 </a>
               </div>
@@ -310,45 +339,53 @@ export default function ProductDetailView({ product, relatedProducts }) {
         </div>
 
         {heroSpecs.length > 0 && (
-          <div className="border-t border-white/15 bg-white/[.04]">
-            <dl className={`${container} grid divide-y divide-white/15 sm:auto-cols-fr sm:grid-flow-col sm:divide-x sm:divide-y-0`}>
-              {heroSpecs.map(([key, value]) => (
-                <div key={key} className="grid grid-cols-[minmax(0,2fr)_minmax(0,3fr)] items-baseline gap-3 py-3 sm:block sm:px-4 sm:py-5 sm:first:pl-0 lg:px-6">
-                  <dt className="font-mono text-xs font-semibold text-brand-200">{specLabels[key] ?? key}</dt>
-                  <dd className="text-sm font-bold leading-snug text-white sm:mt-1.5 sm:text-lg">{value}</dd>
-                </div>
-              ))}
+          <div className={container}>
+            <dl className="sf-product-metrics grid overflow-hidden rounded-lg border border-brand-800 divide-y divide-white/15 sm:auto-cols-fr sm:grid-flow-col sm:divide-x sm:divide-y-0">
+              {heroSpecs.map(([key, value]) => {
+                const Icon = specIcons[key] ?? Crosshair;
+                return (
+                  <div key={key} className="flex min-w-0 items-start gap-3 px-4 py-3.5 sm:p-4 lg:gap-4 lg:px-5">
+                    <span className="sf-product-metric-icon grid size-9 shrink-0 place-items-center rounded-md text-bronze-300 sm:size-10">
+                      <Icon className="size-[18px]" aria-hidden="true" />
+                    </span>
+                    <div className="min-w-0">
+                      <dt className="font-mono text-xs font-semibold text-brand-200">{specLabels[key] ?? key}</dt>
+                      <dd className="mt-1 text-sm font-bold leading-snug text-white sm:text-base lg:text-lg">{value}</dd>
+                    </div>
+                  </div>
+                );
+              })}
             </dl>
           </div>
         )}
       </div>
 
-      <div className="sticky top-14 z-40 border-b border-steel-200 bg-white/95 backdrop-blur sm:top-[60px]">
-        <nav aria-label="Product details" className={`${container} flex gap-5 overflow-x-auto sm:gap-7`}>
+      <div className="sticky top-14 z-40 border-b border-steel-200 bg-white/95 shadow-[0_7px_16px_-16px_#101a3566] backdrop-blur-md sm:top-[60px]">
+        <nav aria-label="Product details" className={`${container} flex gap-3 overflow-x-auto sm:gap-5`}>
           {sections.map(([id, label]) => (
-            <a key={id} href={`#${id}`} className="inline-flex min-h-12 shrink-0 items-center border-b-2 border-transparent px-0.5 text-sm font-bold text-brand-800 hover:border-bronze-500 hover:text-brand-950 focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-brand-600">
+            <a key={id} href={`#${id}`} className="sf-product-nav-link inline-flex min-h-12 shrink-0 items-center rounded-md px-2 text-sm font-bold text-brand-800 hover:bg-brand-50 hover:text-brand-950 focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-brand-600">
               {label}
             </a>
           ))}
         </nav>
       </div>
 
-      <div className={`${container} grid items-start gap-10 py-10 sm:py-14 lg:grid-cols-[minmax(0,1fr)_18rem] lg:gap-12`}>
-        <div className="min-w-0 space-y-12 sm:space-y-16">
+      <div className={`${container} grid items-start gap-8 py-9 sm:py-12 lg:grid-cols-[minmax(0,1fr)_17rem] lg:gap-10 xl:gap-14`}>
+        <div className="min-w-0 space-y-11 sm:space-y-14">
           <section id="specifications" aria-labelledby="specifications-title" className={sectionOffset}>
-            <h2 id="specifications-title" className={heading}>{hasDimensions || hasOemCodes ? "Technical specifications" : "Operating specifications"}</h2>
+            <DetailHeading id="specifications-title" icon={Gauge}>{hasDimensions || hasOemCodes ? "Technical specifications" : "Operating specifications"}</DetailHeading>
             {product.overview?.length > 0 && (
               <div className="mt-4 max-w-prose space-y-3 text-sm leading-relaxed text-steel-700 sm:text-base">
                 {product.overview.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}
               </div>
             )}
-            {product.badge && <p className="mt-3 text-sm font-semibold text-brand-700">{product.badge}</p>}
+            {product.badge && <p className="mt-4 w-fit rounded border border-brand-100 bg-brand-50 px-2.5 py-1.5 font-mono text-xs font-semibold text-brand-800">{product.badge}</p>}
             <div className="mt-5"><SpecRows entries={specEntries} labels={specLabels} /></div>
           </section>
 
           {hasConstruction && (
             <section id="construction" aria-labelledby="construction-title" className={sectionOffset}>
-              <h2 id="construction-title" className={heading}>Materials and construction</h2>
+              <DetailHeading id="construction-title" icon={Layers}>Materials and construction</DetailHeading>
               <div className="mt-5">
                 {materialEntries.length > 0 && <SpecRows entries={materialEntries} labels={materialLabels} />}
                 <BearingConstruction product={product} />
@@ -358,10 +395,11 @@ export default function ProductDetailView({ product, relatedProducts }) {
 
           {product.features?.length > 0 && (
             <section aria-labelledby="features-title">
-              <h2 id="features-title" className={heading}>Design features</h2>
+              <DetailHeading id="features-title" icon={Crosshair}>Design features</DetailHeading>
               <ul className="mt-5 grid gap-3 sm:grid-cols-2">
                 {product.features.map((feature) => (
-                  <li key={feature} className="border-l-2 border-bronze-500 bg-brand-50 px-4 py-4 text-sm font-medium leading-relaxed text-brand-950">
+                  <li key={feature} className="flex gap-3 rounded-lg border border-brand-100 bg-brand-50/80 p-4 text-sm font-medium leading-relaxed text-brand-950">
+                    <Check className="mt-0.5 size-4 shrink-0 text-bronze-800" aria-hidden="true" />
                     {feature}
                   </li>
                 ))}
@@ -371,9 +409,14 @@ export default function ProductDetailView({ product, relatedProducts }) {
 
           {hasApplications && (
             <section id="applications" aria-labelledby="applications-title" className={sectionOffset}>
-              <h2 id="applications-title" className={heading}>Typical applications</h2>
-              <ul className="mt-5 grid list-disc gap-x-8 gap-y-2 border-y border-steel-200 py-4 pl-5 text-sm leading-relaxed text-steel-700 marker:text-bronze-600 sm:grid-cols-2 sm:text-base">
-                {product.applications.map((application) => <li key={application}>{application}</li>)}
+              <DetailHeading id="applications-title" icon={Building2}>Typical applications</DetailHeading>
+              <ul className="mt-5 grid gap-px overflow-hidden rounded-lg border border-steel-200 bg-steel-200 text-sm leading-relaxed text-steel-700 sm:grid-cols-2">
+                {product.applications.map((application) => (
+                  <li key={application} className="flex items-baseline gap-3 bg-white px-4 py-3.5">
+                    <span className="size-1.5 shrink-0 rotate-45 bg-bronze-600" aria-hidden="true" />
+                    {application}
+                  </li>
+                ))}
               </ul>
               {product.industries?.length > 0 && (
                 <ul aria-label="Industries" className="mt-4 flex flex-wrap gap-2">
@@ -387,7 +430,7 @@ export default function ProductDetailView({ product, relatedProducts }) {
 
           {(hasDimensions || hasOemCodes) && (
             <section id="reference" aria-labelledby="reference-title" className={`${sectionOffset} space-y-5`}>
-              <h2 id="reference-title" className={heading}>{hasDimensions ? "Reference dimensions" : "OEM seal code reference"}</h2>
+              <DetailHeading id="reference-title" icon={hasDimensions ? Ruler : ClipboardCheck}>{hasDimensions ? "Reference dimensions" : "OEM seal code reference"}</DetailHeading>
               {hasDimensions && (
                 <>
                   <CutlassDimensionsDiagram />
@@ -410,27 +453,29 @@ export default function ProductDetailView({ product, relatedProducts }) {
           )}
         </div>
 
-        <aside aria-labelledby="resources-title" className="border border-brand-100 border-t-2 border-t-bronze-500 bg-brand-50 p-5 lg:sticky lg:top-32">
-          <h2 id="resources-title" className="text-lg font-extrabold text-brand-950">Selection resources</h2>
-          {catalogue && (
-            <a href={catalogue.pdfPath} download className="mt-4 flex min-h-11 items-center justify-between gap-3 border border-brand-200 bg-white px-3 py-2 text-sm font-bold text-brand-950 hover:border-brand-400">
-              <span>Download catalogue <span className="mt-0.5 block text-xs font-medium text-steel-600">PDF · {catalogue.size}</span></span>
-              <ArrowDownToLine className="size-4 shrink-0 text-brand-700" aria-hidden="true" />
-            </a>
-          )}
-          <Link href="/products#materials" className={`${inlineLink} mt-4`}>
-            Material selection guide <ArrowUpRight className="size-4" aria-hidden="true" />
-          </Link>
-          <details className="mt-4 border-t border-brand-200 pt-3">
-            <summary className="cursor-pointer py-1 text-sm font-bold text-brand-800">Compatibility checks</summary>
-            <ul className="mt-3 list-disc space-y-2 pl-4 text-sm leading-relaxed text-steel-700">
-              {materialGuide.selectionRules.map((rule) => <li key={rule}>{rule}</li>)}
-            </ul>
-          </details>
+        <aside aria-labelledby="resources-title" className="overflow-hidden rounded-lg border border-brand-100 bg-brand-50 lg:sticky lg:top-32">
+          <div className="flex items-center gap-2 border-b border-brand-100 bg-white px-4 py-3.5">
+            <ClipboardCheck className="size-[18px] shrink-0 text-bronze-800" aria-hidden="true" />
+            <h2 id="resources-title" className="text-sm font-extrabold text-brand-950">Selection resources</h2>
+          </div>
+          <div className="px-4 pb-4">
+            <Link href="/products#materials" className={`${inlineLink} flex min-h-11 w-full justify-between`}>
+              Material selection guide <ArrowUpRight className="size-4 shrink-0" aria-hidden="true" />
+            </Link>
+            <details className="group border-t border-brand-200">
+              <summary className="flex min-h-11 cursor-pointer list-none items-center justify-between gap-2 text-sm font-bold text-brand-800 [&::-webkit-details-marker]:hidden">
+                Compatibility checks
+                <ChevronRight className="size-4 shrink-0 motion-safe:transition-transform group-open:rotate-90" aria-hidden="true" />
+              </summary>
+              <ul className="list-disc space-y-2 pb-1 pl-4 text-sm leading-relaxed text-steel-700">
+                {materialGuide.selectionRules.map((rule) => <li key={rule}>{rule}</li>)}
+              </ul>
+            </details>
+          </div>
         </aside>
       </div>
 
-      <section id="quote" aria-labelledby="quote-title" className={`${sectionOffset} border-y border-brand-800 bg-brand-950 text-white`}>
+      <section id="quote" aria-labelledby="quote-title" className={`${sectionOffset} sf-product-quote border-y border-brand-800 text-white`}>
         <div className={`${container} grid gap-7 py-9 sm:py-12 lg:grid-cols-[minmax(0,1fr)_minmax(0,.8fr)] lg:gap-14`}>
           <div>
             <h2 id="quote-title" className="text-2xl font-extrabold tracking-tight sm:text-4xl">Request a technical quote</h2>
@@ -439,7 +484,7 @@ export default function ProductDetailView({ product, relatedProducts }) {
             <p className="mt-3 break-all text-sm text-brand-200">{companyInfo.email}</p>
           </div>
           {requirements.length > 0 && (
-            <div className="border-t border-brand-700 pt-5 lg:border-l lg:border-t-0 lg:pl-7 lg:pt-0">
+            <div className="rounded-lg border border-white/15 bg-white/[.06] p-4 sm:p-6">
               <h3 className="text-base font-bold">Include with your enquiry</h3>
               <ul className="mt-3 list-disc space-y-2 pl-5 text-sm leading-relaxed text-brand-100 marker:text-bronze-400">
                 {requirements.map((item) => <li key={item}>{item}</li>)}
@@ -454,7 +499,7 @@ export default function ProductDetailView({ product, relatedProducts }) {
           <div className={`${container} py-10 sm:py-14`}>
             <div className="mb-6 flex flex-wrap items-baseline justify-between gap-3">
               <h2 id="related-title" className={heading}>Related products</h2>
-              <Link href="/products" className={inlineLink}>View full catalogue <ArrowUpRight className="size-4" aria-hidden="true" /></Link>
+              <Link href="/products" className={inlineLink}>Browse all products <ArrowUpRight className="size-4" aria-hidden="true" /></Link>
             </div>
             <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
               {relatedProducts.map((related) => <ProductCard key={related.slug} product={related} />)}

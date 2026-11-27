@@ -1,0 +1,169 @@
+.sf-product-hero {
+  background:
+    radial-gradient(ellipse at 12% 100%, #f6ede0 0%, transparent 45%),
+    linear-gradient(132deg, #fbfcfe 12%, #eef3fb 100%);
+}
+
+.sf-product-stage {
+  background:
+    radial-gradient(ellipse at 49% 42%, #fff 9%, #f0f4fb 59%, #dce6f8 100%);
+  border: 1px solid var(--color-brand-200);
+  border-radius: 0.5rem;
+  box-shadow: 0 25px 60px -38px #101a3580, inset 0 1px 0 #fff;
+}
+
+.sf-product-stage-grid {
+  background-image:
+    linear-gradient(to right, #25366412 1px, transparent 1px),
+    linear-gradient(to bottom, #25366412 1px, transparent 1px);
+  background-size: 30px 30px;
+  mask-image: radial-gradient(ellipse, #0001 34%, #000 100%);
+}
+
+.sf-product-stage::after {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(112deg, transparent 37%, #fff9 50%, transparent 63%);
+  content: "";
+  opacity: 0;
+  pointer-events: none;
+}
+
+.sf-product-stage-image {
+  filter: drop-shadow(0 22px 21px #101a3530);
+}
+
+.sf-product-metrics {
+  background:
+    linear-gradient(128deg, #263969 0%, #14203f 58%, #0c152a 100%);
+  box-shadow: 0 16px 36px -24px #101a35b3;
+}
+
+.sf-product-metric-icon {
+  background: linear-gradient(145deg, #ffffff17, #ffffff06);
+  border: 1px solid #ffffff24;
+}
+
+.sf-product-nav-link {
+  position: relative;
+  transition: background-color 160ms ease, color 160ms ease;
+}
+
+.sf-product-nav-link::after {
+  position: absolute;
+  inset: auto 0 2px;
+  height: 2px;
+  background: var(--color-bronze-500);
+  content: "";
+  transform: scaleX(0);
+  transition: transform 200ms ease;
+}
+
+.sf-product-nav-link:hover::after,
+.sf-product-nav-link:focus-visible::after,
+.sf-product-page:has([id="specifications"]:target) .sf-product-nav-link[href="#specifications"]::after,
+.sf-product-page:has([id="construction"]:target) .sf-product-nav-link[href="#construction"]::after,
+.sf-product-page:has([id="applications"]:target) .sf-product-nav-link[href="#applications"]::after,
+.sf-product-page:has([id="reference"]:target) .sf-product-nav-link[href="#reference"]::after,
+.sf-product-page:has([id="quote"]:target) .sf-product-nav-link[href="#quote"]::after {
+  transform: scaleX(1);
+}
+
+.sf-product-quote {
+  background:
+    radial-gradient(ellipse at 8% 110%, #594120 0%, transparent 46%),
+    radial-gradient(ellipse at 96% 8%, #334c8a 0%, transparent 62%),
+    #101a35;
+}
+
+@keyframes sf-product-rise-in {
+  from {
+    opacity: 0;
+    translate: 0 14px;
+  }
+  to {
+    opacity: 1;
+    translate: 0 0;
+  }
+}
+
+@keyframes sf-product-image-in {
+  from {
+    opacity: 0;
+    scale: 0.96;
+    translate: 0 12px;
+  }
+  to {
+    opacity: 1;
+    scale: 1;
+    translate: 0 0;
+  }
+}
+
+@keyframes sf-product-light-sweep {
+  0% {
+    opacity: 0;
+    transform: translateX(-55%);
+  }
+  30% {
+    opacity: 0.55;
+  }
+  100% {
+    opacity: 0;
+    transform: translateX(62%);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .sf-product-enter {
+    animation: sf-product-rise-in 560ms cubic-bezier(0.22, 1, 0.36, 1) var(--enter-delay, 0ms) both;
+  }
+
+  .sf-product-stage-image {
+    animation: sf-product-image-in 760ms cubic-bezier(0.22, 1, 0.36, 1) both;
+    transition: transform 450ms cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .sf-product-stage::after {
+    animation: sf-product-light-sweep 900ms ease-in-out 100ms both;
+  }
+}
+
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  .sf-product-stage:hover .sf-product-stage-image {
+    transform: scale(1.045);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html:has(.sf-product-page) {
+    scroll-behavior: auto;
+  }
+
+  .sf-product-nav-link,
+  .sf-product-nav-link::after {
+    transition: none;
+  }
+}
+
+@keyframes sf-product-section-enter {
+  from {
+    opacity: 0.65;
+    translate: 0 10px;
+  }
+  to {
+    opacity: 1;
+    translate: 0 0;
+  }
+}
+
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .sf-product-section-heading {
+      animation: sf-product-section-enter ease-out both;
+      animation-timeline: view();
+      animation-range: entry 0% cover 18%;
+    }
+  }
+}

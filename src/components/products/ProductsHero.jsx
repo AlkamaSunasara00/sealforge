@@ -136,12 +136,12 @@ export default function ProductsHero() {
       ref={sectionRef}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
-      className="relative isolate min-h-[640px] h-[calc(100svh-84px)] sm:h-[calc(100svh-88px)] max-h-[900px] flex flex-col items-center justify-center overflow-hidden bg-[#070d1c] text-white border-b border-white/10"
+      className="relative isolate h-auto pt-8 pb-10 sm:py-0 sm:min-h-[640px] sm:h-[calc(100svh-88px)] sm:max-h-[880px] flex flex-col items-center justify-center overflow-hidden bg-[#070d1c] text-white border-b border-white/10"
     >
       {/* Layer 0: Blueprint Background (moves slightly opposite on parallax) */}
       <div
         ref={blueprintRef}
-        className="absolute inset-0 -z-30 bg-cover bg-center bg-no-repeat opacity-20 will-change-transform transition-transform duration-300 ease-out"
+        className="absolute inset-0 -z-30 bg-cover bg-center bg-no-repeat opacity-25 sm:opacity-20 will-change-transform transition-transform duration-300 ease-out"
         style={{
           backgroundImage: `url(${mechanicalSealBlueprint.src})`,
           transform: "translate3d(0px, 0px, 0px) scale(1.04)",
@@ -149,7 +149,7 @@ export default function ProductsHero() {
         aria-hidden="true"
       />
       <div
-        className="absolute inset-0 -z-20 bg-gradient-to-b from-[#070d1c]/85 via-[#070d1c]/78 to-[#070d1c]"
+        className="absolute inset-0 -z-20 bg-gradient-to-b from-[#070d1c]/85 via-[#070d1c]/75 to-[#070d1c]"
         aria-hidden="true"
       />
 
@@ -161,12 +161,21 @@ export default function ProductsHero() {
       >
         <div
           style={glowAnimStyle}
-          className="h-[340px] w-[340px] sm:h-[460px] sm:w-[460px] lg:h-[540px] lg:w-[540px] rounded-full bg-[radial-gradient(circle_at_center,rgba(56,189,248,0.16)_0%,rgba(37,54,100,0.28)_42%,transparent_72%)] blur-2xl"
+          className="h-[300px] w-[300px] sm:h-[460px] sm:w-[460px] lg:h-[540px] lg:w-[540px] rounded-full bg-[radial-gradient(circle_at_center,rgba(56,189,248,0.22)_0%,rgba(37,54,100,0.32)_44%,transparent_72%)] blur-2xl"
         />
       </div>
 
       {/* Centered Composition */}
       <div className="mx-auto w-full px-3 sm:px-6 flex flex-col items-center justify-center text-center">
+        {/* Subtle Top Eyebrow on Mobile so top feels anchored */}
+        <div
+          style={backLineAnimStyle}
+          className="sm:hidden inline-flex items-center gap-2 text-[10px] font-mono font-bold tracking-[0.2em] uppercase text-bronze-300 mb-3"
+        >
+          <span className="w-1.5 h-1.5 rounded-[1px] bg-bronze-400" />
+          <span>SEALFORGE HARDWARE PORTFOLIO</span>
+        </div>
+
         <h1 className="relative w-full flex flex-col items-center justify-center">
           {/* Layer 2 (Back, z-1): Outline "ENGINEERED" — 90-95% viewport width */}
           <div
@@ -179,16 +188,16 @@ export default function ProductsHero() {
                 color: "rgba(255, 255, 255, 0.04)",
                 WebkitTextStroke: "clamp(1.2px, 0.16vw, 2.2px) rgba(255, 255, 255, 0.56)",
               }}
-              className="block text-[13.4vw] sm:text-[13.6vw] lg:text-[13.4vw] leading-[0.84] font-bold tracking-[-0.04em] uppercase whitespace-nowrap select-none will-change-[opacity,transform]"
+              className="block text-[14.2vw] sm:text-[13.6vw] lg:text-[13.4vw] leading-[0.84] font-bold tracking-[-0.04em] uppercase whitespace-nowrap select-none will-change-[opacity,transform]"
             >
               ENGINEERED
             </span>
           </div>
 
-          {/* Layer 3 (Middle, z-2): Product Image (~52% viewport width desktop, ~80% mobile, max ~52% hero height) */}
+          {/* Layer 3 (Middle, z-2): Product Image (~52% viewport width desktop, ~92% mobile) */}
           <div
             ref={imageLayerRef}
-            className="relative z-[2] -mt-[5.2vw] sm:-mt-[4.8vw] lg:-mt-[4.6vw] w-[80vw] sm:w-[62vw] md:w-[55vw] lg:w-[52vw] max-w-[760px] mx-auto will-change-transform transition-transform duration-300 ease-out"
+            className="relative z-[2] -mt-[3.5vw] sm:-mt-[4.8vw] lg:-mt-[4.6vw] w-[92vw] sm:w-[62vw] md:w-[55vw] lg:w-[52vw] max-w-[440px] sm:max-w-[760px] mx-auto will-change-transform transition-transform duration-300 ease-out"
           >
             <div
               style={imageAnimStyle}
@@ -204,8 +213,8 @@ export default function ProductsHero() {
                   src={heroCompositeImg}
                   alt="SealForge Mechanical Seals, Industrial Pumps, and Cutlass Bearings"
                   priority
-                  sizes="(max-width: 640px) 80vw, (max-width: 1024px) 55vw, 52vw"
-                  className="w-full h-auto max-h-[38svh] sm:max-h-[46svh] lg:max-h-[48svh] object-contain drop-shadow-[0_24px_48px_rgba(0,0,0,0.85)]"
+                  sizes="(max-width: 640px) 92vw, (max-width: 1024px) 55vw, 52vw"
+                  className="w-full h-auto max-h-[40svh] sm:max-h-[46svh] lg:max-h-[48svh] object-contain drop-shadow-[0_24px_48px_rgba(0,0,0,0.85)]"
                 />
               </div>
 
@@ -216,7 +225,7 @@ export default function ProductsHero() {
                 className="w-full flex justify-center will-change-[opacity,transform]"
               >
                 <div
-                  className={`-mt-3 sm:-mt-4 h-5 sm:h-7 w-[68%] rounded-full bg-black/70 blur-xl pointer-events-none ${
+                  className={`-mt-2 sm:-mt-4 h-4 sm:h-7 w-[68%] rounded-full bg-black/70 blur-xl pointer-events-none ${
                     prefersReducedMotion ? "" : "hero-shadow-pulse"
                   }`}
                 />
@@ -227,11 +236,11 @@ export default function ProductsHero() {
           {/* Layer 4 (Front, z-3): Solid Bronze-400 "CATALOGUE." cutting across product */}
           <div
             ref={frontLineRef}
-            className="relative z-[3] -mt-[10.5vw] sm:-mt-[9.5vw] lg:-mt-[9vw] w-full flex justify-center will-change-transform transition-transform duration-300 ease-out pointer-events-none"
+            className="relative z-[3] -mt-[8vw] sm:-mt-[9.5vw] lg:-mt-[9vw] w-full flex justify-center will-change-transform transition-transform duration-300 ease-out pointer-events-none"
           >
             <span
               style={frontLineAnimStyle}
-              className="relative block text-[13.4vw] sm:text-[13.6vw] lg:text-[13.4vw] leading-[0.84] font-bold tracking-[-0.04em] uppercase whitespace-nowrap select-none text-bronze-400 drop-shadow-[0_12px_28px_rgba(7,13,28,0.94)] will-change-[opacity,transform]"
+              className="relative block text-[14.2vw] sm:text-[13.6vw] lg:text-[13.4vw] leading-[0.84] font-bold tracking-[-0.04em] uppercase whitespace-nowrap select-none text-bronze-400 drop-shadow-[0_12px_28px_rgba(7,13,28,0.94)] will-change-[opacity,transform]"
             >
               CATALOGUE.
             </span>
@@ -241,12 +250,12 @@ export default function ProductsHero() {
         {/* Layer 5 (Front, z-4): Buttons directly under "CATALOGUE." */}
         <div
           style={buttonsAnimStyle}
-          className="relative z-[4] mt-5 sm:mt-7 flex flex-wrap items-center justify-center gap-4 will-change-[opacity,transform]"
+          className="relative z-[4] mt-6 sm:mt-7 flex flex-col sm:flex-row items-stretch sm:items-center justify-center gap-3 sm:gap-4 w-full max-w-[290px] sm:max-w-none will-change-[opacity,transform]"
         >
-          <Button variant="primary" href="#mechanical-seals">
+          <Button variant="primary" href="#mechanical-seals" className="w-full sm:w-auto">
             Explore Products
           </Button>
-          <Button variant="white" href="/contact">
+          <Button variant="white" href="/contact" className="w-full sm:w-auto">
             Consult an Engineer
           </Button>
         </div>

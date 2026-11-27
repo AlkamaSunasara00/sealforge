@@ -1,20 +1,21 @@
 "use client";
 
-import React, { useEffect, useRef, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import Button from "@/components/common/Button";
-import FloatingLines from "@/components/common/FloatingLines";
 import mechanicalSealsImg from "@/assets/mechenical-seals-main.webp";
 import pumpsImg from "@/assets/pumps-main.webp";
 import cutlassBearingImg from "@/assets/cutlass-bearing-main.webp";
 
 const EASE_OUT = "cubic-bezier(0.22, 1, 0.36, 1)";
+const EASE_IN_OUT = "cubic-bezier(0.42, 0, 0.58, 1)";
 const HOLD_MS = 5200;
-const TRANSITION_MS = 850;
+const TRANSITION_MS = 750;
 
 const SLIDES = [
   {
     id: "mechanical-seals",
+    name: "Mechanical Seals",
     eyebrow: "01 / FLUID CONTAINMENT",
     lines: ["PRECISION", "MECHANICAL", "SEALS."],
     description:
@@ -27,6 +28,7 @@ const SLIDES = [
   },
   {
     id: "industrial-pumps",
+    name: "Industrial Centrifugal Pumps",
     eyebrow: "02 / PROCESS TRANSFER",
     lines: ["CORROSION", "RESISTANT", "PUMPS."],
     description:
@@ -39,6 +41,7 @@ const SLIDES = [
   },
   {
     id: "cutlass-bearings",
+    name: "Water-Lubricated Cutlass Bearings",
     eyebrow: "03 / SHAFT SUPPORT",
     lines: ["WATER", "LUBRICATED", "BEARINGS."],
     description:
@@ -56,8 +59,10 @@ export default function HeroSection() {
   const [exitingIndex, setExitingIndex] = useState(null);
   const [isEntering, setIsEntering] = useState(false);
   const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
+  const [stageSize, setStageSize] = useState({ width: 0, height: 0 });
   const parallaxRef = useRef(null);
   const sectionRef = useRef(null);
+  const stageRef = useRef(null);
 
   useEffect(() => {
     const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
@@ -68,17 +73,31 @@ export default function HeroSection() {
   }, []);
 
   useEffect(() => {
-    if (exitingIndex !== null) return undefined;
+    const el = stageRef.current;
+    if (!el) return undefined;
 
-    const timer = setTimeout(() => {
-      const next = (activeIndex + 1) % SLIDES.length;
+    const updateSize = () => {
+      const rect = el.getBoundingClientRect();
+      setStageSize({ width: rect.width, height: rect.height });
+    };
+
+    updateSize();
+    const observer = new ResizeObserver(updateSize);
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
+
+  const advanceToSlide = useCallback(
+    (targetIndex) => {
+      if (exitingIndex !== null || targetIndex === activeIndex) return;
+
       if (prefersReducedMotion) {
-        setActiveIndex(next);
+        setActiveIndex(targetIndex);
         return;
       }
 
       setExitingIndex(activeIndex);
-      setActiveIndex(next);
+      setActiveIndex(targetIndex);
       setIsEntering(true);
 
       requestAnimationFrame(() => {
@@ -86,10 +105,20 @@ export default function HeroSection() {
           setIsEntering(false);
         });
       });
+    },
+    [activeIndex, exitingIndex, prefersReducedMotion]
+  );
+
+  useEffect(() => {
+    if (exitingIndex !== null) return undefined;
+
+    const timer = setTimeout(() => {
+      const next = (activeIndex + 1) % SLIDES.length;
+      advanceToSlide(next);
     }, HOLD_MS);
 
     return () => clearTimeout(timer);
-  }, [activeIndex, exitingIndex, prefersReducedMotion]);
+  }, [activeIndex, exitingIndex, advanceToSlide]);
 
   useEffect(() => {
     if (exitingIndex === null) return undefined;
@@ -115,8 +144,24 @@ export default function HeroSection() {
     }
   };
 
+  const nextIndex = (activeIndex + 1) % SLIDES.length;
   const currentSlide = SLIDES[activeIndex];
   const exitingSlide = exitingIndex !== null ? SLIDES[exitingIndex] : null;
+  const isTransitioning = exitingIndex !== null;
+
+  // Actual preview offset inside the image stage so the ~25% cutout sits cleanly in the bottom-right corner
+  const insetPx = stageSize.width >= 640 ? 6 : 4;
+  const featuredTransform =
+    stageSize.width >= 640
+      ? "translate3d(-18px, -14px, 0) scale(0.9)"
+      : "translate3d(-12px, -10px, 0) scale(0.88)";
+  const previewTransform =
+    stageSize.width > 0 && stageSize.height > 0
+      ? `translate3d(${(stageSize.width * 0.38 - insetPx).toFixed(2)}px, ${(
+          stageSize.height * 0.38 -
+          insetPx
+        ).toFixed(2)}px, 0) scale(0.24)`
+      : "translate3d(38%, 38%, 0) scale(0.24)";
 
   const getEnterLineStyle = (idx) => {
     if (prefersReducedMotion) return {};
@@ -160,24 +205,70 @@ export default function HeroSection() {
     };
   };
 
-  const getEnterImageStyle = () => {
-    if (prefersReducedMotion) return {};
-    if (isEntering) {
+  const getSlideImageStyle = (idx) => {
+    const isFeatured = idx === activeIndex;
+    const isPreview = idx === nextIndex;
+    const isExiting = idx === exitingIndex;
+
+    if (prefersReducedMotion) {
+      if (isFeatured) {
+        return {
+          opacity: 1,
+          transform: featuredTransform,
+          zIndex: 20,
+          transition: "opacity 220ms ease-in-out",
+        };
+      }
+      if (isPreview) {
+        return {
+          opacity: 1,
+          transform: previewTransform,
+          zIndex: 15,
+          transition: "opacity 220ms ease-in-out",
+        };
+      }
       return {
         opacity: 0,
-        transform: "scale(0.93)",
-        filter: "blur(8px)",
-        transition: "none",
+        transform: featuredTransform,
+        zIndex: 10,
+        transition: "opacity 220ms ease-in-out",
       };
     }
+
+    if (isFeatured) {
+      return {
+        opacity: 1,
+        transform: featuredTransform,
+        zIndex: 20,
+        transition: `transform ${TRANSITION_MS}ms ${EASE_IN_OUT}, opacity ${TRANSITION_MS}ms ${EASE_IN_OUT}`,
+      };
+    }
+
+    if (isExiting) {
+      return {
+        opacity: 0,
+        transform: "translate3d(-52px, -14px, 0) scale(0.86)",
+        zIndex: 10,
+        transition: `transform ${TRANSITION_MS}ms ${EASE_IN_OUT}, opacity ${TRANSITION_MS}ms ${EASE_IN_OUT}`,
+      };
+    }
+
+    if (isPreview) {
+      return {
+        opacity: 1,
+        transform: previewTransform,
+        zIndex: 15,
+        transition: isTransitioning
+          ? "opacity 320ms ease-in-out 430ms"
+          : "opacity 240ms ease-in-out",
+      };
+    }
+
     return {
-      opacity: 1,
-      transform: "scale(1)",
-      filter: "blur(0px)",
-      transitionProperty: "opacity, transform, filter",
-      transitionDuration: "800ms",
-      transitionTimingFunction: EASE_OUT,
-      transitionDelay: "120ms",
+      opacity: 0,
+      transform: previewTransform,
+      zIndex: 5,
+      transition: "none",
     };
   };
 
@@ -188,35 +279,12 @@ export default function HeroSection() {
       onMouseLeave={handleMouseLeave}
       className="relative isolate min-h-[calc(100svh-84px)] sm:min-h-[calc(100svh-88px)] flex items-center overflow-hidden bg-[#070d1c] text-white"
     >
-      {/* Background Interactive Floating Lines Fluid Dynamics */}
-      <div className="absolute inset-0 -z-20 overflow-hidden pointer-events-auto">
-        <FloatingLines
-          linesGradient={["#253664", "#4a6fa5", "#9a6a1a", "#ffffff"]}
-          enabledWaves={["top", "middle", "bottom"]}
-          lineCount={12}
-          lineDistance={5}
-          bendStrength={-0.45}
-          interactive
-          clickSwirl
-          animationSpeed={0.7}
-          amplitude={1.1}
-          glow={1.1}
-          brightness={1.15}
-          depthOfField={0.45}
-          edgeFade={0.1}
-          opacity={0.9}
-          className="w-full h-full"
-        />
-
-        {/* Minimal Subtle Edge Vignette */}
-        <div
-          className="absolute inset-0 bg-gradient-to-r from-[#070d1c]/50 via-transparent to-transparent pointer-events-none"
-          aria-hidden="true"
-        />
-        <div
-          className="absolute inset-0 bg-gradient-to-b from-[#070d1c]/30 via-transparent to-[#070d1c]/60 pointer-events-none"
-          aria-hidden="true"
-        />
+      {/* Clean Static Engineering Backdrop */}
+      <div className="absolute inset-0 -z-20 overflow-hidden pointer-events-none" aria-hidden="true">
+        <div className="bg-grid-pattern absolute inset-0 opacity-[0.06]" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_72%_48%,rgba(37,54,100,0.28)_0%,rgba(7,13,28,0)_62%)]" />
+        <div className="absolute inset-0 bg-gradient-to-r from-[#070d1c]/60 via-transparent to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-b from-[#070d1c]/30 via-transparent to-[#070d1c]/65" />
       </div>
 
       {/* Main Hero Container */}
@@ -316,7 +384,7 @@ export default function HeroSection() {
             </div>
           </div>
 
-          {/* Right Column: Large Product Showcase with Radial Backdrop & Mouse Parallax */}
+          {/* Right Column: Large Product Showcase with Continuous Preview-to-Featured Motion */}
           <div className="lg:col-span-6 xl:col-span-6 relative flex items-center justify-center">
             {/* Subtle Ambient Spotlight Behind Product */}
             <div
@@ -328,38 +396,55 @@ export default function HeroSection() {
               ref={parallaxRef}
               className="relative w-full flex items-center justify-center will-change-transform transition-transform duration-300 ease-out"
             >
-              {/* Exiting Image Layer */}
-              {exitingSlide && (
-                <div
-                  aria-hidden="true"
-                  className="pointer-events-none absolute inset-0 flex items-center justify-center animate-[heroImgOut_360ms_cubic-bezier(0.22,1,0.36,1)_forwards]"
-                >
-                  <div className="relative w-full max-w-[400px] sm:max-w-[470px] lg:max-w-[540px] aspect-[4/3]">
-                    <Image
-                      src={exitingSlide.image}
-                      alt=""
-                      fill
-                      sizes="(max-width: 768px) 90vw, (max-width: 1200px) 48vw, 540px"
-                      className="object-contain drop-shadow-[0_25px_50px_rgba(0,0,0,0.85)] filter contrast-[1.04] brightness-[0.98]"
-                    />
-                  </div>
-                </div>
-              )}
-
-              {/* Active Image Layer */}
               <div
-                key={`${currentSlide.id}-img`}
-                style={getEnterImageStyle()}
-                className="relative w-full max-w-[400px] sm:max-w-[470px] lg:max-w-[540px] aspect-[4/3] flex items-center justify-center will-change-[opacity,transform,filter]"
+                ref={stageRef}
+                className="relative w-full max-w-[420px] sm:max-w-[500px] lg:max-w-[580px] aspect-[4/3] overflow-hidden"
               >
-                <Image
-                  src={currentSlide.image}
-                  alt={currentSlide.alt}
-                  fill
-                  priority
-                  sizes="(max-width: 768px) 90vw, (max-width: 1200px) 48vw, 540px"
-                  className="object-contain drop-shadow-[0_25px_50px_rgba(0,0,0,0.85)] filter contrast-[1.04] brightness-[0.98]"
-                />
+                {SLIDES.map((slide, idx) => {
+                  const isPreview = idx === nextIndex;
+                  const isInteractivePreview = isPreview && !isTransitioning;
+                  const style = getSlideImageStyle(idx);
+
+                  return (
+                    <div
+                      key={slide.id}
+                      style={style}
+                      className={`absolute inset-0 flex items-center justify-center origin-center will-change-[transform,opacity] ${
+                        isInteractivePreview ? "pointer-events-auto" : "pointer-events-none"
+                      }`}
+                    >
+                      {isInteractivePreview ? (
+                        <button
+                          type="button"
+                          onClick={() => advanceToSlide(idx)}
+                          aria-label={`Show ${slide.name}`}
+                          className="relative w-full h-full cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-bronze-400/80 rounded-full"
+                        >
+                          <Image
+                            src={slide.image}
+                            alt={slide.alt}
+                            fill
+                            priority={idx === 0}
+                            sizes="(max-width: 768px) 90vw, (max-width: 1200px) 48vw, 540px"
+                            className="object-contain drop-shadow-[0_25px_50px_rgba(0,0,0,0.85)] filter contrast-[1.04] brightness-[0.98]"
+                          />
+                        </button>
+                      ) : (
+                        <div className="relative w-full h-full">
+                          <Image
+                            src={slide.image}
+                            alt={idx === activeIndex ? slide.alt : ""}
+                            aria-hidden={idx !== activeIndex}
+                            fill
+                            priority={idx === 0}
+                            sizes="(max-width: 768px) 90vw, (max-width: 1200px) 48vw, 540px"
+                            className="object-contain drop-shadow-[0_25px_50px_rgba(0,0,0,0.85)] filter contrast-[1.04] brightness-[0.98]"
+                          />
+                        </div>
+                      )}
+                    </div>
+                  );
+                })}
               </div>
             </div>
           </div>
@@ -377,18 +462,6 @@ export default function HeroSection() {
             opacity: 0;
             transform: translate3d(0, -8px, 0);
             filter: blur(6px);
-          }
-        }
-        @keyframes heroImgOut {
-          from {
-            opacity: 1;
-            transform: scale(1);
-            filter: blur(0px);
-          }
-          to {
-            opacity: 0;
-            transform: scale(0.94);
-            filter: blur(8px);
           }
         }
       `}</style>

@@ -1,5 +1,3 @@
-import Link from "next/link";
-import { MoveUpRight } from "lucide-react";
 import Button from "@/components/common/Button";
 import Reveal from "@/components/about/Reveal";
 import mechanicalSealBlueprint from "@/assets/about/mechanical-seal-blueprint.webp";
@@ -17,13 +15,19 @@ export default function AboutHero() {
 
       {/* Dark overlay */}
       <div
-        className="absolute inset-0 -z-20 bg-brand-950/80"
+        className="absolute inset-0 -z-20 bg-brand-950/82"
+        aria-hidden="true"
+      />
+
+      {/* Subtle engineering grid */}
+      <div
+        className="bg-grid-pattern absolute inset-0 -z-15 opacity-[0.07]"
         aria-hidden="true"
       />
 
       {/* Center readability overlay */}
       <div
-        className="absolute inset-0 -z-10 bg-[radial-gradient(circle_at_center,rgba(15,35,65,0.22)_0%,rgba(5,12,27,0.65)_55%,rgba(5,12,27,0.92)_100%)]"
+        className="absolute inset-0 -z-10 bg-[radial-gradient(circle_at_center,rgba(15,35,65,0.22)_0%,rgba(5,12,27,0.68)_55%,rgba(5,12,27,0.94)_100%)]"
         aria-hidden="true"
       />
 
@@ -33,22 +37,20 @@ export default function AboutHero() {
         aria-hidden="true"
       />
 
-      {/* Main content - equal top and bottom spacing */}
-      <div className="mx-auto flex w-full max-w-7xl items-center justify-center px-4 py-12 text-center sm:px-6 sm:py-16 lg:px-8 lg:py-20">
+      {/* Main content */}
+      <div className="mx-auto flex w-full max-w-7xl flex-col items-center justify-center px-4 pt-8 pb-12 text-center sm:px-6 sm:pt-10 sm:pb-14 lg:px-8 lg:pt-12 lg:pb-16">
         <Reveal>
           <div className="mx-auto max-w-3xl">
             {/* Section Eyebrow Label */}
-            <div className="inline-flex items-center gap-2 text-xs font-mono font-bold tracking-wider uppercase text-bronze-300 mb-3 sm:mb-4">
+            <div className="inline-flex items-center gap-2 text-xs font-mono font-bold tracking-wider uppercase text-bronze-300 mb-2.5 sm:mb-3">
               <span className="w-1.5 h-1.5 rounded-full bg-bronze-400" />
               <span>INDIAN ENGINEERING FOR A BETTER TOMORROW</span>
             </div>
 
             {/* Heading */}
-            <h1 className="text-4xl font-semibold leading-[1.08] tracking-[-0.025em] sm:text-5xl md:text-6xl lg:text-[4.25rem]">
-              About SealForge:
-              <span className="block text-steel-300 font-normal mt-1">
-                Precision Engineering for Rotating Equipment
-              </span>
+            <h1 className="text-4xl font-bold leading-[1.08] tracking-[-0.025em] sm:text-5xl md:text-6xl lg:text-[4.25rem]">
+              Precision Engineering for{" "}
+              <span className="text-bronze-400">Rotating Equipment</span>
             </h1>
 
             {/* Description */}

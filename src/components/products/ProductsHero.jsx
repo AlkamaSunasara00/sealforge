@@ -83,40 +83,52 @@ export default function ProductsHero() {
     ? {}
     : {
         opacity: loaded ? 1 : 0,
-        transform: loaded ? "translate3d(0, 0, 0)" : "translate3d(0, 20px, 0)",
-        transition: `opacity 700ms ${EASE_OUT} 60ms, transform 700ms ${EASE_OUT} 60ms`,
+        transform: loaded ? "translate3d(0, 0, 0)" : "translate3d(-8vw, 0, 0)",
+        filter: loaded ? "blur(0px)" : "blur(8px)",
+        transition: `opacity 850ms ${EASE_OUT} 40ms, transform 900ms ${EASE_OUT} 40ms, filter 850ms ${EASE_OUT} 40ms`,
       };
 
   const imageAnimStyle = prefersReducedMotion
     ? {}
     : {
         opacity: loaded ? 1 : 0,
-        transform: loaded ? "scale(1)" : "scale(0.92)",
-        filter: loaded ? "blur(0px)" : "blur(10px)",
-        transition: `opacity 1000ms ${EASE_OUT} 180ms, transform 1000ms ${EASE_OUT} 180ms, filter 1000ms ${EASE_OUT} 180ms`,
+        transform: loaded ? "translate3d(0, 0, 0) scale(1)" : "translate3d(0, 28px, 0) scale(0.84)",
+        filter: loaded ? "blur(0px)" : "blur(12px)",
+        transition: `opacity 1000ms ${EASE_OUT} 120ms, transform 1100ms ${EASE_OUT} 120ms, filter 1000ms ${EASE_OUT} 120ms`,
       };
 
   const frontLineAnimStyle = prefersReducedMotion
     ? {}
     : {
         opacity: loaded ? 1 : 0,
-        transform: loaded ? "translate3d(0, 0, 0)" : "translate3d(0, 26px, 0)",
-        transition: `opacity 750ms ${EASE_OUT} 340ms, transform 750ms ${EASE_OUT} 340ms`,
+        transform: loaded ? "translate3d(0, 0, 0)" : "translate3d(8vw, 0, 0)",
+        filter: loaded ? "blur(0px)" : "blur(8px)",
+        transition: `opacity 850ms ${EASE_OUT} 180ms, transform 950ms ${EASE_OUT} 180ms, filter 850ms ${EASE_OUT} 180ms`,
       };
 
   const glowAnimStyle = prefersReducedMotion
     ? { opacity: 1 }
     : {
-        opacity: loaded ? 1 : 0.15,
-        transition: `opacity 900ms ${EASE_OUT} 380ms`,
+        opacity: loaded ? 1 : 0,
+        transform: loaded ? "scale(1)" : "scale(0.72)",
+        transition: `opacity 1100ms ${EASE_OUT} 180ms, transform 1200ms ${EASE_OUT} 180ms`,
+      };
+
+  const shadowAnimStyle = prefersReducedMotion
+    ? {}
+    : {
+        opacity: loaded ? 1 : 0,
+        transform: loaded ? "scale(1)" : "scale(0.6)",
+        transition: `opacity 900ms ${EASE_OUT} 300ms, transform 950ms ${EASE_OUT} 300ms`,
       };
 
   const buttonsAnimStyle = prefersReducedMotion
     ? {}
     : {
         opacity: loaded ? 1 : 0,
-        transform: loaded ? "translate3d(0, 0, 0)" : "translate3d(0, 16px, 0)",
-        transition: `opacity 700ms ${EASE_OUT} 540ms, transform 700ms ${EASE_OUT} 540ms`,
+        transform: loaded ? "translate3d(0, 0, 0)" : "translate3d(0, 20px, 0)",
+        filter: loaded ? "blur(0px)" : "blur(4px)",
+        transition: `opacity 750ms ${EASE_OUT} 420ms, transform 800ms ${EASE_OUT} 420ms, filter 750ms ${EASE_OUT} 420ms`,
       };
 
   return (
@@ -200,10 +212,15 @@ export default function ProductsHero() {
               {/* Ground Ellipse Shadow scaling slightly with float */}
               <div
                 aria-hidden="true"
-                className={`-mt-3 sm:-mt-4 h-5 sm:h-7 w-[68%] rounded-full bg-black/70 blur-xl pointer-events-none ${
-                  prefersReducedMotion ? "" : "hero-shadow-pulse"
-                }`}
-              />
+                style={shadowAnimStyle}
+                className="w-full flex justify-center will-change-[opacity,transform]"
+              >
+                <div
+                  className={`-mt-3 sm:-mt-4 h-5 sm:h-7 w-[68%] rounded-full bg-black/70 blur-xl pointer-events-none ${
+                    prefersReducedMotion ? "" : "hero-shadow-pulse"
+                  }`}
+                />
+              </div>
             </div>
           </div>
 

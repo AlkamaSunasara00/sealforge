@@ -67,15 +67,15 @@ export default function ProductsPageContent() {
   return (
     <div className="w-full bg-white text-slate-900 font-sans selection:bg-[#253664] selection:text-white">
       {/* 1. Clean Hero */}
-      <ProductsHero
-        searchQuery={searchQuery}
-        setSearchQuery={setSearchQuery}
-      />
+      <ProductsHero />
 
       {/* 2. Sticky Category Filter Bar */}
       <ProductsFilterBar
         selectedCategory={selectedCategory}
         setSelectedCategory={setSelectedCategory}
+        searchQuery={searchQuery}
+        setSearchQuery={setSearchQuery}
+        resultCount={filteredProducts.length}
       />
 
       {/* 3. Clean Product Catalogue Grid */}

@@ -71,7 +71,8 @@ vec2 warp(vec2 p, float rotate, float flip) {
 }
 
 void main() {
-  vec2 screen = (2.0 * gl_FragCoord.xy - uResolution) / uResolution.y;
+  float refDim = min(uResolution.y, uResolution.x * 0.72);
+  vec2 screen = (2.0 * gl_FragCoord.xy - uResolution) / refDim;
   screen.y = -screen.y;
   for (int k = 0; k < ${MAX_CLICKS}; k++) {
     vec4 click = uClicks[k];
@@ -396,8 +397,9 @@ const FloatingLines = ({
       const eased = reveal * reveal * (3 - 2 * reveal);
       const ratio = width / Math.max(1, container.clientWidth);
       const stops = s.stops.map(value => parse(value, [1, 1, 1]).map(channel => Math.pow(channel, 2.2)));
-      const mouseX = (2 * mouse.x - width) / height;
-      const mouseY = -(2 * mouse.y - height) / height;
+      const refDim = Math.min(height, width * 0.72);
+      const mouseX = (2 * mouse.x - width) / refDim;
+      const mouseY = -(2 * mouse.y - height) / refDim;
       s.waves.forEach((wave, index) => {
         const shape = WAVE_SHAPE[WAVES[index]];
         const { x: shift, y: lift, rotate } = wave.position;
@@ -541,8 +543,9 @@ const FloatingLines = ({
     const onPointerDown = event => {
       locate(event);
       if (!pointer.inside || !settingsRef.current.clickSwirl || reduce) return;
-      const x = (2 * pointer.x - canvas.width) / canvas.height;
-      const y = -(2 * pointer.y - canvas.height) / canvas.height;
+      const refDim = Math.min(canvas.height, canvas.width * 0.72);
+      const x = (2 * pointer.x - canvas.width) / refDim;
+      const y = -(2 * pointer.y - canvas.height) / refDim;
       clicks.unshift({ x, y, age: 0, spin: pointer.vx < 0 ? -1 : 1 });
       if (clicks.length > MAX_CLICKS) clicks.pop();
       wake();

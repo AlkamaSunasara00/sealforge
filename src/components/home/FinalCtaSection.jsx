@@ -1,121 +1,94 @@
 "use client";
 
 import React from "react";
-import Image from "next/image";
 import Reveal from "@/components/about/Reveal";
 import Button from "@/components/common/Button";
-import finishedProductImg from "@/assets/contact/seal-forge-mechanical-seal.webp";
+import MagicRings from "@/components/about/MagicRings";
 import { companyInfo } from "@/data/company";
 import { Phone, Mail, MapPin } from "lucide-react";
 
 export default function FinalCtaSection() {
   return (
-    <section className="relative py-14 sm:py-18 lg:py-24 bg-slate-50 border-b border-slate-200 overflow-hidden">
-      <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        {/* Main Architectural Block with Cinematic Backdrop */}
-        <div className="relative isolate overflow-hidden rounded-[2.5rem] bg-[#070d1c] text-white border border-slate-800 shadow-2xl shadow-black/25">
-          {/* Background Photography */}
-          <div className="absolute inset-0 -z-20 overflow-hidden">
-            <Image
-              src="https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=1600&q=80"
-              alt="Industrial process facility"
-              fill
-              sizes="100vw"
-              className="object-cover object-center opacity-25 filter brightness-90 contrast-125"
-            />
-            {/* Cinematic Film Vignette Overlay */}
-            <div
-              className="absolute inset-0 bg-gradient-to-r from-[#070d1c] via-[#070d1c]/95 to-[#070d1c]/80"
-              aria-hidden="true"
-            />
-          </div>
+    <section className="bg-steel-50 px-4 py-10 text-white sm:px-6 sm:py-14 lg:px-8 lg:py-16 border-b border-slate-200">
+      <div className="relative isolate mx-auto max-w-7xl overflow-hidden rounded-[2rem] border border-brand-800/70 bg-brand-950 shadow-2xl shadow-brand-950/15">
+        {/* Animated MagicRings Background (Matches About Page CTA) */}
+        <div
+          className="pointer-events-none absolute inset-0 opacity-70"
+          aria-hidden="true"
+        >
+          <MagicRings
+            color="#d49938"
+            colorTwo="#5b79c3"
+            ringCount={6}
+            motion="breathe"
+            speed={0.35}
+            lineThickness={1.6}
+            glow={0.8}
+            opacity={0.72}
+            followMouse
+            mouseInfluence={0.08}
+            hoverScale={1.05}
+            hoverIntensity={0.7}
+            parallax={0.025}
+            clickBurst={false}
+            className="h-full w-full"
+          />
+        </div>
 
-          <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-8 items-center px-6 py-12 sm:px-12 sm:py-16 lg:px-16 lg:py-20">
-            {/* Left Column: Heading, Copy & Action */}
-            <div className="lg:col-span-7 space-y-6">
-              <Reveal>
-                {/* Eyebrow Label */}
-                <div className="inline-flex items-center gap-2 text-xs font-mono font-bold tracking-wider uppercase text-bronze-300 mb-2">
-                  <span className="w-1.5 h-1.5 rounded-full bg-bronze-400" />
-                  <span>LET&apos;S SOLVE YOUR SEALING & PUMPING CHALLENGE</span>
-                </div>
-
-                {/* Main Heading */}
-                <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight leading-[1.08] uppercase text-white">
-                  LET&apos;S FIND THE RIGHT SOLUTION<br />
-                  FOR YOUR{" "}
-                  <span className="text-bronze-400">ROTATING EQUIPMENT.</span>
-                </h2>
-
-                {/* Supporting Copy */}
-                <p className="mt-4 text-base sm:text-lg text-slate-300 leading-relaxed font-normal max-w-xl">
-                  Whether you need an engineered mechanical seal replacement, a chemical process pump, or a custom-machined cutlass bearing, our technical team is ready to evaluate your operating datasheet.
-                </p>
-
-                {/* Action CTAs */}
-                <div className="mt-8 flex flex-col sm:flex-row items-stretch sm:items-center gap-4 pt-2">
-                  <Button variant="primary" href="/contact">
-                    Request a Technical Quote
-                  </Button>
-
-                  <Button variant="white" href="/products">
-                    Explore Products
-                  </Button>
-                </div>
-
-                {/* Direct Technical Contact */}
-                <div className="pt-8 mt-6 border-t border-white/10 grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs font-mono text-slate-300">
-                  <a
-                    href={`tel:${companyInfo.phone.replace(/\s+/g, "")}`}
-                    className="flex items-center gap-2.5 hover:text-white transition-colors"
-                  >
-                    <div className="p-2 rounded-lg bg-white/10 text-bronze-300 shrink-0">
-                      <Phone className="w-4 h-4 text-bronze-300" />
-                    </div>
-                    <div>
-                      <span className="text-[10px] text-slate-400 block uppercase">Direct Helpline</span>
-                      <span className="font-bold text-white text-sm">{companyInfo.phoneDisplay}</span>
-                    </div>
-                  </a>
-
-                  <a
-                    href={`mailto:${companyInfo.email}`}
-                    className="flex items-center gap-2.5 hover:text-white transition-colors"
-                  >
-                    <div className="p-2 rounded-lg bg-white/10 text-bronze-300 shrink-0">
-                      <Mail className="w-4 h-4 text-bronze-300" />
-                    </div>
-                    <div>
-                      <span className="text-[10px] text-slate-400 block uppercase">Technical Inquiries</span>
-                      <span className="font-bold text-white text-sm">{companyInfo.email}</span>
-                    </div>
-                  </a>
-
-                  <div className="sm:col-span-2 flex items-start gap-2.5 pt-2 text-slate-400">
-                    <MapPin className="w-4 h-4 text-bronze-400 shrink-0 mt-0.5" />
-                    <span className="text-xs leading-relaxed">
-                      Works: {companyInfo.address.full}
-                    </span>
-                  </div>
-                </div>
-              </Reveal>
+        <div className="relative mx-auto flex max-w-4xl items-center justify-center px-5 py-11 text-center sm:px-10 sm:py-14 lg:px-12 lg:py-16">
+          <Reveal className="flex w-full flex-col items-center">
+            {/* Eyebrow Label */}
+            <div className="inline-flex items-center gap-2 text-[11px] sm:text-xs font-mono font-bold tracking-wider uppercase text-bronze-300 mb-3.5">
+              <span className="w-1.5 h-1.5 rounded-full bg-bronze-400" />
+              <span>LET&apos;S SOLVE YOUR SEALING &amp; PUMPING CHALLENGE</span>
             </div>
 
-            {/* Right Column: High-Impact Product Visual */}
-            <div className="lg:col-span-5 relative flex items-center justify-center lg:justify-end">
-              <Reveal delay={150} className="w-full">
-                <div className="relative w-72 sm:w-80 lg:w-96 aspect-square mx-auto drop-shadow-[0_25px_50px_rgba(0,0,0,0.95)] transition-transform duration-500 ease-out hover:scale-105">
-                  <Image
-                    src={finishedProductImg}
-                    alt="SealForge Engineered Mechanical Sealing Assembly"
-                    fill
-                    sizes="(max-width: 768px) 100vw, 400px"
-                    className="object-contain filter contrast-110 brightness-95"
-                  />
-                </div>
-              </Reveal>
+            {/* Main Heading */}
+            <h2 className="max-w-3xl text-3xl sm:text-4xl lg:text-5xl font-bold leading-[1.08] tracking-tight uppercase text-white">
+              LET&apos;S FIND THE RIGHT SOLUTION FOR YOUR{" "}
+              <span className="text-bronze-400">ROTATING EQUIPMENT.</span>
+            </h2>
+
+            {/* Supporting Copy */}
+            <p className="mt-4 max-w-2xl text-sm sm:text-base lg:text-[1.0625rem] leading-relaxed text-steel-200 font-normal">
+              Whether you need an engineered mechanical seal replacement, a chemical process pump, or a custom-machined cutlass bearing, our technical team is ready to evaluate your operating datasheet.
+            </p>
+
+            {/* Action CTAs */}
+            <div className="mt-7 flex flex-col sm:flex-row items-stretch sm:items-center justify-center gap-3.5 sm:gap-4">
+              <Button variant="white" href="/contact">
+                Request a Technical Quote
+              </Button>
+
+              <Button variant="primary" href="/products">
+                Explore Products
+              </Button>
             </div>
-          </div>
+
+            {/* Direct Contact Bar */}
+            <div className="mt-8 pt-6 border-t border-white/10 w-full max-w-3xl flex flex-wrap items-center justify-center gap-x-6 gap-y-3 text-xs font-mono text-steel-300">
+              <div className="flex items-center gap-2">
+                <MapPin className="w-4 h-4 text-bronze-400 shrink-0" />
+                <span>Kurla (West), Mumbai 400 070</span>
+              </div>
+              <span className="text-white/20 hidden sm:inline">•</span>
+              <a
+                href={`tel:${companyInfo.phone.replace(/\s+/g, "")}`}
+                className="flex items-center gap-2 hover:text-white transition-colors"
+              >
+                <Phone className="w-4 h-4 text-bronze-400 shrink-0" />
+                <span>Direct: {companyInfo.phoneDisplay}</span>
+              </a>
+              <span className="text-white/20 hidden sm:inline">•</span>
+              <a
+                href={`mailto:${companyInfo.email}`}
+                className="flex items-center gap-2 hover:text-white transition-colors"
+              >
+                <Mail className="w-4 h-4 text-sky-400 shrink-0" />
+                <span>Email: {companyInfo.email}</span>
+              </a>
+            </div>
+          </Reveal>
         </div>
       </div>
     </section>

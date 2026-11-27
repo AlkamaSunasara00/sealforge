@@ -66,12 +66,12 @@ export default function MaterialsSection() {
   return (
     <section
       id="materials"
-      className="py-16 sm:py-20 lg:py-28 bg-white border-b border-slate-200"
+      className="py-12 sm:py-16 lg:py-20 bg-white border-b border-slate-200"
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Clean Header */}
         <Reveal>
-          <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-6 mb-12">
+          <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-6 mb-8 sm:mb-10">
             <div className="space-y-3 max-w-2xl">
               <div className="inline-flex items-center gap-2 text-xs font-mono font-bold tracking-wider uppercase text-brand-700">
                 <span className="w-1.5 h-1.5 rounded-full bg-bronze-600" />

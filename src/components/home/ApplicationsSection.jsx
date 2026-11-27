@@ -125,12 +125,12 @@ export default function ApplicationsSection() {
   return (
     <section
       id="applications"
-      className="relative overflow-hidden border-b border-slate-200 bg-white py-16 sm:py-20 lg:py-28"
+      className="relative overflow-hidden border-b border-slate-200 bg-white py-12 sm:py-16 lg:py-20"
     >
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         {/* Clean Editorial Header */}
         <Reveal>
-          <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-6 mb-10 sm:mb-12">
+          <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-6 mb-8 sm:mb-10">
             <div className="max-w-3xl space-y-3">
               <div className="inline-flex items-center gap-2 text-xs font-mono font-bold tracking-wider uppercase text-brand-700">
                 <span className="w-1.5 h-1.5 rounded-full bg-bronze-600" />
@@ -154,7 +154,7 @@ export default function ApplicationsSection() {
           <div
             role="tablist"
             aria-label="Industrial sectors"
-            className="flex items-center gap-1 sm:gap-2 border-b border-slate-200 overflow-x-auto no-scrollbar mb-10 sm:mb-12"
+            className="flex items-center gap-1 sm:gap-2 border-b border-slate-200 overflow-x-auto no-scrollbar mb-8"
           >
             {sectors.map((s, i) => {
               const Icon = s.icon;

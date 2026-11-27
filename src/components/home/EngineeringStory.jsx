@@ -55,7 +55,7 @@ export default function EngineeringStory() {
   const [active, setActive] = useState(0);
 
   return (
-    <section className="relative bg-slate-50 border-b border-slate-200 py-14 sm:py-18 lg:py-24 overflow-hidden">
+    <section className="relative bg-slate-50 border-b border-slate-200 py-12 sm:py-16 lg:py-20 overflow-hidden">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 space-y-8 sm:space-y-12">
         {/* Header */}
         <Reveal>
